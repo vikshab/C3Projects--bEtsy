@@ -1,5 +1,5 @@
 class OrderItem < ActiveRecord::Base
-  belongs_to :order_id
-  belongs_to :product_id
-  belongs_to :user_id
+  belongs_to :order
+  belongs_to :product
+  belongs_to :user
 end
