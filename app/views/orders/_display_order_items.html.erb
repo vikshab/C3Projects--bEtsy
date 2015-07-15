@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <th>Item Name</th>
+    <th>Quantity Ordered</th>
+    <th>Cost</th>
+  </tr>
+  <% order.order_items.each do |item| %>
+    <tr>
+      <td><%= item.product.name %></td>
+      <td><%= item.quantity_ordered %></td>
+      <td><%= display_dollars(item.quantity_ordered * item.product.price) %></td>
+    </tr>
+  <% end %>
+</table>

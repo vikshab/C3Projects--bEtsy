@@ -1,0 +1,24 @@
+<%= form_for @order, html: { role: "form", method: :post } do |f| %>
+  <div class="form-group">
+    <%= f.label :buyer_name %>
+    <%= f.text_field :buyer_name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :buyer_email %>
+    <%= f.text_field :buyer_email, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :buyer_address %>
+    <%= f.text_field :buyer_address, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :buyer_card_short %>
+    <%= f.text_field :buyer_card_short, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :buyer_card_expiration %>
+    <%= f.text_field :buyer_card_expiration, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Submit Order", class: "btn btn-primary" %>
+<% end %>

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # adding an item to the cart
   post "/cart" => "orders#add"
 
