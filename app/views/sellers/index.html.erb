@@ -1,26 +1,28 @@
-<div class="col-lg-12">
-  <table class="table table-hover">
-  <tr>
-    <th>
-      Seller
-    </th>
-    <th>
-      Total number of products in stock
-    </th>
-  </tr>
-  <% @sellers.each do |seller| %>
+<div class="container">
+  <div class="col-lg-12">
+    <table class="table table-hover">
     <tr>
-      <td>
-        <%= seller.username %>
-      </td>
-      <td>
-        <% num_products = 0 %>
-        <% seller.products.each do |product| %>
-          <% num_products += product.stock %>
-        <% end %>
-        <%= num_products %>
-      </td>
+      <th>
+        Seller
+      </th>
+      <th>
+        Total number of products in stock
+      </th>
     </tr>
-  <% end %>
-  </table>
+    <% @sellers.each do |seller| %>
+      <tr>
+        <td>
+          <%= seller.username %>
+        </td>
+        <td>
+          <% num_products = 0 %>
+          <% seller.products.each do |product| %>
+            <% num_products += product.stock %>
+          <% end %>
+          <%= num_products %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
 </div>
