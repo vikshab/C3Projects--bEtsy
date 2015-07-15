@@ -15,8 +15,9 @@ class ChangeColumnNullForAllTables < ActiveRecord::Migration
 
     change_column_null :reviews, :rating, false
     change_column_null :reviews, :product_id, false
-    
+
     change_column_null :sellers, :username, false
     change_column_null :sellers, :email, false
     change_column_null :sellers, :password_digest, false
+  end
 end
