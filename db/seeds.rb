@@ -7,15 +7,24 @@ require 'csv'
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+CSV.foreach("db/categories.csv", headers: true) do |row|
+
+  Category.create(
+    name: row[0]
+  )
+ end
+
+
+
 CSV.foreach("db/products.csv", headers: true) do |row|
 
   Product.create(
-    name: row[1],
-    price: row[2],
-    desc: row[3],
-    stock: row[4],
-    photo_url: row[5],
-    category_id: row[6],
-    user_id: row[7]
+    name: row[0],
+    price: row[1],
+    desc: row[2],
+    stock: row[3],
+    photo_url: row[4],
+    category_id: row[5],
+    user_id: row[6]
   )
  end
