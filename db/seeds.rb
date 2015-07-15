@@ -22,3 +22,21 @@ products = [
 products.each do |product|
   Product.create(product)
 end
+
+  categories = [
+    { name: "Grocery" },
+    { name: "Animals" },
+    { name: "Home and Garden" },
+    { name: "Toys" },
+    { name: "Clothing" },
+    { name: "Health and Beauty" },
+    { name: "Sports and Outdoors" },
+    { name: "Automotive" },
+    { name: "Books" },
+    { name: "Movies" },
+    { name: "Electronic" }
+  ]
+
+  categories.each do |category|
+    Category.create(category)
+  end
