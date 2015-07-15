@@ -4,11 +4,12 @@
     <th>Quantity Ordered</th>
     <th>Cost</th>
   </tr>
-  <% order.order_items.each do |item| %>
+  <% @order.order_items.each do |item| %>
     <tr>
       <td><%= item.product.name %></td>
       <td><%= item.quantity_ordered %></td>
-      <td><%= display_dollars(item.quantity_ordered * item.product.price) %></td>
+      <!-- this should use Lindsey's display_dollars helper once it exists! -->
+      <td><%= (item.quantity_ordered * item.product.price) / 100.0 %></td>
     </tr>
   <% end %>
 </table>

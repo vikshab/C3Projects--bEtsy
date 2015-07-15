@@ -40,7 +40,7 @@ buyer_names = [
   "Ada Lovelace", "Betty McAwesomePants", "Tallis GenericLastName", "Tux"
 ]
 
-50.times do
+20.times do
   current_status = order_statuses.sample
 
   if current_status == "pending"
@@ -57,4 +57,14 @@ buyer_names = [
       buyer_card_expiration: Date.parse("June 5 2016")
     )
   end
+end
+
+product_limit = Product.all.count
+
+200.times do
+  OrderItem.create(
+    product_id: (1..product_limit).to_a.sample,
+    order_id: (1..20).to_a.sample,
+    quantity_ordered: (1..5).to_a.sample
+  )
 end

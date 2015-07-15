@@ -30,17 +30,13 @@ class OrdersController < ApplicationController
 
   def cart
     # code to view items in cart
-    @order_items = Order.order_items.all
   end
 
   def checkout
     # code to add buyer info
-    @order_items = Order.order_items.all
   end
 
   def receipt
-    @order = Order.find_by(session[:order_id])
-    @order_items = Order.order_items.all
     # code to display finalized order
   end
 
@@ -54,6 +50,9 @@ class OrdersController < ApplicationController
 
     def find_order
       # note: not using params :id yet! >_>
-      @order = Order.find_by(session[:order_id]) if session[:order_id] == params[:id]
+      # @order = Order.find_by(id: session[:order_id]) if session[:order_id] == params[:id]
+      @order = Order.second
+      @order_items = @order.order_items.all
+      @order_items_count = @order_items.count
     end
 end
