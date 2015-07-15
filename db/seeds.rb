@@ -78,3 +78,10 @@ buyer_names = [
     )
   end
 end
+
+all_categories = Category.all
+all_products = Product.all
+
+all_products.each do |product|
+  product.categories << all_categories.sample(rand(0..4))
+end
