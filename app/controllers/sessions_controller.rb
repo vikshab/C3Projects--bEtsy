@@ -1,11 +1,13 @@
 class SessionsController < ApplicationController
+  before_action :find_user
+
   def new
 
   end
 
   def create
     # login using email address
-    @user = User.find_by(email: params[:session][:email])
+    find_user
 
         if @user && @user.authenticate(params[:session][:password]) # user was found
           session[:user_id] = @user.id # setting session to the user.id
@@ -22,3 +24,15 @@ class SessionsController < ApplicationController
   end
 
 end
+
+
+  private
+
+  def find_user
+    @user = User.find_by(email: session_params(:email))
+  end
+
+  def session_params
+    params.require(:session).permit(:email, :password, :user_id)
+
+  end
