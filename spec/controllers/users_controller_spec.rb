@@ -2,29 +2,11 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 
-  describe "GET index" do
-
-    it "routes GET /albums to albums#index" do
-      expect(get: '/albums').to route_to('albums#index')
-    end
-
-    it "responds successfully with an HTTP 200 status code" do
-      get :show
-
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
-    end
-
-    it "generates /albums from albums_path" do
-      expect(albums_path).to eq('/albums')
-    end
-  end
-
   # describe "you can interact with a specific album" do
   #   before :each do
   #     @album = Album.create(name: "name_thing")
   #   end
-  #
+  # 
   #   it "renders the #show view" do
   #     get :show, id: @album
   #     expect(response).to render_template("show")
