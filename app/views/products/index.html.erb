@@ -15,8 +15,9 @@
     <td><%= product.price %></td>
     <td><%= product.stock %></td>
     <td><%= image_tag("#{product.photo_url}") %></td>
-    <th><%= link_to "Show", product_path(product.id), method: "get" %></th>
-    <th><%= link_to "Edit", edit_product_path(product.id) %></th>
-    <th><%= link_to "Delete", product_path(product.id), method: "delete",  data: { confirm: "Are you sure?" } %></th>
+    <td><%= link_to "Show", product_path(product.id), method: "get" %></td>
+    <td><%= link_to "Edit", edit_product_path(product.id) %></td>
+    <td><%= link_to "Delete", product_path(product.id), method: "delete",  data: { confirm: "Are you sure?" } %></td>
+  </tr>
   <% end %>
 </table>
