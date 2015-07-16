@@ -14,7 +14,8 @@ class Cart::OrderItemsController < ApplicationController
 
     Orders.all.select do |order|
       order.status == "pending" && order.order_items.select do |item|
-        item.product.id ==
+        # item.product.id ==
+      end
     end
 
     @item.increment!(:quantity_ordered, 1) unless @item.product.stock == @item.quantity_ordered
