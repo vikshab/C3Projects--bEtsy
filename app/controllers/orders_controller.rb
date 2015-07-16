@@ -2,35 +2,15 @@ class OrdersController < ApplicationController
   before_action :find_order
   before_action :redirect_illegal_actions, only: [:cart, :add, :remove, :checkout]
 
-  def add # to cart
-    # code to add item to the cart
-    # some kind of handling for users trying to circumvent assigned id
-      # eg, checking for pending status & not allowing any changes otherwise
+  def cart; end
 
-    if session[:order_id] == params[:id]
-      OrderItem.create(add_to_cart_params)
-      # increment cart view
-      # redirect_to product page
-    else # not success
-      # why would it not be successful?
-    end
-  end
-
-  def remove # from cart
-    # must prompt before doing this!
-    id = params[:order_item][:id]
-    @order.order_items.find_by(id: id).destroy
-  end
-
-  def cart
-    # code to view items in cart
-  end
-
-  def checkout
-    # code to add buyer info
-  end
+  def checkout; end
 
   def receipt
+    # guard clauses
+    redirect_to checkout_path if order_mutable?
+    redirect_to root_path if (@order.status == "complete") || (@order.status == "cancelled")
+
     # code to display finalized order
   end
 
@@ -46,7 +26,7 @@ class OrdersController < ApplicationController
       # note: not using params :id yet! >_>
       # @order = Order.find_by(id: session[:order_id]) if session[:order_id] == params[:order_id] || session[:order_id] == params[:id]
       @order = Order.first
-      @order_items = @order.order_items.all
+      @order_items = @order.order_items
       @order_items_count = @order_items.count
     end
 
@@ -55,6 +35,6 @@ class OrdersController < ApplicationController
     end
 
     def order_mutable?
-      return false unless @order.status == "pending"
+      @order.status == "pending"
     end
 end

@@ -1,4 +1,4 @@
-class Cart::OrderItemsController < ApplicationController
+class OrderItemsController < ApplicationController
   before_action :find_item, except: :add
 
   def add
@@ -12,13 +12,15 @@ class Cart::OrderItemsController < ApplicationController
   def more
     max_limit = 0
 
-    Orders.all.select do |order|
-      order.status == "pending" && order.order_items.select do |item|
-        # item.product.id ==
-      end
-    end
+    # Orders.all.select do |order|
+    #   order.status == "pending" && order.order_items.select do |item|
+    #     # item.product.id ==
+    #   end
+    # end
 
-    @item.increment!(:quantity_ordered, 1) unless @item.product.stock == @item.quantity_ordered
+    # @item.increment!(:quantity_ordered, 1) unless @item.product.stock == @item.quantity_ordered
+
+    @item.increment!(:quantity_ordered, 1)
 
     redirect_to cart_path
   end
