@@ -3,9 +3,10 @@ Rails.application.routes.draw do
 
   resources :categories, except: :destroy
   resources :sellers, only: [:index, :show]
+  resources :products, only: [:index, :show]
 
-  get 'products', to: 'products#index'
-  get 'products/:id', to: 'products#show', as: 'product'
+  get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
+  post '/products/:id/reviews/new', to: 'reviews#create'
 
   # viewing the checkout form
   get "/cart/checkout" => "orders#checkout"
