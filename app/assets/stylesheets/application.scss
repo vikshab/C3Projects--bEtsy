@@ -14,4 +14,22 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
- 
+ @import url(http://fonts.googleapis.com/css?family=Cherry+Swash:400,700);
+
+ .navbar-brand {
+  font-family: 'Cherry Swash', cursive;
+  font-size: 1.8em;
+ }
+
+ .navbar-right {
+  margin-right: 25px;
+ }
+
+ .cart {
+  font-size: 1.4em;
+ }
+
+.jumbotron {
+  margin-top: 55px;
+  width: 100%;
+}
