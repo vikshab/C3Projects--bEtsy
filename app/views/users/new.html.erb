@@ -1,16 +1,25 @@
-<h1>Sign Up for Bitsy!</h1>
-<%= form_for @user do |f| %>
-  <%= f.label :name  %>
-  <%= f.text_field :name %>
+<div class="row">
+  <div class = "col-md-6 col-md-offset-3">
+      <h1>Sign Up for Bitsy!</h1>
+  </div>
+</div>
+<div class="row">
+  <div class = "col-md-6 col-md-offset-3">
+    <%= form_for @user do |f| %>
+      <%= render 'shared/error_messages' %>
+      <%= f.label :name  %>
+      <%= f.text_field :name, class: "form-control" %>
 
-  <%= f.label :email  %>
-  <%= f.email_field :email %>
+      <%= f.label :email  %>
+      <%= f.email_field :email, class: "form-control" %>
 
-  <%= f.label :password %>
-  <%= f.pasword_field :password  %>
+      <%= f.label :password %>
+      <%= f.password_field :password, class: "form-control"  %>
 
-    <%= f.label :password_confirmation, "Confirm Password" %>
-    <%= f.password_field :password_confirmation %>
+      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.password_field :password_confirmation, class: "form-control" %>
 
-    <%= f.submit "Create account" %>
-<% end %>
+      <%= f.submit "Create account", class: "btn btn-default"%>
+    <% end %>
+  </div>
+</div>
