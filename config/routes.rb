@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
-  resources :products
+  resources :products do
+    resources :reviews
+  end
   resources :users do
     member do
       resources :products, only: [:new]

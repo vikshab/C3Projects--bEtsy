@@ -22,3 +22,10 @@
 </table>
 
 <%= link_to "Add New Product", new_product_path %>
+<div id="reviews">
+  <h2><%= @product.reviews.count %> Reviews</h2>
+  <%= render @product.reviews %>
+
+  <h3>Add a comment:</h3>
+  <%= render "reviews/form" %>
+</div>
