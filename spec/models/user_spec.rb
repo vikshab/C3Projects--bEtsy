@@ -32,6 +32,13 @@ RSpec.describe User, type: :model do
       expect(user2.errors.keys).to include(:email)
     end
 
+    it "email needs an @ sign, all the time" do
+      user = User.new(name: "Frank", email: "frankmail", password: "fr@nklin", password_confirmation: "fr@nklin")
+
+      expect(user).to_not be_valid
+      expect(user.errors.keys).to include(:email) #testing that it's failing b/c title is required
+    end
+
     it "requires the password confirmation to match" do
       user1 = User.create(name: "Frank", email: "frank@email.com", password: "fr@nklin", password_confirmation: "franklin")
 

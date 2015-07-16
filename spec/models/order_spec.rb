@@ -7,7 +7,6 @@ RSpec.describe Order, type: :model do
 
     fields.each do |field|
       it "requires a #{field}, all the time" do
-        # 1 it = 1 example/test
         order = Order.new
 
         expect(order).to_not be_valid
@@ -16,7 +15,6 @@ RSpec.describe Order, type: :model do
     end
 
     it "email needs an @ sign, all the time" do
-      # 1 it = 1 example/test
       order = Order.new(buyer_email: "bloey")
 
       expect(order).to_not be_valid
