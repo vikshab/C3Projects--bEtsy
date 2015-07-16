@@ -1,26 +1,37 @@
 <%= form_for @product, html: {class: "form"}, url: product_path(@product.id) do |f| %>
-  <h2>Edit Product></h2>
+  <h2><center>Edit Product</h2>
+  <div class="jumbotron">
     <div class = "form-group">
-      <%= f.label :name %>
-      <%= f.text_field :name, class: "form-control" %>
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: "form-control" %>
 
-      <%= f.label :price %>
-      <%= f.text_field :price, class: "form-control" %>
+          <%= f.label :price %>
+          <%= f.text_field :price, class: "form-control" %>
 
-      <%= f.label :description %>
-      <%= f.text_field :desc, class: "form-control" %>
+          <%= f.label :description %>
+          <%= f.text_field :desc, class: "form-control" %>
+        </div>
 
-      <%= f.label :stock %>
-      <%= f.text_field :stock, class: "form-control" %>
 
-      <%= f.label :photo_url %>
-      <%= f.text_field :photo_url, class: "form-control" %>
+        <div class="col-md-4">
+          <%= f.label :stock %>
+          <%= f.text_field :stock, class: "form-control" %>
 
-      <%= f.label :category_id %>
-      <%= f.text_field :category_id, class: "form-control" %>
+          <%= f.label :photo_url %>
+          <%= f.text_field :photo_url, class: "form-control" %>
+        </div>
 
-      <%= f.label :user_id %>
-      <%= f.text_field :user_id, class: "form-control" %>
+        <div class="col-md-4">
+          <%= f.label :category_id %>
+          <%= f.text_field :category_id, class: "form-control" %>
+
+          <%= f.label :user_id %>
+          <%= f.text_field :user_id, class: "form-control" %>
+        </div>
+      </div>
     </div>
+  </div>
   <%= f.submit 'Save changes', class: "btn btn-default" %>
 <% end %>
