@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :find_order, only: [:update, :show, :destroy]
 
   def new
     @order = Order.new
@@ -15,14 +16,22 @@ class OrdersController < ApplicationController
     end
   end
 
-  def destroy
-    @order = Order.find(id: order_params[:id])
-    @order.destroy
+  def update
+    @order.update(order_params)
+    render :show
+  end
 
+
+  def destroy
+    @order.destroy
   end
 
   def index
     @all_orders = Order.all
+  end
+
+  def show
+
   end
 
   private
@@ -38,6 +47,8 @@ class OrdersController < ApplicationController
                                   :buyer_last4cc)
   end
 
-
+  def find_order
+    @order = Order.find(id: order_params[:id])
+  end
 
 end
