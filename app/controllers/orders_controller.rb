@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :find_order
+  before_action :redirect_illegal_actions, only: [:cart, :add, :remove, :checkout]
 
   def add # to cart
     # code to add item to the cart
@@ -47,5 +48,13 @@ class OrdersController < ApplicationController
       @order = Order.second
       @order_items = @order.order_items.all
       @order_items_count = @order_items.count
+    end
+
+    def redirect_illegal_actions
+      redirect_to receipt_path unless order_mutable?
+    end
+
+    def order_mutable?
+      return false unless @order.status == "pending"
     end
 end
