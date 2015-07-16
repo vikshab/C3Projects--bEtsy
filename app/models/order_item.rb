@@ -4,9 +4,9 @@ class OrderItem < ActiveRecord::Base
   belongs_to :order
 
   # data validations
-  # validates :product_id, presence: true, numericality: { ??? }
-  # validates :order_id, presence: true, numericality: { ??? }
-  validates :quantity_ordered, presence: true, numericality: true
+  validates :product_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
   def increase # quantity
     quantity_ordered.increment!
