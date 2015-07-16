@@ -19,17 +19,17 @@ sellers.each do |username, email, password|
 end
 
 products = [
-  { name: "puppies", price: "300", seller_id: "2", stock: "3" },
-  { name: "hats", price: "2000", seller_id: "4", stock: "7" },
-  { name: "shoes", price: "3400", seller_id: "2", stock: "10" },
-  { name: "books", price: "600", seller_id: "7", stock: "2" },
-  { name: "sunglasses", price: "10000", seller_id: "1", stock: "9" },
-  { name: "coffee", price: "1000", seller_id: "6", stock: "4" },
-  { name: "t-shirts", price: "1300", seller_id: "9", stock: "15" },
-  { name: "rings", price: "4000", seller_id: "8", stock: "34" },
-  { name: "watches", price: "1600", seller_id: "3", stock: "7" },
-  { name: "markers", price: "25", seller_id: "10", stock: "13" },
-  { name: "sunscreen", price: "400", seller_id: "5", stock: "45" }
+  { name: "Puppy", price: 300, seller_id: 2, stock: 3 },
+  { name: "Hat", price: 2000, seller_id: 4, stock: 7 },
+  { name: "Shoes", price: 3400, seller_id: 2, stock: 10 },
+  { name: "Book", price: 600, seller_id: 7, stock: 2 },
+  { name: "Sunglasses", price: 10000, seller_id: 1, stock: 9 },
+  { name: "Coffee", price: 1000, seller_id: 6, stock: 4 },
+  { name: "T-shirt", price: 1300, seller_id: 9, stock: 15 },
+  { name: "Ring", price: 4000, seller_id: 8, stock: 34 },
+  { name: "Watch", price: 1600, seller_id: 3, stock: 7 },
+  { name: "Markers", price: 25, seller_id: 10, stock: 13 },
+  { name: "Sunscreen", price: 400, seller_id: 5, stock: 45 }
 ]
 
 products.each do |product|
@@ -95,4 +95,14 @@ product_limit = Product.all.count
     order_id: (1..20).to_a.sample,
     quantity_ordered: (1..5).to_a.sample
   )
+end
+
+reviews = [
+  { rating: 2, product_id: 3},
+  { rating: 4, product_id: 2},
+  { rating: 5, product_id: 8}
+]
+
+reviews.each do |review|
+  Review.create(review)
 end
