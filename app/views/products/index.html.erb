@@ -1,1 +1,6 @@
-<h1>Hello User!</h1>
+<% @products.each do |product| %>
+  <%= image_tag("#{product.photo_url}") %>
+  <%= product.name %>
+  <%= product.price %>
+  <%= product.category.name %>
+<% end %>
