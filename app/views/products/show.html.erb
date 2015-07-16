@@ -6,6 +6,9 @@
 
 <h4><%= display_dollars(@product.price) %></h4>
 
-<%= link_to "Add to Cart", cart_path %>
+<%= link_to "Add to Cart", "/cart" %>
 
-<!-- Add area for review -->
+<%= link_to "Add Review", "/products/:id/reviews/:id" %>
+
+<!-- Add area for reviews -->
+<!-- Add stuff for categories?? -->
