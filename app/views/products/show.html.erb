@@ -10,7 +10,16 @@
 
 <h3>Reviews</h3>
 
-<%= link_to "Add Review", "/products/:id/reviews/:id" %>
+<h4>Average Rating:</h4>
 
-<!-- Add area for reviews -->
+<%= link_to "Add Review", new_review_path %>
+
+<% @reviews.each do |review| %>
+  <ul>
+    <li><%= review.rating %></li>
+    <li><%= review.description %></li>
+  </ul>
+<% end %>
+
+
 <!-- Add stuff for categories?? -->
