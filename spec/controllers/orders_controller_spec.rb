@@ -12,20 +12,27 @@ RSpec.describe OrdersController, type: :controller do
     # )
 
     ["raven", "crow", "seagull", "wren", "robin", "finch", "heron", "egret"].each do |bird|
-      Product.create(name: bird, price: 100_00, seller_id: 1, stock: 9_001)
+      Product.create(name: bird, seller_id: 1, price: 1_000, stock: 50)
     end
 
     @order_items = []
 
     number_of_cart_items_wanted.times do
-      order = OrderItem.create(order_id: 1, product_id: (1..4).to_a.sample)
-      @order_items.push(order)
+      item = OrderItem.create(order_id: 1, product_id: (1..8).to_a.sample, quantity_ordered: 5)
+      @order_items.push(item)
     end
   end
 
   describe "GET cart" do
+    it "renders the cart template" do
+      get :cart
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
     it "assigns @order" do
-      get cart_path
+      get :cart
 
       expect(assigns(:order)).to eq(@order)
     end
