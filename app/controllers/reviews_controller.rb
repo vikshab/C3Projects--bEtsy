@@ -1,12 +1,10 @@
 class ReviewsController < ApplicationController
-
+before_action :set_product, only: [:create, :show]
   def new
     @review = Review.new
-    @product = Product.find(params[:id])
   end
 
   def create
-    @product = Product.find(params[:id])
     @review = Review.new(create_params)
       if @review.save
         redirect_to product_path(@product)
@@ -16,6 +14,10 @@ class ReviewsController < ApplicationController
   end
 
   private
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
   def create_params
     params[:review].permit(:rating, :description, :product_id)
