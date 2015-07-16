@@ -1,5 +1,9 @@
 {
   "result": {
-    "covered_percent": 93.02
+<<<<<<< HEAD
+    "covered_percent": 82.15
+=======
+    "covered_percent": 78.46
+>>>>>>> product_controller3
   }
 }
