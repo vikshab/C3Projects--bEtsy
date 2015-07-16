@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>C3ProjectsBetsy</title>
+  <title>Bitsy</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -10,5 +10,8 @@
 
 <%= yield %>
 
+<footer class="footer">
+  Copyright &copy; Bitsy <%= Time.now.year %>
+</footer>
 </body>
 </html>
