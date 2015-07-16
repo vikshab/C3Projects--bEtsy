@@ -1,58 +1,31 @@
 Rails.application.routes.draw do
+  root "welcome#index"
 
+  resources :categories, except: :destroy
   resources :sellers, only: [:index, :show]
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  get 'products', to: 'products#index'
+  get 'products/:id', to: 'products#show', as: 'product'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  # viewing the checkout form
+  get "/cart/checkout" => "orders#checkout"
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  # changing the status from pending to paid
+  post "/cart/checkout" => "orders#verify"
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  # displaying the receipt
+  get "/cart/receipt" => "orders#receipt", as: "receipt"
 
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
+  # viewing the cart
+  get "/cart" => "orders#cart"
 
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
+  # adding an item to the cart
+  post "/cart" => "cart/order_items#add", as: "add_item" # can also use cart_path
 
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
+  # adjusting the quantity of an item in the cart
+  patch "/cart/item/:id/more" => "cart/order_items#more", as: "more_item"
+  patch "/cart/item/:id/less" => "cart/order_items#less", as: "less_item"
 
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  # removing an item from the cart
+  delete "/cart/item/:id" => "cart/order_items#destroy", as: "kill_item"
 end

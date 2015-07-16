@@ -1,0 +1,14 @@
+<h1><%= @product.name %></h1>
+
+<%= image_tag "#{@product.photo_url}" %>
+
+<p><%= @product.description %></p>
+
+<h4><%= display_dollars(@product.price) %></h4>
+
+<%= link_to "Add to Cart", "/cart" %>
+
+<%= link_to "Add Review", "/products/:id/reviews/:id" %>
+
+<!-- Add area for reviews -->
+<!-- Add stuff for categories?? -->

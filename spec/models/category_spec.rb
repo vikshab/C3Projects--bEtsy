@@ -1,5 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "model validations" do
+    context "when name is missing" do
+      it "does not persist the record" do
+        category = Category.new
+
+        expect(category).to_not be_valid
+        expect(category.errors.keys).to include(:name)
+      end
+    end
+  end
 end
