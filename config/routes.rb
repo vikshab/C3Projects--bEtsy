@@ -1,12 +1,6 @@
 Rails.application.routes.draw do
   root "welcome#root"
 
-  # adding an item to the cart
-  post "/cart" => "cart/order_items#add"
-
-  # viewing the cart
-  get "/cart" => "orders#cart"
-
   # viewing the checkout form
   get "/cart/checkout" => "orders#checkout"
 
@@ -14,18 +8,18 @@ Rails.application.routes.draw do
   post "/cart/checkout" => "orders#verify"
 
   # displaying the receipt
-  get "/cart/receipt" => "orders#receipt"
+  get "/cart/receipt" => "orders#receipt", as: "receipt"
 
-  delete "/cart/item/:id" => "cart/order_items#destroy", as: "kill_item"
+  # viewing the cart
+  get "/cart" => "orders#cart"
+
+  # adding an item to the cart
+  post "/cart" => "cart/order_items#add", as: "add_item" # can also use cart_path
+
+  # adjusting the quantity of an item in the cart
   patch "/cart/item/:id/more" => "cart/order_items#more", as: "more_item"
   patch "/cart/item/:id/less" => "cart/order_items#less", as: "less_item"
 
-  # namespace :cart do
-  #   resources :order_items, only: [:create, :update, :destroy], as: "item", path: "item" do # actually neither does this
-  #     member do
-  #       patch :more # ;_; doesn't work as expected
-  #       patch :less
-  #     end
-  #   end
-  # end
+  # removing an item from the cart
+  delete "/cart/item/:id" => "cart/order_items#destroy", as: "kill_item"
 end

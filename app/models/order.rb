@@ -1,7 +1,8 @@
 class Order < ActiveRecord::Base
   has_many :order_items
 
-  validates :status, with: /(pending)|(paid)|(complete)|(cancelled)/
+  validates :status, presence: true, with: /(pending)|(paid)|(complete)|(cancelled)/
+
 
   def total_price
     array_of_totals = order_items.map { |item| item.quantity_ordered * item.product.price }

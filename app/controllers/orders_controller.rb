@@ -33,21 +33,6 @@ class OrdersController < ApplicationController
     # code to display finalized order
   end
 
-  # def more_item
-  #   item = OrderItem.find_by(id: params[:id])
-  #   item.increase!
-  # end
-  #
-  # def less_item
-  #   item = OrderItem.find_by(id: params[:id])
-  #
-  #   unless item.decrease!
-  #     flash[:error] = "You cannot decrease the quantity any further. You must remove this item from your cart."
-  #   end
-  #
-  #   redirect_to cart_path
-  # end
-
   private
     def add_to_cart_params
       # t.integer :product_id
