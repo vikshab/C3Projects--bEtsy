@@ -10,8 +10,8 @@
       <td><%= item.display_name %></td>
       <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
       <td>$<%= item.cost / 100.0 %></td>
-      <td><%= link_to "˅", root_path, method: :get %> <%= item.quantity_ordered %> <%= link_to "˄", root_path, method: :get %></td>
-      <td><%= link_to "x", root_path, method: :get, data: { confirm: item.remove_prompt_text } %>
+      <td><%= link_to "˅", less_item_path(item), method: :patch %> <%= item.quantity_ordered %> <%= link_to "˄", more_item_path(item), method: :patch %></td>
+      <td><%= link_to "x", kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } %>
     </tr>
   <% end %>
   <tr>

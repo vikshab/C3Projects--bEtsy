@@ -8,22 +8,12 @@ class OrderItem < ActiveRecord::Base
   validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
-  def increase # quantity
-    quantity_ordered.increment!
-  end
-
-  def decrease # quantity
-    # !Q should this flash.now an error instead of destroying the order item?
-    # or should / can we add some logic to prompt upon decreasing from one to zero & then destroy?
-    quantity_ordered == 1 ? destroy : quantity_ordered.decrement!
-  end
-
   def remove_prompt_text
     "Are you sure you want to remove this item (#{ quantity_ordered } #{ display_name }) from your cart?"
   end
 
   def display_name
-    name = product.name
+    name = product.name.capitalize
     quantity_ordered == 1 ? name.singularize : name.pluralize
   end
 

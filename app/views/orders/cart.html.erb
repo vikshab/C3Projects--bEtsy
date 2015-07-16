@@ -1,5 +1,9 @@
 <h1>CART</h1>
 
+<% if flash[:error] %>
+  <h2 class="alert alert-warning"><%= flash[:error] %></h2>
+<% end %>
+
 <%= render "display_order_items", locals: { order: @order } %>
 
 <%= link_to "Checkout!", cart_checkout_path, class: "btn btn-primary" %>
