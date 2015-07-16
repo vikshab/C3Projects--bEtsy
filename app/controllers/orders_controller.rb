@@ -45,7 +45,7 @@ class OrdersController < ApplicationController
     def find_order
       # note: not using params :id yet! >_>
       # @order = Order.find_by(id: session[:order_id]) if session[:order_id] == params[:order_id] || session[:order_id] == params[:id]
-      @order = Order.second
+      @order = Order.first
       @order_items = @order.order_items.all
       @order_items_count = @order_items.count
     end
