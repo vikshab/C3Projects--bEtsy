@@ -9,9 +9,8 @@ RSpec.describe SellersController, type: :controller do
       seller.save
       @seller_id = seller.id
 
-      10.times do
-        Product.create(name: "new", price: 10, seller_id: seller.id, stock: 1)
-      end
+      Product.create(name: "new", price: 10, seller_id: @seller_id, stock: 1)
+      Product.create(name: "newer", price: 20, seller_id: @seller_id, stock: 2)
     end
 
     it "responds successfully with an HTTP 200 status code" do
@@ -23,7 +22,7 @@ RSpec.describe SellersController, type: :controller do
 
     it "knows the number of products a seller has in stock" do
       get :index
-      expected_result = { @seller_id => 10 }
+      expected_result = { @seller_id => 3 }
 
       expect(assigns(:num_products_for_sellers)).to eq expected_result
     end
