@@ -1,9 +1,10 @@
 class Order < ActiveRecord::Base
+  # ASSOCIATIONS --------------------------------------------------------
   has_many :order_items
 
-  # VALIDATIONS ------------------------------------------------------------
+  # VALIDATIONS ----------------------------------------------------------
   validates :buyer_name, presence: true
-  validates :buyer_email, presence: true
+  validates :buyer_email, {presence: true}
   validates :buyer_address, presence: true
   validates :buyer_zip, presence: true,
                         numericality: { only_integer: true },
@@ -16,12 +17,18 @@ class Order < ActiveRecord::Base
                             numericality: { only_integer: true },
                             length: { is: 4 }
 
-  # custom VALIDATIONS
-  # validate :
-
+  validate :email_must_contain_at
+  
   # SCOPES ------------------------------------------------------------
 
 
 
+  def email_must_contain_at
+    return if self.buyer_email == nil # guard clause, inline conditional
+    unless self.buyer_email.chars.include?("@")
+      # refactor to include regex
+      errors.add(:buyer_email, "Invalid email. Please enter a correct email address.")
+    end
+  end
 
 end
