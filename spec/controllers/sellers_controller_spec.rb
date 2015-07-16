@@ -9,4 +9,20 @@ RSpec.describe SellersController, type: :controller do
       expect(response).to have_http_status(200)
     end
   end
+
+  describe "calculate_num_products(seller)" do
+    before :all do
+      @seller = Seller.new(username: "Harry", email: "harry.potter@email.com")
+      @seller.password = "test"
+      @seller.password_confirmation = "test"
+      @seller.save
+      10.times do
+        Product.create(name: "new", price: 10, seller_id: @seller.id)
+      end
+    end
+
+    it "returns the total number of products for a specific seller" do
+      expect(calculate_num_products(@seller)).to eq 7
+    end
+  end
 end
