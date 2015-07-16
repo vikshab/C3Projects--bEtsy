@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="col-lg-12">
+  <h1>All Sellers</h1>
+    <table class="table table-hover">
+    <tr>
+      <th>
+        Seller
+      </th>
+      <th>
+        Total number of products in stock
+      </th>
+    </tr>
+    <% @sellers.each do |seller| %>
+      <tr>
+        <td>
+          <%= link_to "#{seller.username}", seller_path(id: seller.id) %>
+        </td>
+        <td>
+          <%= @num_products_for_sellers[seller.id] %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+</div>

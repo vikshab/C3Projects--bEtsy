@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root "welcome#root"
 
+  resources :sellers, only: [:index, :show]
+
   # viewing the checkout form
   get "/cart/checkout" => "orders#checkout"
 
