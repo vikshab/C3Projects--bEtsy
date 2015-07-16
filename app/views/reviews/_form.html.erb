@@ -1,14 +1,14 @@
 <%= form_for([@product, @product.reviews.build]) do |f| %>
-  <%= label_tag(:rating, "1") %>
-  <%= radio_button_tag(:rating, 1) %>
-  <%= label_tag(:rating, "2") %>
-  <%= radio_button_tag(:rating, 2) %>
-  <%= label_tag(:rating, "3") %>
-  <%= radio_button_tag(:rating, 3) %>
-  <%= label_tag(:rating, "4") %>
-  <%= radio_button_tag(:rating, 4) %>
-  <%= label_tag(:rating, "5") %>
-  <%= radio_button_tag(:rating, 5) %>
+  <%= f.label(:rating, 1) %>
+  <%= f.radio_button(:rating, 1) %>
+  <%= f.label(:rating, 2) %>
+  <%= f.radio_button(:rating, 2) %>
+  <%= f.label(:rating, 3) %>
+  <%= f.radio_button(:rating, 3) %>
+  <%= f.label(:rating, 4) %>
+  <%= f.radio_button(:rating, 4) %>
+  <%= f.label(:rating, 5) %>
+  <%= f.radio_button(:rating, 5) %>
   <br><%= f.label :body, "Review" %>
   <br>
   <%= f.text_area :body %><br>
