@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :products
-  resources :users, only: [:show, :new] do
+  resources :users do
     member do
       resources :products, only: [:new]
     end

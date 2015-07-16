@@ -2,25 +2,26 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 
-  # describe "you can interact with a specific album" do
-  #   before :each do
-  #     @album = Album.create(name: "name_thing")
-  #   end
-  # 
-  #   it "renders the #show view" do
-  #     get :show, id: @album
-  #     expect(response).to render_template("show")
-  #   end
-  #
-  #   it "renders the #new view" do
-  #     get :new, id: @album
-  #     expect(response).to render_template("new")
-  #   end
-  #
-  #   it "renders the #edit view" do
-  #     get :edit, id: @album
-  #     expect(response).to render_template("edit")
-  #   end
+  describe "a user can see their user page" do
+    before :each do
+      @user = User.create(name: "Name1", email: "name@email.com", password: "foobar", password_confirmation: "foobar")
+    end
+
+    it "renders the #show view" do
+      get :show, id: @user
+      expect(response).to render_template("show")
+    end
+
+    it "renders the #new view" do
+      get :new, id: @user
+      expect(response).to render_template("new")
+    end
+    #
+    # it "renders the #edit view" do
+    #   get :edit, id: @album
+    #   expect(response).to render_template("edit")
+    # end
+  end
   #
   #   it "increases the rank when you upvote" do
   #     patch :upvote, id: @album
@@ -65,6 +66,6 @@ RSpec.describe UsersController, type: :controller do
   #     post :update, id: album, album: {name: "Edited name", rank: 20}
   #     expect(response).to redirect_to(album_path(assigns(:media)))
   #   end
-  end
+
 
 end
