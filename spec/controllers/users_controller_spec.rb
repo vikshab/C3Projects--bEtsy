@@ -16,11 +16,6 @@ RSpec.describe UsersController, type: :controller do
       get :new, id: @user
       expect(response).to render_template("new")
     end
-    #
-    # it "renders the #edit view" do
-    #   get :edit, id: @album
-    #   expect(response).to render_template("edit")
-    # end
   end
   #
   #   it "increases the rank when you upvote" do
