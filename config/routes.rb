@@ -15,4 +15,8 @@ Rails.application.routes.draw do
 
   # displaying the receipt
   get "/cart/receipt" => "orders#receipt"
+
+  namespace :cart do
+    resources :order_items, except: :show, as: "item", path: "item"
+  end
 end

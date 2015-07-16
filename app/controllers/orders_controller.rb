@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :find_order
 
-  def add
+  def add # to cart
     # code to add item to the cart
     # some kind of handling for users trying to circumvent assigned id
       # eg, checking for pending status & not allowing any changes otherwise
@@ -15,17 +15,10 @@ class OrdersController < ApplicationController
     end
   end
 
-  def remove_item
+  def remove # from cart
     # must prompt before doing this!
     id = params[:order_item][:id]
     @order.order_items.find_by(id: id).destroy
-  end
-
-  def update_quantity
-    # new_quantity = params(order_item: [:quantity_ordered]) #?
-    # handle for zero
-    # handle increment
-    # handle decrement
   end
 
   def cart
@@ -50,7 +43,7 @@ class OrdersController < ApplicationController
 
     def find_order
       # note: not using params :id yet! >_>
-      # @order = Order.find_by(id: session[:order_id]) if session[:order_id] == params[:id]
+      # @order = Order.find_by(id: session[:order_id]) if session[:order_id] == params[:order_id] || session[:order_id] == params[:id]
       @order = Order.second
       @order_items = @order.order_items.all
       @order_items_count = @order_items.count

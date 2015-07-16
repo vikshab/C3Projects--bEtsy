@@ -1,15 +1,26 @@
 <table>
   <tr>
+    <th>Quantity</th>
     <th>Item Name</th>
-    <th>Quantity Ordered</th>
     <th>Cost</th>
+    <th>Options</th>
   </tr>
   <% @order.order_items.each do |item| %>
     <tr>
-      <td><%= item.product.name %></td>
-      <td><%= item.quantity_ordered %></td>
-      <!-- this should use Lindsey's display_dollars helper once it exists! -->
-      <td><%= (item.quantity_ordered * item.product.price) / 100.0 %></td>
+      <td><%= item.display_name %></td>
+      <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
+      <td>$<%= item.cost / 100.0 %></td>
+      <td><%= link_to "˅", root_path, method: :get %> <%= item.quantity_ordered %> <%= link_to "˄", root_path, method: :get %></td>
+      <td><%= link_to "x", root_path, method: :get, data: { confirm: item.remove_prompt_text } %>
     </tr>
   <% end %>
+  <tr>
+    <th colspan="2">
+      <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
+      Total:
+    </th>
+    <th colspan="2">
+      $<%= @order.total_price / 100.0 %>
+    </th>
+  </tr>
 </table>
