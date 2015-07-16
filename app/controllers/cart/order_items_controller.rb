@@ -10,7 +10,14 @@ class Cart::OrderItemsController < ApplicationController
   end
 
   def more
-    @item.increment!(:quantity_ordered, 1)
+    max_limit = 0
+
+    Orders.all.select do |order|
+      order.status == "pending" && order.order_items.select do |item|
+        item.product.id ==
+    end
+
+    @item.increment!(:quantity_ordered, 1) unless @item.product.stock == @item.quantity_ordered
 
     redirect_to cart_path
   end

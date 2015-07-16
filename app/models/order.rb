@@ -14,6 +14,12 @@ class Order < ActiveRecord::Base
   # validate card expiration is after today / Date.now
   # validate address or name somehow?
 
+  # scopes
+  scope :pending, -> { where(status: "pending") }
+  # scope :paid, -> { where(status: "paid") }
+  # scope :complete, -> { where(status: "complete") }
+  # scope :cancelled, -> { where(status: "cancelled") }
+
   def total_price
     array_of_totals = order_items.map { |item| item.quantity_ordered * item.product.price }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
