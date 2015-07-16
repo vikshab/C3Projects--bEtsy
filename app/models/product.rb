@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
   belongs_to :seller
   has_many :order_items
   has_many :reviews
-  
+
   # Validations ----------------------------------------------------------------
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true, numericality: { greater_than: 0 }
