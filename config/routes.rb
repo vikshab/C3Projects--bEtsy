@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   get "/cart/receipt" => "orders#receipt"
 
   namespace :cart do
-    resources :order_items, except: :show, as: "item", path: "item"
+    resources :order_items, only: [:create, :update, :destroy], as: "item", path: "item" do
+      member do
+        patch :more
+        patch :less
+      end
+    end
   end
 end
