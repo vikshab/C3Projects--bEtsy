@@ -1,0 +1,18 @@
+<h3>Sign In!</h3>
+<% if flash.now[:error] %>
+  <div>
+      <%= flash.now[:error] %>
+  </div>
+<% end %>
+<%= form_for(:session, url: login_path) do |f| %>
+<!-- in form_for :session, telling us below are in the params[:session] hash -->
+<!-- url for the POST url after they click submit -->
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <!-- f.password_field will only display dots -->
+
+  <%= f.submit "Sign In" %>
+<% end %>

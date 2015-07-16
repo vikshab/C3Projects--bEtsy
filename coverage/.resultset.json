@@ -1,10 +1,65 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/controllers/home_controller_spec.rb": [
+      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/controllers/sessions_controller_spec.rb": [
         1,
         null,
         1,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
         null,
         null
       ],
@@ -230,7 +285,19 @@
         null,
         null,
         null,
+        1,
         null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        1,
         null,
         null,
         null,
@@ -310,82 +377,6 @@
         1,
         null
       ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/home_controller.rb": [
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/application_controller.rb": [
-        1,
-        null,
-        null,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/controllers/orders_controller_spec.rb": [
-        1,
-        null,
-        1,
-        null,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/orders_controller.rb": [
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/controllers/products_controller_spec.rb": [
-        1,
-        null,
-        1,
-        null,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/products_controller.rb": [
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/controllers/reviews_controller_spec.rb": [
-        1,
-        null,
-        1,
-        null,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/reviews_controller.rb": [
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/controllers/sessions_controller_spec.rb": [
-        1,
-        null,
-        1,
-        null,
-        1,
-        1,
-        null,
-        null,
-        null,
-        1,
-        1,
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        1,
-        1,
-        null,
-        1,
-        3,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
       "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/sessions_controller.rb": [
         1,
         1,
@@ -396,116 +387,39 @@
         null,
         1,
         null,
-        0,
-        null,
-        0,
-        0,
-        0,
-        null,
-        0,
-        0,
-        null,
-        null,
-        null,
         1,
         0,
         0,
-        null,
-        null,
-        null,
-        null,
-        null,
-        1,
-        null,
-        1,
         0,
+        null,
+        1,
+        1,
+        null,
         null,
         null,
         1,
         0,
+        0,
         null,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/controllers/users_controller_spec.rb": [
-        1,
         null,
-        1,
         null,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/users_controller.rb": [
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/models/category_spec.rb": [
+        null,
+        null,
         1,
         null,
         1,
         1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/models/category.rb": [
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/models/order_item_spec.rb": [
-        1,
+        null,
         null,
         1,
-        1,
+        0,
+        null,
         null
       ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/models/order_item.rb": [
-        1,
-        1,
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/models/order_spec.rb": [
+      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/controllers/application_controller.rb": [
         1,
         null,
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/models/order.rb": [
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/models/product_spec.rb": [
-        1,
         null,
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/models/product.rb": [
-        1,
-        1,
-        1,
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/models/review_spec.rb": [
-        1,
-        null,
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/app/models/review.rb": [
-        1,
-        1,
-        null
-      ],
-      "/Users/brittlwalentin/ada/project-forks/C3Projects--bEtsy/spec/models/user_spec.rb": [
-        1,
-        null,
-        1,
         1,
         null
       ],
@@ -513,9 +427,10 @@
         1,
         1,
         1,
+        1,
         null
       ]
     },
-    "timestamp": 1436993704
+    "timestamp": 1437004359
   }
 }
