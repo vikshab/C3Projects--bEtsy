@@ -12,7 +12,9 @@ class SellersController < ApplicationController
   private
 
   # these two methods below help calculate a seller's
-  # total number of products in stock
+  # total number of products in stock, we can use methods
+  # like these if we want to display other things about
+  # the seller on the sellers#index page
   def calculate_num_products(seller)
     num_products = 0
     seller.products.each do |product|
