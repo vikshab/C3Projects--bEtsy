@@ -20,7 +20,7 @@ class Order < ActiveRecord::Base
   scope :complete, -> { where(status: "complete") }
   scope :cancelled, -> { where(status: "cancelled") }
 
-  def total_price
+  def price
     array_of_totals = order_items.map { |item| item.cost }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
   end
