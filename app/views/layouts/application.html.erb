@@ -57,17 +57,11 @@
   </div>
 </nav>
 <body>
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Welcome to Bitsy</h1>
-      <p>Your home for the itsy bitsy, teeny weeny, itty bitty, small, minuscule, tiny things in life. </p>
-    </div>
-  </div>
   <div class="container-fluid">
     <%= yield %>
   </div>
-<footer>
-  <p class="text-muted">copyright &copy; Bitsy <%= Time.now.year %></p>
-</footer>
+  <footer>
+    <p class="text-muted">copyright &copy; Bitsy <%= Time.now.year %></p>
+  </footer>
 </body>
 </html>
