@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
     rating_total = 0
     total_num_reviews = product.reviews.count
 
-    return 0 if total_num_reviews == 0
+    return "No reviews" if total_num_reviews == 0
 
     product.reviews.each do |review|
       rating_total += review[:rating]
