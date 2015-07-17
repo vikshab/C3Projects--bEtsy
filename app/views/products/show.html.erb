@@ -6,7 +6,7 @@
 
 <h4><%= display_dollars(@product.price) %></h4>
 
-<%= link_to "Add to Cart", "/cart" %>
+<%= link_to "Add to Cart", add_item_path(@product), method: :post %>
 
 <%= link_to "Add Review", "/products/:id/reviews/:id" %>
 

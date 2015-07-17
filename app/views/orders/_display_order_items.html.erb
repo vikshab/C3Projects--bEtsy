@@ -13,7 +13,7 @@
         <%= item.quantity_ordered %>
         <%= link_to "˄", more_item_path(item), method: :patch %>
       </td>
-      <td><%= item.display_name %></td>
+      <td><%= link_to item.display_name, product_path(item.product) %></td>
       <td>$<%= item.price / 100.0 %></td>
       <td>
         <%= link_to "x", kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } %>
