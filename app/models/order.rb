@@ -24,4 +24,12 @@ class Order < ActiveRecord::Base
     array_of_totals = order_items.map { |item| item.price }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
   end
+
+  def already_has_product?(product_id)
+    order_items.each do |item|
+      return true if item.product_id == product_id
+    end
+
+    return false
+  end
 end

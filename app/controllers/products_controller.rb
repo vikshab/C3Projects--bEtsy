@@ -2,7 +2,9 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :add_to_cart]
 
   def add_to_cart
-    OrderItem.create(product_id: @product.id, order_id: session[:order_id], quantity_ordered: 1)
+    unless Order.find(session[:order_id]).already_has_product?(@product.id)
+      OrderItem.create(product_id: @product.id, order_id: session[:order_id], quantity_ordered: 1)
+    end
 
     redirect_to cart_path
   end
