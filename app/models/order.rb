@@ -9,7 +9,7 @@ class Order < ActiveRecord::Base
 
   # data validations
   validates :status, presence: true, format: { with: VALID_STATUS_REGEX }
-  # validates :buyer_card_short, presence: false, numericality: { greater_than: 999, less_than: 10_000 }
+  # validates :buyer_card_short, presence: false, numericality: { only_integer: true, greater_than: 999 }
   # validates :buyer_email, presence: false, format: { with: VALID_EMAIL_REGEX }
   # validate card expiration is after today / Date.now
   # validate address or name somehow?
@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
   scope :cancelled, -> { where(status: "cancelled") }
 
   def total_price
-    array_of_totals = order_items.map { |item| item.quantity_ordered * item.product.price }
+    array_of_totals = order_items.map { |item| item.cost }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
   end
 end
