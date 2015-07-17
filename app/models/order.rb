@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
   scope :cancelled, -> { where(status: "cancelled") }
 
   def price
-    array_of_totals = order_items.map { |item| item.cost }
+    array_of_totals = order_items.map { |item| item.price }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
   end
 end

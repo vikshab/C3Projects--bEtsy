@@ -2,7 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   describe "database relationships" do
-    it "has many order items" do
+    it "has order items" do
+      order = Order.create
+
+      no_order_items = 10
+      no_order_items.times do
+        OrderItem.create(order_id: 1, product_id: 1, quantity_ordered: 1)
+      end
+
+      expect(order.order_items.count).to eq(no_order_items)
     end
   end
 
@@ -52,10 +60,10 @@ RSpec.describe Order, type: :model do
 
   describe "scopes" do
     before :each do
-      @statuses = ["pending", "paid", "complete", "cancelled"]
+      statuses = ["pending", "paid", "complete", "cancelled"]
 
-      @statuses.each do |status|
-        5.times.do
+      statuses.each do |status|
+        5.times do
           Order.create(status: status)
         end
       end
@@ -83,7 +91,31 @@ RSpec.describe Order, type: :model do
   end
 
   describe "methods" do
-    it "price" do
+    context "price" do
+      before :each do
+        @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
+        @order = Order.create
+        @item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 5)
+      end
+
+      it "has a price based on its order items" do
+        expect(@order.price).to eq(@item.price)
+        expect(@order.price).to eq(@item.quantity_ordered * @product.price)
+
+        item2 = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 25)
+        @order.reload
+        expect(@order.price).to eq(@item.price + item2.price)
+        expect(@order.price).to eq((@item.quantity_ordered * @product.price) + (item2.quantity_ordered * @product.price))
+      end
+
+      it "and only its order items" do
+        expect(@order.price).to eq(@item.price)
+        expect(@order.price).to eq(@item.quantity_ordered * @product.price)
+
+        item2 = OrderItem.create(product_id: 1, order_id: 2, quantity_ordered: 25)
+        expect(@order.price).to eq(@item.price)
+        expect(@order.price).to eq(@item.quantity_ordered * @product.price)
+      end
       # array_of_totals = order_items.map { |item| item.cost }
       # total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
     end
