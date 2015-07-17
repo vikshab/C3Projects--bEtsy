@@ -2,10 +2,18 @@ require 'rails_helper'
 
 RSpec.describe OrderItem, type: :model do
   describe "database relationships" do
+    before :each do
+      @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
+      @order = Order.create
+      @item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 1)
+    end
+
     it "belongs to a product" do
+      expect(@item.product).to eq(@product)
     end
 
     it "belongs to an order" do
+      expect(@item.order).to eq(@order)
     end
   end
 
