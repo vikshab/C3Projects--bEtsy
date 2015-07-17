@@ -40,8 +40,17 @@
         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Sign Up", new_user_path, class: "navbar-link" %></li>
-        <li><button type="button"  class="btn btn-default navbar-btn"><%= link_to "Login", login_path %></button></li>
+
+        <% if session[:user_id] == nil  %>
+          <li><button type="button"  class="btn btn-default navbar-btn"><%= link_to "Login", login_path %></button></li>
+          <li><%= link_to "Sign Up", new_user_path, class: "navbar-link" %></li>
+        <% else %>
+          <li><button type="button"  class="btn btn-default navbar-btn">
+              <%= button_to "Logout", logout_path, method: :destroy,
+                  data: {:confirm => "Are you sure you want to logout?"} %>
+          </button></li>
+
+        <% end %>
         <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-shopping-cart cart" aria-hidden="true"></span></i></a></li>
       </div>
     </div>
