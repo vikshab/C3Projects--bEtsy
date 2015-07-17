@@ -159,30 +159,47 @@ RSpec.describe OrderItem, type: :model do
   end
 
   describe "methods" do
-    context "price" do
-      before :each do
-        @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
-      end
+    before :each do
+      @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
+    end
 
+    context "price" do
       it "has a price through its association to product" do
         item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 1)
         expect(item.price).to eq(@product.price)
       end
 
       it "has a price that adjusts based on quantity_ordered" do
-        quantity = 5
+        quantity = 2
         item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: quantity)
         expect(item.price).to eq(@product.price * quantity)
       end
     end
 
-    it "display_name" do
-      # name = product.name.capitalize
-      # quantity_ordered == 1 ? name.singularize : name.pluralize
+    context "display_name" do
+      it "has a display_name through its association to product" do
+        item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 1)
+        expect(item.display_name).to eq(@product.name.capitalize.singularize)
+      end
+
+      it "has a display_name that adjusts based on quantity ordered" do
+        item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 2)
+        expect(item.display_name).to eq(@product.name.capitalize.pluralize)
+      end
     end
 
-    it "remove_prompt_text" do
-      # "Are you sure you want to remove this item (#{ quantity_ordered } #{ display_name }) from your cart?"
+    context "remove_prompt_text" do
+      it "outputs a string related to removing items from the cart" do
+        item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 1)
+        remove_string =  "Are you sure you want to remove this item (1 Astronaut) from your cart?"
+        expect(item.remove_prompt_text).to eq(remove_string)
+      end
+
+      it "adjusts the string based on quantity ordered" do
+        item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 2)
+        remove_string =  "Are you sure you want to remove this item (2 Astronauts) from your cart?"
+        expect(item.remove_prompt_text).to eq(remove_string)
+      end
     end
   end
 end
