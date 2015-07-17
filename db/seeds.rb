@@ -98,9 +98,9 @@ product_limit = Product.all.count
 end
 
 reviews = [
-  { rating: 2, product_id: 3},
-  { rating: 4, product_id: 2},
-  { rating: 5, product_id: 8}
+  { rating: 3, description: "Comfortable", product_id: 3},
+  { rating: 5, description: "Very cute :)", product_id: 1},
+  { rating: 2, description: "Does not block the sun", product_id: 5}
 ]
 
 reviews.each do |review|
