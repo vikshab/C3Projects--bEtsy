@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :redirect_illegal_actions, only: [:cart, :checkout]
 
   def cart
-    session[:order_id] = nil
+    # session[:order_id] = nil
   end
 
   def checkout; end
