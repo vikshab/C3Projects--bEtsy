@@ -47,3 +47,15 @@ footer {
 .review_time {
   font-style: italic;
 }
+
+.jumbotron {
+  background: url(symphony.png) repeat;
+  border-bottom: 5px solid #000;
+}
+
+.jumbotron h1 {
+  font-family: 'Cherry Swash', cursive;
+  color: #FF5454;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px #858585;
+}
