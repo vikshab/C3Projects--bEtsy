@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>C3ProjectsBetsy</title>
+  <title>Tux</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <header class="jumbotron">
+    <h1>Tux</h1>
+    <nav>
+      <ul>
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "All Products", products_path %></li>
+        <li><%= link_to "All Categories", categories_path %></li>
+        <li><%= link_to "All Sellers", sellers_path %></li>
+        <li><%= link_to "Cart", cart_path %></li>
+      </ul>
+    </nav>
+  </header>
 
 <%= yield %>
 

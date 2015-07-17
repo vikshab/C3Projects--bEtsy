@@ -60,7 +60,10 @@ buyer_names = [
   "Ada Lovelace", "Betty McAwesomePants", "Tallis GenericLastName", "Tux"
 ]
 
-20.times do
+Order.create
+Product.create(name: "astronaut", price: 15_000, seller_id: 1, stock: 50)
+
+5.times do
   current_status = order_statuses.sample
 
   if current_status == "pending"
@@ -89,7 +92,7 @@ end
 
 product_limit = Product.all.count
 
-200.times do
+20.times do
   OrderItem.create(
     product_id: (1..product_limit).to_a.sample,
     order_id: (1..20).to_a.sample,

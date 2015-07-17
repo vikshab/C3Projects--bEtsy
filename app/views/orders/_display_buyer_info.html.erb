@@ -1,4 +1,9 @@
-<h1>buyer info goes here</h1>
-<p class="wailing-on-keyboard">
-  lhkjdgkjl sadjkhlad s ffadjklh456kjl hep98h g3p98h w35pui hvw5eps;ihu vesg
-</p>
+<h2>BUYER INFO</h2>
+
+<ul>
+  <li>Name: <%= @order.buyer_name %></li>
+  <li>Email: <%= @order.buyer_email %></li>
+  <li>Address: <%= @order.buyer_address %></li>
+  <li>MasterCard: xxxx-<%= @order.buyer_card_short %></li>
+  <li>Expiration: <%= @order.buyer_card_expiration %></li>
+</ul>

@@ -1,4 +1,6 @@
-<%= form_for @order, url: "./", html: { role: "form", method: :post } do |f| %>
+<h2>PAYMENT INFO</h2>
+
+<%= form_for @order, url: checkout_path, html: { role: "form", method: :patch } do |f| %>
   <div class="form-group">
     <%= f.label :buyer_name %>
     <%= f.text_field :buyer_name, class: "form-control" %>

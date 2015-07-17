@@ -8,25 +8,20 @@ Rails.application.routes.draw do
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
   post '/products/:id/reviews/new', to: 'reviews#create'
 
-  # viewing the checkout form
-  get "/cart/checkout" => "orders#checkout"
-
-  # changing the status from pending to paid
-  post "/cart/checkout" => "orders#verify"
-
-  # displaying the receipt
-  get "/cart/receipt" => "orders#receipt", as: "receipt"
-
-  # viewing the cart
-  get "/cart" => "orders#cart"
+  scope :cart do
+    get "/", to: "orders#cart", as: "cart"
+    get "checkout", to: "orders#checkout"
+    patch "checkout", to: "orders#update"
+    get "receipt", to: "orders#receipt"
+  end
 
   # adding an item to the cart
-  post "/cart" => "cart/order_items#add", as: "add_item" # can also use cart_path
+  post "/products/:id/add", to: "products#add_to_cart", as: "add_item"
 
   # adjusting the quantity of an item in the cart
-  patch "/cart/item/:id/more" => "cart/order_items#more", as: "more_item"
-  patch "/cart/item/:id/less" => "cart/order_items#less", as: "less_item"
+  patch "/cart/item/:id/more" => "order_items#more", as: "more_item"
+  patch "/cart/item/:id/less" => "order_items#less", as: "less_item"
 
   # removing an item from the cart
-  delete "/cart/item/:id" => "cart/order_items#destroy", as: "kill_item"
+  delete "/cart/item/:id" => "order_items#destroy", as: "kill_item"
 end

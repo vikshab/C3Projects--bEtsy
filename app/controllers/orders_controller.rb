@@ -1,53 +1,44 @@
 class OrdersController < ApplicationController
   before_action :find_order
-  before_action :redirect_illegal_actions, only: [:cart, :add, :remove, :checkout]
-
-  def add # to cart
-    # code to add item to the cart
-    # some kind of handling for users trying to circumvent assigned id
-      # eg, checking for pending status & not allowing any changes otherwise
-
-    if session[:order_id] == params[:id]
-      OrderItem.create(add_to_cart_params)
-      # increment cart view
-      # redirect_to product page
-    else # not success
-      # why would it not be successful?
-    end
-  end
-
-  def remove # from cart
-    # must prompt before doing this!
-    id = params[:order_item][:id]
-    @order.order_items.find_by(id: id).destroy
-  end
+  before_action :redirect_illegal_actions, only: [:cart, :checkout]
 
   def cart
-    # code to view items in cart
+    session[:order_id] = nil
   end
 
-  def checkout
-    # code to add buyer info
+  def checkout; end
+
+  def update
+    # add buyer info to order & change status
+    @order.update(checkout_params)
+
+    redirect_to receipt_path
   end
 
   def receipt
-    # code to display finalized order
+    # guard clauses
+    if order_mutable?
+      redirect_to checkout_path
+    elsif (@order.status == "complete") || (@order.status == "cancelled")
+      redirect_to root_path
+    end
+
+    render :receipt
+
+    # will this work? no?
+    reset_session
   end
 
   private
-    def add_to_cart_params
-      # t.integer :product_id
-      # t.integer :order_id
-      # t.integer :quantity_ordered
-      params.permit(order_item: [:product_id, :order_id, :quantity_ordered])[:order_item]
+    def checkout_params
+      order_info = params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
+      order_info[:status] = "paid"
+
+      return order_info
     end
 
     def find_order
-      # note: not using params :id yet! >_>
-      # @order = Order.find_by(id: session[:order_id]) if session[:order_id] == params[:order_id] || session[:order_id] == params[:id]
-      @order = Order.first
-      @order_items = @order.order_items.all
-      @order_items_count = @order_items.count
+      @order = Order.find_by(id: session[:order_id])
     end
 
     def redirect_illegal_actions
@@ -55,6 +46,6 @@ class OrdersController < ApplicationController
     end
 
     def order_mutable?
-      return false unless @order.status == "pending"
+      @order.status == "pending"
     end
 end
