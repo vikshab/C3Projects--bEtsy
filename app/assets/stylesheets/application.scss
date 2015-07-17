@@ -48,6 +48,7 @@ footer {
 }
 
 .jumbotron {
+  width: 100%;
   background: url(symphony.png) repeat;
   border-bottom: 3px solid #B4B4B4;
 }
@@ -57,8 +58,4 @@ footer {
   color: #FF5454;
   font-weight: bold;
   text-shadow: 2px 2px 2px #858585;
-}
-
-body {
-  margin-top: 75px;
 }
