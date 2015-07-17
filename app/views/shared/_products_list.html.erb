@@ -1,0 +1,9 @@
+<% products.each do |product| %>
+  <div>
+    <ul>
+      <li><%= link_to "#{product.name}", product_path(product) %></li>
+      <li><%= image_tag "#{product.photo_url}" %></li>
+      <li><%= display_dollars(product.price) %></li>
+    </ul>
+  </div>
+<% end %>

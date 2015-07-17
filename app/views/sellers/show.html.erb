@@ -1,21 +1,3 @@
 <h1> <%= @seller.username %> Information</h1>
-<table class="table table-hover">
-  <tr>
-    <th>
-      Product
-    </th>
-    <th>
-      Stock
-    </th>
-  </tr>
-  <% @seller.products.each do |product| %>
-    <tr>
-      <td>
-        <%= link_to "#{product.name}", product_path(id: product.id) %>
-      </td>
-      <td>
-        <%= product.stock %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+
+<%= render 'shared/products_list', { products: @seller.products } %>
