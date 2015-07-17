@@ -20,7 +20,7 @@ CSV.foreach("db/products.csv", headers: true) do |row|
  end
 
 category_products = { 1 => [1, 2, 4, 5, 9, 12], 2 => [1, 3, 12 ], 3 => [7, 13, 14, 15, 16, 17, 18], 4 => [6, 7, 8, 10, 11, 15, 18, 14] }
-# fix this to be a hash of key/value pairs
+# fixed this to be a hash of key/value pairs
 
 category_products.each do |k, v|
   category = Category.find(k)
