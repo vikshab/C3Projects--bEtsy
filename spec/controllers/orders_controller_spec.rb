@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe OrdersController, type: :controller do
   describe "GET cart" do
     before :each do
-      @order = Order.create(status: "pending")
-
       @order_items_count = number_of_cart_items_wanted = 10
       number_of_cart_items_wanted.times do
         OrderItem.create(order_id: 1, product_id: (1..10).to_a.sample, quantity_ordered: 5)
@@ -27,7 +25,7 @@ RSpec.describe OrdersController, type: :controller do
     it "assigns @order" do
       get :cart
 
-      expect(assigns(:order)).to eq(@order)
+      expect(assigns(:order)).to eq(Order.find(session[:order_id]))
     end
 
     it "assigns @order_items" do
@@ -38,9 +36,7 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     it "redirects to receipt page if order status is not pending" do
-      @order.update(status: "paid")
-      @order.save
-      @order.reload
+      Order.find(session[:order_id]).update(status: "paid").save.reload
 
       get :cart
 
@@ -51,8 +47,6 @@ RSpec.describe OrdersController, type: :controller do
 
   context "GET checkout" do
     before :each do
-      @order = Order.create(status: "pending")
-
       @order_items_count = number_of_cart_items_wanted = 10
       number_of_cart_items_wanted.times do
         OrderItem.create(order_id: 1, product_id: (1..10).to_a.sample, quantity_ordered: 5)
@@ -75,7 +69,7 @@ RSpec.describe OrdersController, type: :controller do
     it "assigns @order" do
       get :checkout
 
-      expect(assigns(:order)).to eq(@order)
+      expect(assigns(:order)).to eq(Order.find(session[:order_id]))
     end
 
     it "assigns @order_items" do
@@ -86,9 +80,9 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     it "redirects to receipt page if order status is not pending" do
-      @order.update(status: "paid")
-      @order.save
-      @order.reload
+      Order.find(session[:order_id]).update(status: "paid")
+      Order.find(session[:order_id]).save
+      Order.find(session[:order_id]).reload
 
       get :checkout
 
@@ -99,8 +93,6 @@ RSpec.describe OrdersController, type: :controller do
 
   describe "GET receipt" do
     before :each do
-      @order = Order.create(status: "paid")
-
       @order_items_count = number_of_cart_items_wanted = 10
       number_of_cart_items_wanted.times do
         OrderItem.create(order_id: 1, product_id: (1..10).to_a.sample, quantity_ordered: 5)
@@ -108,9 +100,11 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     it "successfully grabs the #receipt action" do
+      get :checkout
+      Order.find(session[:order_id]).update(status: "paid").save.reload
       get :receipt
 
-      expect(response).to be_success
+      # expect(response).to be_success
       expect(response).to have_http_status(200)
     end
 
@@ -123,7 +117,7 @@ RSpec.describe OrdersController, type: :controller do
     it "assigns @order" do
       get :receipt
 
-      expect(assigns(:order)).to eq(@order)
+      expect(assigns(:order)).to eq(Order.find(session[:order_id]))
     end
 
     it "assigns @order_items" do
@@ -135,9 +129,9 @@ RSpec.describe OrdersController, type: :controller do
 
     context "redirecting to other places based on order status" do
       it "redirects to checkout page when order status is pending" do
-        @order.update(status: "pending")
-        @order.save
-        @order.reload
+        Order.find(session[:order_id]).update(status: "pending")
+        Order.find(session[:order_id]).save
+        Order.find(session[:order_id]).reload
 
         get :receipt
 
@@ -146,9 +140,9 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it "redirects to root when order status is complete" do
-        @order.update(status: "cancelled")
-        @order.save
-        @order.reload
+        Order.find(session[:order_id]).update(status: "cancelled")
+        Order.find(session[:order_id]).save
+        Order.find(session[:order_id]).reload
 
         get :receipt
 
@@ -157,9 +151,9 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it "redirects to root when order status is cancelled" do
-        @order.update(status: "complete")
-        @order.save
-        @order.reload
+        Order.find(session[:order_id]).update(status: "complete")
+        Order.find(session[:order_id]).save
+        Order.find(session[:order_id]).reload
 
         get :receipt
 
