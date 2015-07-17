@@ -1,6 +1,7 @@
 <h1>Add a Review</h1>
 
 <%= form_for @review, url: "/products/#{@product.id}/reviews/new" do |f| %>
+<fieldset>
   <%= f.label :rating %>
   <%= f.text_field :rating %>
 
@@ -8,6 +9,6 @@
   <%= f.text_area :description, in: 1..5, step: 1 %>
 
   <%= f.hidden_field :product_id, :value => @product.id %>
-
+</fieldset>
   <%= f.submit %>
 <% end %>
