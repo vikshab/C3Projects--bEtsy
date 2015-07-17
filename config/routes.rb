@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   scope :cart do
     get "/", to: "orders#cart", as: "cart"
     get "checkout", to: "orders#checkout"
-    post "checkout", to: "orders#verify"
+    patch "checkout", to: "orders#update"
     get "receipt", to: "orders#receipt"
   end
 

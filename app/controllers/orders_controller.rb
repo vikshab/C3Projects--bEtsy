@@ -1,23 +1,41 @@
 class OrdersController < ApplicationController
   before_action :find_order
-  before_action :redirect_illegal_actions, only: [:cart, :add, :remove, :checkout]
+  before_action :redirect_illegal_actions, only: [:cart, :checkout]
 
   def cart; end
 
   def checkout; end
 
+  def update
+    # add buyer info to order & change status
+    @order.update(checkout_params)
+
+    redirect_to receipt_path
+  end
+
   def receipt
     # guard clauses
-    redirect_to checkout_path if order_mutable?
-    redirect_to root_path if (@order.status == "complete") || (@order.status == "cancelled")
+    if order_mutable?
+      redirect_to checkout_path
+    elsif (@order.status == "complete") || (@order.status == "cancelled")
+      redirect_to root_path
+    end
 
-    # code to display finalized order
+    render :receipt
+
+    # will this work?
+    session[:order_id] = nil
   end
 
   private
+    def checkout_params
+      order_info = params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
+      order_info[:status] = "paid"
+
+      return order_info
+    end
+
     def find_order
-      # note: not using params :id yet! >_>
-      # @order = Order.find_by(id: session[:order_id]) if session[:order_id] == params[:order_id] || session[:order_id] == params[:id]
       @order = Order.find_by(id: session[:order_id])
       @order_items = @order.order_items
       @order_items_count = @order_items.count
