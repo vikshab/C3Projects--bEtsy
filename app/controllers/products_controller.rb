@@ -6,7 +6,8 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @reviews = Review.all
+    @reviews = Product.find(params[:id]).reviews
+    @average_rating = Product.average_rating(params[:id])
   end
 
   private

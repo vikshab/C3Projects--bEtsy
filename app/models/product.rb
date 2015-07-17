@@ -10,4 +10,19 @@ class Product < ActiveRecord::Base
   validates :seller_id, presence: true, numericality: { only_integer: true }
   validates :stock, presence: true, numericality: { only_integer: true }
 
+  def self.average_rating(id)
+    product = Product.find(id)
+
+    rating_total = 0
+    total_num_reviews = product.reviews.count
+
+    return 0 if total_num_reviews == 0
+
+    product.reviews.each do |review|
+      rating_total += review[:rating]
+    end
+
+    average_rating = rating_total/total_num_reviews
+    return average_rating
+  end
 end
