@@ -54,33 +54,33 @@ categories.each do |category|
   Category.create(category)
 end
 
-# order_statuses = ["pending", "paid", "completed", "cancelled"]
-# buyer_names = [
-#   "Johnathan NoLastName", "Satan McHandsomeDevil", "Dr. Potato Head",
-#   "Ada Lovelace", "Betty McAwesomePants", "Tallis GenericLastName", "Tux"
-# ]
-#
-# Order.create
-# Product.create(name: "astronaut", price: 15_000, seller_id: 1, stock: 50)
-#
-# 5.times do
-#   current_status = order_statuses.sample
-#
-#   if current_status == "pending"
-#     Order.create(status: current_status)
-#   else
-#     current_name = buyer_names.sample
-#
-#     Order.create(
-#       status: current_status,
-#       buyer_name: buyer_names.sample,
-#       buyer_email: current_name.split(" ").sample + "@email.net",
-#       buyer_address: "1234 fake st",
-#       buyer_card_short: "4567",
-#       buyer_card_expiration: Date.parse("June 5 2016")
-#     )
-#   end
-# end
+order_statuses = ["pending", "paid", "completed", "cancelled"]
+buyer_names = [
+  "Johnathan NoLastName", "Satan McHandsomeDevil", "Dr. Potato Head",
+  "Ada Lovelace", "Betty McAwesomePants", "Tallis GenericLastName", "Tux"
+]
+
+Order.create
+Product.create(name: "astronaut", price: 15_000, seller_id: 1, stock: 50)
+
+5.times do
+  current_status = order_statuses.sample
+
+  if current_status == "pending"
+    Order.create(status: current_status)
+  else
+    current_name = buyer_names.sample
+
+    Order.create(
+      status: current_status,
+      buyer_name: buyer_names.sample,
+      buyer_email: current_name.split(" ").sample + "@email.net",
+      buyer_address: "1234 fake st",
+      buyer_card_short: "4567",
+      buyer_card_expiration: Date.parse("June 5 2016")
+    )
+  end
+end
 
 all_categories = Category.all
 all_products = Product.all
@@ -92,10 +92,10 @@ end
 
 product_limit = Product.all.count
 
-# 20.times do
-#   OrderItem.create(
-#     product_id: (1..product_limit).to_a.sample,
-#     order_id: (1..20).to_a.sample,
-#     quantity_ordered: (1..5).to_a.sample
-#   )
-# end
+20.times do
+  OrderItem.create(
+    product_id: (1..product_limit).to_a.sample,
+    order_id: (1..20).to_a.sample,
+    quantity_ordered: (1..5).to_a.sample
+  )
+end

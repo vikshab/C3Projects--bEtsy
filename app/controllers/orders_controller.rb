@@ -2,7 +2,9 @@ class OrdersController < ApplicationController
   before_action :find_order
   before_action :redirect_illegal_actions, only: [:cart, :checkout]
 
-  def cart; end
+  def cart
+    session[:order_id] = nil
+  end
 
   def checkout; end
 
@@ -23,8 +25,8 @@ class OrdersController < ApplicationController
 
     render :receipt
 
-    # will this work?
-    session[:order_id] = nil
+    # will this work? no?
+    reset_session
   end
 
   private
@@ -37,8 +39,6 @@ class OrdersController < ApplicationController
 
     def find_order
       @order = Order.find_by(id: session[:order_id])
-      @order_items = @order.order_items
-      @order_items_count = @order_items.count
     end
 
     def redirect_illegal_actions
