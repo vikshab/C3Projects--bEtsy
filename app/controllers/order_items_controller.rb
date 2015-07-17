@@ -10,17 +10,21 @@ class OrderItemsController < ApplicationController
   end
 
   def more
-    max_limit = 0
+    stock = @item.product.stock
+    current_quantity = @item.quantity_ordered
 
-    # Orders.all.select do |order|
-    #   order.status == "pending" && order.order_items.select do |item|
-    #     # item.product.id ==
-    #   end
-    # end
+    if current_quantity < stock
+      orders = Order.pending
+      matching_items = orders.select do |order|
+        order.order_items.by_product(@item.product_id) > 0
+      end
 
-    # @item.increment!(:quantity_ordered, 1) unless @item.product.stock == @item.quantity_ordered
+      also_pending = matching_items.flatten.reduce(0) { |sum, item| sum += item.quantity_ordered }
 
-    @item.increment!(:quantity_ordered, 1)
+      stock -= also_pending
+
+      @item.increment!(:quantity_ordered, 1) if current_quantity < stock
+    end
 
     redirect_to cart_path
   end
