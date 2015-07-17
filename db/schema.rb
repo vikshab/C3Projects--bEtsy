@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716205159) do
+ActiveRecord::Schema.define(version: 20150717012326) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "categories_products", id: false, force: :cascade do |t|
+    t.integer "category_id"
+    t.integer "product_id"
+  end
+
+  add_index "categories_products", ["category_id"], name: "index_categories_products_on_category_id"
+  add_index "categories_products", ["product_id"], name: "index_categories_products_on_product_id"
 
   create_table "order_items", force: :cascade do |t|
     t.integer  "quantity"
@@ -50,14 +58,12 @@ ActiveRecord::Schema.define(version: 20150716205159) do
     t.text     "desc"
     t.integer  "stock"
     t.string   "photo_url"
-    t.integer  "category_id"
     t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "retired",     default: "no"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "retired",    default: "no"
   end
 
-  add_index "products", ["category_id"], name: "index_products_on_category_id"
   add_index "products", ["user_id"], name: "index_products_on_user_id"
 
   create_table "reviews", force: :cascade do |t|
