@@ -15,6 +15,7 @@ class OrderItemsController < ApplicationController
 
     if current_quantity < stock
       orders = Order.pending
+
       orders_with_matching_items = orders.select do |order|
         order.order_items.by_product(1).count > 0
       end
