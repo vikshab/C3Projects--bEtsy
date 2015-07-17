@@ -11,17 +11,27 @@ class OrderItem < ActiveRecord::Base
 
   # scopes
   scope :by_product, ->(prod_id) { where(product_id: prod_id) }
+  # this scope is unecessary, because product.order_items can be used.
+  # order_items_controller's #more will need to be rewritten to use the right syntax & to not reinvent the wheel.
 
+  # this should probably be in helpers/order_items_helpers
+  # if this is only going to be used in the cart, maybe just use it inline inside the view
   def remove_prompt_text
-    "Are you sure you want to remove this item (#{ quantity_ordered } #{ display_name }) from your cart?"
+    "Are you sure you want to remove this item (#{ quantity_ordered } #{ product.name }) from your cart?"
   end
+
+  # in the pull request:
+  # two sentences about if we're doing anything over the weekend
+  # and what our basic idea for monday is going to be
+
+  # maybe talk about buyers logging in w/ Jeremy?
 
   def display_name
-    name = product.name.capitalize
-    quantity_ordered == 1 ? name.singularize : name.pluralize
+    product.name
   end
 
-  def price
+  # note that we to talk about this more
+  def price # cost / item_cost
     quantity_ordered * product.price
   end
 end
