@@ -17,7 +17,7 @@ RSpec.describe Review, type: :model do
       end
     end
 
-    ["hahaha", 10.0, 95].each do |invalid_rating|
+    ["hahaha", 10.0, 3.5, 95].each do |invalid_rating|
       it "doesn't validate #{invalid_rating} as a rating" do
         review = Review.new(rating: invalid_rating)
 
