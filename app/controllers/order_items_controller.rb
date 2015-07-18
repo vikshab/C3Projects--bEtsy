@@ -53,7 +53,7 @@ class OrderItemsController < ApplicationController
 
   def less # of a particular item in a cart; decreases the quantity of an item in the cart
     if @item.quantity_ordered == 1
-      flash[:error] = "You cannot decrease the quantity of #{ @item.display_name } any further. You must remove it from your cart."
+      flash[:error] = "You cannot decrease the quantity of #{ @item.product.name } any further. You must remove it from your cart."
     end
 
     @item.decrement!(:quantity_ordered, 1) unless @item.quantity_ordered == 1
@@ -77,6 +77,6 @@ class OrderItemsController < ApplicationController
     end
 
     def flash_more_error # we should talk about whether or not this error message should be displayed & what it should truly say in production
-      flash[:error] = "You cannot increase the quantity of #{ @item.display_name } any further, because there are only #{ @item.quantity_ordered } in stock."
+      flash[:error] = "You cannot increase the quantity of #{ @item.product.name } any further, because there are only #{ @item.quantity_ordered } in stock."
     end
 end
