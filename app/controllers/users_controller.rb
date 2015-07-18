@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, except [:new, :create]
+  before_action :require_login, except: [:new, :create]
   # def index
   #   @users = User.all
   # end
@@ -33,6 +33,5 @@ class UsersController < ApplicationController
         flash[:error] = "You must be logged in to access this section"
      redirect_to login_path
     end
-
-
+  end
 end
