@@ -2,6 +2,16 @@ class OrdersController < ApplicationController
   before_action :find_order, only: [:cart, :checkout, :update, :receipt]
   before_action :check_access, only: [:cart, :checkout, :receipt]
 
+  def add_to_cart
+    product = Product.find(params[:id])
+    # this should perhaps be a method in the order model
+    unless Order.find_by(id: session[:order_id]).already_has_product?(product.id)
+      OrderItem.create(product_id: product.id, order_id: session[:order_id], quantity_ordered: 1)
+      # session[:cart][@product.id.to_sym] = 1
+    end
+
+    redirect_to product_path(product) # this should redirect to product show page
+  end
 
   def cart; end
 
@@ -20,7 +30,7 @@ class OrdersController < ApplicationController
       render :receipt
 
       # will this work? no?
-      reset_session
+      reset_session # it does!
     else
       # redirect to somewhere more logical
       redirect_to root_path
