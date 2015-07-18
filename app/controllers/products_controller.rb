@@ -5,9 +5,10 @@ class ProductsController < ApplicationController
     # this should perhaps be a method in the order model
     unless Order.find_by(id: session[:order_id]).already_has_product?(@product.id)
       OrderItem.create(product_id: @product.id, order_id: session[:order_id], quantity_ordered: 1)
+      # session[:cart][@product.id.to_sym] = 1
     end
 
-    redirect_to cart_path # this should redirect to product show page
+    redirect_to product_path(@product) # this should redirect to product show page
   end
 
   def index
