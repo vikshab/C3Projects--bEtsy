@@ -10,8 +10,8 @@ class Product < ActiveRecord::Base
   validates :seller_id, presence: true, numericality: { only_integer: true }
   validates :stock, presence: true, numericality: { only_integer: true }
 
-  def self.average_rating(id)
-    product = Product.find(id)
+  def self.average_rating(id) # why is this a class method instead of an instance method?
+    product = Product.find(id) # we could call this on the product in question: product.average_rating
 
     rating_total = 0
     total_num_reviews = product.reviews.count
@@ -24,5 +24,13 @@ class Product < ActiveRecord::Base
 
     average_rating = rating_total/total_num_reviews
     return average_rating
+  end
+
+  def quantity_already_pending
+    items_also_pending = order_items.select { |item| item.order.status == "pending" }
+    quantity_pending_array = items_also_pending.map { |item| item.quantity_ordered }
+    quantity_pending = quantity_pending_array.reduce(0) { |sum, current_quantity| sum += current_quantity }
+
+    return quantity_pending
   end
 end
