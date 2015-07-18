@@ -3,10 +3,7 @@ class OrderItemsController < ApplicationController
 
   # more increases the quantity of an item in the cart
   def more # OrderItem.more <-- gimme more of this OrderItem
-    quantity_tied_up_in_pending_transactions = @item.product.quantity_already_pending
-    current_available_stock = @item.product.stock
-
-    if (quantity_tied_up_in_pending_transactions + 1) <= current_available_stock
+    if @item.product.has_available_stock?
       @item.increment!(:quantity_ordered, 1)
     else
       # !W we should talk about whether this error message should be shown
