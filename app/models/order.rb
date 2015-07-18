@@ -19,9 +19,9 @@ class Order < ActiveRecord::Base
   # scopes
   scope :pending, -> { where(status: "pending") } # rewrite to include product or remove this.
 
-  def price # chg to total_cost
+  def order_price # chg to total_cost
     # come back and talk about the method names.
-    array_of_totals = order_items.map { |item| item.price }
+    array_of_totals = order_items.map { |item| item.item_price }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
   end
 

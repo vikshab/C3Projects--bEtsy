@@ -14,7 +14,7 @@
         <%= link_to "˄", more_item_path(item), method: :patch %>
       </td>
       <td><%= link_to item.display_name, product_path(item.product) %></td>
-      <td>$<%= item.price / 100.0 %></td>
+      <td>$<%= item.item_price / 100.0 %></td>
       <td>
         <%= link_to "x", kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } %>
       </td>
@@ -26,7 +26,7 @@
       Total:
     </th>
     <th colspan="1">
-      $<%= @order.price / 100.0 %>
+      $<%= @order.order_price / 100.0 %>
     </th>
   </tr>
 </table>

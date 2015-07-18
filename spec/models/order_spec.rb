@@ -73,25 +73,10 @@ RSpec.describe Order, type: :model do
       expect(Order.count).to eq(20)
       expect(Order.pending.count).to eq(5)
     end
-
-    it "orders can be grabbed based on paid status" do
-      expect(Order.count).to eq(20)
-      expect(Order.paid.count).to eq(5)
-    end
-
-    it "orders can be grabbed based on complete status" do
-      expect(Order.count).to eq(20)
-      expect(Order.complete.count).to eq(5)
-    end
-
-    it "orders can be grabbed based on cancelled status" do
-      expect(Order.count).to eq(20)
-      expect(Order.cancelled.count).to eq(5)
-    end
   end
 
   describe "methods" do
-    context "price" do
+    context "order_price" do
       before :each do
         @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
         @order = Order.create
@@ -99,25 +84,23 @@ RSpec.describe Order, type: :model do
       end
 
       it "has a price based on its order items" do
-        expect(@order.price).to eq(@item.price)
-        expect(@order.price).to eq(@item.quantity_ordered * @product.price)
+        expect(@order.order_price).to eq(@item.item_price)
+        expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
 
         item2 = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 25)
         @order.reload
-        expect(@order.price).to eq(@item.price + item2.price)
-        expect(@order.price).to eq((@item.quantity_ordered * @product.price) + (item2.quantity_ordered * @product.price))
+        expect(@order.order_price).to eq(@item.item_price + item2.item_price)
+        expect(@order.order_price).to eq((@item.quantity_ordered * @product.price) + (item2.quantity_ordered * @product.price))
       end
 
       it "and only its order items" do
-        expect(@order.price).to eq(@item.price)
-        expect(@order.price).to eq(@item.quantity_ordered * @product.price)
+        expect(@order.order_price).to eq(@item.item_price)
+        expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
 
         item2 = OrderItem.create(product_id: 1, order_id: 2, quantity_ordered: 25)
-        expect(@order.price).to eq(@item.price)
-        expect(@order.price).to eq(@item.quantity_ordered * @product.price)
+        expect(@order.order_price).to eq(@item.item_price)
+        expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
       end
-      # array_of_totals = order_items.map { |item| item.cost }
-      # total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
     end
   end
 end
