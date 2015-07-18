@@ -8,11 +8,10 @@ Rails.application.routes.draw do
   resources :products do
     resources :reviews
   end
-  resources :users do
-    member do
-      resources :products, only: [:new]
+  resources :users, path: "merchants" do
+      resources :products, except: [:show, :index]
     end
-  end
+
   resources :orders
 
   get    "/login", to: "sessions#new"
