@@ -8,6 +8,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it "renders the #show view" do
+      @user.session.create
       get :show, id: @user
       expect(response).to render_template("show")
     end
