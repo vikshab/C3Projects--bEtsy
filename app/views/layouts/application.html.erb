@@ -7,20 +7,34 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header class="jumbotron">
+  <header class="jumbotron" id="top">
     <h1>Tux</h1>
-    <nav>
-      <ul>
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "All Products", products_path %></li>
-        <li><%= link_to "All Categories", categories_path %></li>
-        <li><%= link_to "All Sellers", sellers_path %></li>
-        <li><%= link_to "Cart", cart_path %></li>
-      </ul>
+    <nav class="navbar"> -
+      <%= link_to "Home", root_path %> -
+      <%= link_to "All Products", products_path %> -
+      <%= link_to "All Categories", categories_path %> -
+      <%= link_to "All Sellers", sellers_path %> -
+      <% cart_display_text = "Cart" %>
+      <% if @order.order_items && @order.order_items.count > 0 %>
+        <% cart_display_text += " (#{ @order.order_items.count })" %>
+      <% end %>
+      <%= link_to cart_display_text, cart_path %> -
     </nav>
   </header>
 
-<%= yield %>
+  <main class="container-fluid">
+    <%= yield %>
+  </main>
 
+  <footer>
+    <nav class="navbar"> -
+      <%= link_to "Top", "#top" %> -
+      <%= link_to "Home", root_path %> -
+      <%= link_to "All Products", products_path %> -
+      <%= link_to "All Categories", categories_path %> -
+      <%= link_to "All Sellers", sellers_path %> -
+      <%= link_to cart_display_text, cart_path %> -
+    </nav>
+  </footer>
 </body>
 </html>

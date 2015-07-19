@@ -4,8 +4,8 @@
   <h4 class="alert alert-warning"><%= flash[:error] %></h4>
 <% end %>
 
-<% if @order.order_items %>
-  <%= render "display_order_items" %>
+<% if @order.order_items && @order.order_items.count > 0 %>
+  <%= render "display_mutable_order_items" %>
   <%= link_to "Checkout!", checkout_path, class: "btn btn-primary" %>
 <% else %>
   <h4 class="alert alert-info">You don't have any items in your cart.</h4>
