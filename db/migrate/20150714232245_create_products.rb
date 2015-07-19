@@ -6,7 +6,6 @@ class CreateProducts < ActiveRecord::Migration
       t.text :desc
       t.integer :stock
       t.string :photo_url
-      t.references :category, index: true, foreign_key: true
       t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
