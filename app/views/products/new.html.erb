@@ -1,37 +1,39 @@
-<%= form_for @product, html: {class: "form"}, url: products_path do |f| %>
-<h2><center>New Product</h2>
-<div class="jumbotron">
-  <div class = "form-group">
-    <div class="row">
-      <div class="col-md-4">
-        <h3>Describe your product and set the price</h3>
-        <%= f.label :name %>
-        <%= f.text_field :name, class: "form-control" %>
-
-        <%= f.label :price %>
-        <%= f.text_field :price, class: "form-control" %>
-
-        <%= f.label :description %>
-        <%= f.text_field :desc, class: "form-control" %>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Add quantity and submit a photo</h3>
-        <%= f.label :stock %>
-        <%= f.text_field :stock, class: "form-control" %>
-
-        <%= f.label :photo_url %>
-        <%= f.text_field :photo_url, class: "form-control" %>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Choose seller and category</h3>
-
-        <%= f.label :user_id %>
-        <%= f.text_field :user_id, class: "form-control"%>
-      </div>
+  <div class = "row no-jumbo form-header">
+    <div class="col-sm-4 col-sm-offset-5">
+      <h2>Add a Product</h2>
     </div>
   </div>
+  <div class="row form-group">
+    <%= form_for @product, html: {class: "form"}, url: products_path do |f| %>
+  <div class="col-sm-4 col-sm-offset-1">
+    <h3>Describe your product</h3>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+
+
+    <%= f.label :description %>
+    <%= f.text_area :desc, class: "form-control" %>
+  </div>
+
+  <div class="col-sm-3">
+    <h3>Add product details</h3>
+    <%= f.label :stock %>
+    <%= f.number_field :stock, class: "form-control" %>
+    <%= f.label :price %>
+    <%= f.number_field :price, class: "form-control" %>
+
+    <%= f.label :photo_url %>
+    <%= f.text_field :photo_url, class: "form-control" %>
+  </div>
+
+  <div class="col-sm-4">
+    <h3>Choose product categories</h3>
+
+
+  </div>
 </div>
-    <%= f.submit "Save", class: "btn btn-default" %>
-<% end %>
+  <div class="col-sm-4 col-sm-offset-1">
+    <%= f.submit "Add Product", class: "btn btn-default" %>
+    <% end %>
+  </div>
+</div>
