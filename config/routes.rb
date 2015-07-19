@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :products do
     resources :reviews
   end
+
+  resources :categories
+
   resources :users do
     member do
       resources :products, only: [:new]
