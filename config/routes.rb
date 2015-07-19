@@ -8,10 +8,17 @@ Rails.application.routes.draw do
   resources :products do
     resources :reviews
   end
+
   patch 'products/retire/:id' => 'products#retire', as: "retire"
 
   resources :users, path: "merchants" do
       resources :products, except: [:show, :index]
+
+  resources :categories
+
+  resources :users do
+    member do
+      resources :products, only: [:new]
     end
 
   resources :orders
