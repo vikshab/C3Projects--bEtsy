@@ -10,15 +10,15 @@
     <table class="table table-hover">
   <tr>
     <th>Product Name</th>
-    <th>Edit Product</th>
-    <th>Retire Product</th>
+    <th>Edit</th>
+    <th>Retire</th>
   </tr>
 
   <% @products.each do |product| %>
   <tr>
     <td> <%= link_to "#{product.name}", product_path(product) %></td>
     <td> <%= link_to "Edit", edit_product_path(product), class: "btn btn-default" %> </td>
-    <td> <%= button_to "Retire", retire_path(product), method: "patch", class: "btn btn-primary" %> </td>
+    <td> <%= button_to retire_helper(product), retire_path(product), method: "patch", class: "btn btn-primary" %> </td>
   </tr>
   <% end %>
 </table>
