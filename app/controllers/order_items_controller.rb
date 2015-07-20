@@ -1,11 +1,11 @@
+require 'pry'
 class OrderItemsController < ApplicationController
 
   def create
     @order = current_order
-    @order_item = @order.order_items.new(order_item_params)
-    @order.save
+    @order_item = @order.order_items.create(order_item_params)
     session[:order_id] = @order.id
-    
+
     redirect_to product_path(@order_item.product_id)
   end
 
