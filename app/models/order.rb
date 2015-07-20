@@ -6,7 +6,6 @@ class Order < ActiveRecord::Base
   # orders inactive for whatever time we set.
   # (20-30 minutes? a day? anything inactive for over 2hrs, but only run task once a day?)
   has_many :products, through: :order_items
-  has_many :sellers, through: :products
 
 
   # validations helper regex
