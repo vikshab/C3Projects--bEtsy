@@ -6,9 +6,9 @@
       <div class="thumbnail">
         <%= image_tag(product.photo_url, class: "img-responsive product-thumb") %>
         <div class="caption">
-          <h4 class="pull-right"> <%= product.price %></h4>
+          <h4 class="pull-right"> <%= number_to_currency(product.price) %></h4>
           <h4><a href="#"><%= product.name %></a></h4>
-          <p>See more about this product.</p>
+          <p><%= link_to("See more about the product", product_path(product.id)) %></p>
         </div>
         <div class="ratings">
           <p class="pull-right"><%= product.reviews.count %> Reviews</p>
