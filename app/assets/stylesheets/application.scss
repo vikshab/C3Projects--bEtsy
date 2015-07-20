@@ -33,16 +33,12 @@ $jumbo_border: #B4B4B4;
   font-size: 1.4em;
  }
 
-.container {
+/*.container {
   margin-top: 10%;
-}
+}*/
 
-.jumbotron {
-  margin-top: 55px;
-}
-
-.no-jumbo {
-  margin-top: 55px;
+body { 
+  padding-top: 65px; 
 }
 
 footer {
@@ -61,6 +57,7 @@ footer {
 
 .jumbotron {
   width: 100%;
+  margin-top: -15px;
   background: url(symphony.png) repeat;
   border-bottom: 3px solid $jumbo_border;
 }
