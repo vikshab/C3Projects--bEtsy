@@ -7,5 +7,4 @@ class ApplicationController < ActionController::Base
   def find_categories
       @categories = Category.all
   end
-
 end
