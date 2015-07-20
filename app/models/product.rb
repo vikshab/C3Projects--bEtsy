@@ -20,7 +20,6 @@ class Product < ActiveRecord::Base
   #   @avg_ratings = { product.id => (Review::avg_rating(product.id)) }
   # end
 
-
   def retire_toggle!
     self.retired ? self.retired = false : self.retired = true
   end
