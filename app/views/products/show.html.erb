@@ -21,7 +21,7 @@
     <td><%= link_to "Delete", product_path(@product.id), method: "delete" %></td>
 </table>
 <div class="row">
-<%= form_for @order_item, remote: true do |f| %>
+<%= form_for @order_item do |f| %>
  <h4 class="text-right">Unit Price: <span style="color: green"><%= number_to_currency @product.price %></span></h4>
    <div class="input-group">
      <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
