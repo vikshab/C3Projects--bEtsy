@@ -18,10 +18,12 @@
     <td><%= image_tag("#{@product.photo_url}") %></td>
   </table>
 
-<div id="reviews">
-  <h3><%= @product.reviews.count %> Reviews</h3>
-  <%= render @product.reviews %>
+  <div id="reviews">
+    <h3><%= @product.reviews.count %> Reviews</h3>
+    <%= render @product.reviews %>
 
-  <h3>Add a review:</h3>
-  <%= render "reviews/form" %>
-</div>
+    <% if !session[:user_id] %>
+      <h3>Add a review:</h3>
+      <%= render "reviews/form" %>
+    <% end %>
+  </div>
