@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :products, only: [:new]
   end
 
-  resources :categories
+  get "/categories/:category_name" => "categories#show", as: "category"
 
   resources :users do
     member do

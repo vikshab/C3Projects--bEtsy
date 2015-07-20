@@ -15,7 +15,7 @@
 
             <li class="dropdown-header">Categories</li>
             <% @categories.each do |category|  %>
-              <li><%= link_to "#{category.name.capitalize}", "#{category_path(category.id)}" %></li>
+              <li><%= link_to "#{category.name.capitalize}", "#{category_path(category.name)}" %></li>
             <% end %>
             <li role="separator" class="divider"></li>
 
@@ -39,6 +39,7 @@
           <li><%= link_to "Sign Up", new_user_path, class: "navbar-link" %></li>
         <% else %>
           <li><%= button_to "Logout", logout_path, method: :delete, class: "btn btn-default navbar-btn" %></li>
+          <li><%= link_to "My Home", user_path(session[:user_id]), class: "btn btn-default navbar-btn" %> </li>
         <% end %>
         <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-shopping-cart cart" aria-hidden="true"></span></a></li>
         <li class="navbar-text"><%= "#{current_order.order_items.size}" %></li>
