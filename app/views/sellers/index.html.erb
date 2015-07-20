@@ -7,7 +7,7 @@
         Seller
       </th>
       <th>
-        Total number of products in stock
+        Number of Products
       </th>
     </tr>
     <% @sellers.each do |seller| %>
@@ -16,7 +16,7 @@
           <%= link_to "#{seller.username}", seller_path(id: seller.id) %>
         </td>
         <td>
-          <%= @num_products_for_sellers[seller.id] %>
+          <%= seller.products.count %>
         </td>
       </tr>
     <% end %>
