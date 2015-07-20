@@ -11,11 +11,16 @@ Rails.application.routes.draw do
   patch 'products/retire/:id' => 'products#retire', as: "retire"
 
   resources :users, path: "merchants" do
-      resources :products, except: [:show, :index]
+      resources :products, only: [:new]
     end
 
   resources :orders
 
+  # RoR paths
+  resources :cart, only: [:show]
+  resources :order_items, only: [:create, :update, :destroy]
+
+  # sessions paths
   get    "/login", to: "sessions#new"
   post   "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
