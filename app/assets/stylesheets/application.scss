@@ -16,6 +16,12 @@
  @import "bootstrap";
  @import url(http://fonts.googleapis.com/css?family=Cherry+Swash:400,700);
 
+$jumbo_color: #FF5454; /* red orange */
+$jumbo_shadow: #858585; /* darker grey */
+$border: #B4B4B4; /* dark grey */
+
+/* Navbar ------------------------------------------------------------------ */
+
  .navbar-brand {
   font-family: 'Cherry Swash', cursive;
   font-size: 1.8em;
@@ -29,19 +35,36 @@
   font-size: 1.4em;
  }
 
-.jumbotron {
-  margin-top: 55px;
+/* Sticky footer ----------------------------------------------------------- */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin top by nav height */
+  margin-top: 60px;
+
+  /* Margin bottom by footer height */
+  margin-bottom: 70px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  border-top: 1px solid #E7E7E7;
+  background-color: #F8F8F8;
 }
 
-.no-jumbo {
-  margin-top: 55px;
-}
-
-footer {
-  font-size: 0.8em;
+.container .text-muted {
+  font-size: 0.85em;
+  margin: 16px 0;
   text-align: center;
-  margin: 20px 0;
 }
+
+/* Review ------------------------------------------------------------------- */
 
 .review_rating {
   font-weight: bold;
@@ -51,19 +74,31 @@ footer {
   font-style: italic;
 }
 
+/* Jumbotron ---------------------------------------------------------------- */
+
 .jumbotron {
   width: 100%;
+  margin-top: -15px;
   background: url(symphony.png) repeat;
-  border-bottom: 3px solid #B4B4B4;
+  border-bottom: 3px solid $border;
 }
 
 .jumbotron h1 {
   font-family: 'Cherry Swash', cursive;
-  color: #FF5454;
+  color: $jumbo_color;
   font-weight: bold;
-  text-shadow: 2px 2px 2px #858585;
+  text-shadow: 2px 2px 2px $jumbo_shadow;
 }
+
+/* Forms -------------------------------------------------------------------- */
 
 .form-header h1, h2, h3 {
   font-family: 'Cherry Swash', cursive;
+}
+
+/* Images ------------------------------------------------------------------- */
+
+.product-thumb {
+  max-width: 320px;
+  max-height: 220px;
 }

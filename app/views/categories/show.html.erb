@@ -1,12 +1,8 @@
-<div class="jumbotron">
-  <div class="container">
-    <h1>Welcome to Bitsy</h1>
-    <p>Your home for the itsy bitsy, teeny weeny, itty bitty, small, minuscule, tiny things in life. </p>
-  </div>
-</div>
 <div class="container">
+<h1><%= (@category.name).pluralize(10).capitalize %> </h1>
+  <div class="row">
   <% @products.each do |product| %>
-    <div class="col-xs-4">
+    <div class="col-xs-4 col-lg-4">
       <div class="thumbnail">
         <%= image_tag(product.photo_url, class: "img-responsive product-thumb") %>
         <div class="caption">
@@ -21,4 +17,5 @@
       </div>
     </div>
   <% end %>
+  </div>
 </div>
