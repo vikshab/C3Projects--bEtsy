@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
 
   def find_merchants
     @merchants = User.all
+  end
 
   def current_order
     if session[:order_id]
