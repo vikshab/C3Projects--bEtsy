@@ -1,9 +1,5 @@
 <h1>CART</h1>
 
-<% if flash[:error] %>
-  <h4 class="alert alert-warning"><%= flash[:error] %></h4>
-<% end %>
-
 <% if @order.order_items && @order.order_items.count > 0 %>
   <%= render "display_mutable_order_items" %>
   <%= link_to "Checkout!", checkout_path, class: "btn btn-primary" %>

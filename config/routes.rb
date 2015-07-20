@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   # adding an item to the cart
-  post "/products/:id/add", to: "products#add_to_cart", as: "add_item"
+  post "/products/:id/add", to: "orders#add_to_cart", as: "add_item"
 
   # adjusting the quantity of an item in the cart
   patch "/cart/item/:id/more" => "order_items#more", as: "more_item"

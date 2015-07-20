@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
     unless session[:order_id] && Order.find_by(id: session[:order_id])
       order = Order.create
       session[:order_id] = order.id
+      session[:cart] = []
     end
+
+    @order = Order.find(session[:order_id])
   end
 end

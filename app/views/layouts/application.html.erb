@@ -23,6 +23,10 @@
   </header>
 
   <main class="container-fluid">
+    <% if flash[:error] %>
+      <h4 class="alert alert-warning"><%= flash[:error] %></h4>
+    <% end %>
+    
     <%= yield %>
   </main>
 
