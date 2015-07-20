@@ -1,5 +1,6 @@
 class OrderItem < ActiveRecord::Base
-  before_save :does_product_have_stock?
+  before_save :product_has_stock?
+  before_create :product_absent_from_order? # we want false if the product is present
 
   # DB relationships
   belongs_to :order
@@ -10,8 +11,6 @@ class OrderItem < ActiveRecord::Base
   validates :product_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  # !R !W is there a way we can adjust this validation to the product first?
-  # testing in progress
 
 
   # this should probably be in helpers/order_items_helpers
@@ -35,9 +34,20 @@ class OrderItem < ActiveRecord::Base
     quantity_ordered * product.price
   end
 
-  def does_product_have_stock? # !Q is this the right way to do this?
+  def product_has_stock? # !Q is this the right way to do this?
     stock = product.has_available_stock?
     errors.add(:product_id, "Product must have available stock.") unless stock
     return stock
+  end
+
+  def product_absent_from_order?
+    order.order_items.each do |item|
+      if item.product_id == product_id
+        errors.add(:product_id, "That product is already part of this order.")
+        return false
+      end
+    end
+
+    return true
   end
 end

@@ -1,8 +1,7 @@
 class Product < ActiveRecord::Base
   has_and_belongs_to_many :categories
   belongs_to :seller
-  # this before_add callback should prevent adding new order_items if stock is effectively zero. -J
-  has_many :order_items, before_add: :has_available_stock?
+  has_many :order_items
   has_many :reviews
 
   # Validations ----------------------------------------------------------------
