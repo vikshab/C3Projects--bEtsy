@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :users, path: "merchants" do
       resources :products, except: [:show, :index]
+    end
 
   resources :categories
 
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
     member do
       resources :products, only: [:new]
     end
+  end
 
   resources :orders
 
