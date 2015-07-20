@@ -16,7 +16,7 @@
       </td>
       <td><%= link_to item.product.name, product_path(item.product) %></td>
       <td><%= link_to item.product.seller.username, seller_path(item.product.seller) %></td>
-      <td>$<%= item.item_price / 100.0 %></td>
+      <td><%= display_dollars(item.item_price) %></td>
       <td>
         <%= link_to "x", kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } %>
       </td>
@@ -25,6 +25,6 @@
   <tr>
     <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
     <th colspan="2">Total:</th>
-    <th colspan="3">$<%= @order.order_price / 100.0 %></th>
+    <th colspan="3"><%= display_dollars(@order.order_price) %></th>
   </tr>
 </table>

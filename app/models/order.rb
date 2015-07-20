@@ -14,7 +14,8 @@ class Order < ActiveRecord::Base
   VALID_STATUS_REGEX = /(pending)|(paid)|(complete)|(cancelled)/
 
   # data validations
-  validates :status, presence: true, format: { with: VALID_STATUS_REGEX }
+  validates :status, presence: true, inclusion: { in: %w(pending paid complete cancelled),
+    message: "%{value} is not a valid status" }
 
   validates_presence_of :buyer_email, unless: :pending?
   validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?

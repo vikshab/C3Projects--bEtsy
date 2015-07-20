@@ -11,12 +11,12 @@
       <td><%= item.product.name %></td>
       <td><%= item.product.seller.username %></td>
       <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
-      <td>$<%= item.item_price / 100.0 %></td>
+      <td><%= display_dollars(item.item_price) %></td>
     </tr>
   <% end %>
   <tr>
     <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
     <th colspan="2">Total:</th>
-    <th>$<%= @order.order_price / 100.0 %></th>
+    <th><%= display_dollars(@order.order_price) %></th>
   </tr>
 </table>
