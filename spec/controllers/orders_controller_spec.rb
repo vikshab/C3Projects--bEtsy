@@ -49,6 +49,12 @@ RSpec.describe OrdersController, type: :controller do
       expect(assigns(:order)).to eq(@order)
     end
 
+    it "assigns @product" do
+      post :add_to_cart, id: 1
+
+      expect(assigns(:product)).to eq(@product)
+    end
+
     it "redirects to the product #show page after save" do
       # OrderItem.create(product_id: @product.id, order_id: session[:order_id], quantity_ordered: 1)
       post :add_to_cart, id: 1
