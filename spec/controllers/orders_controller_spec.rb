@@ -3,9 +3,13 @@ require 'rails_helper'
 RSpec.describe OrdersController, type: :controller do
   describe "GET cart" do
     before :each do
-      @order_items_count = number_of_cart_items_wanted = 10
+      @order = Order.create
+      @order_items_count = number_of_cart_items_wanted = 3
+      prod_name = "a"
       number_of_cart_items_wanted.times do
-        OrderItem.create(order_id: 1, product_id: (1..10).to_a.sample, quantity_ordered: 5)
+        product = Product.create(name: prod_name, seller_id: 1, price: 1, stock: 10)
+        OrderItem.create(order_id: @order.id, product_id: product.id, quantity_ordered: 5)
+        prod_name = prod_name.next
       end
     end
 
@@ -28,21 +32,7 @@ RSpec.describe OrdersController, type: :controller do
       expect(assigns(:order)).to eq(Order.find(session[:order_id]))
     end
 
-    # it "assigns @order_items" do
-    #   get :cart
-    #
-    #   expect(assigns(:order_items)).to eq(OrderItem.all)
-    #   expect(assigns(:order_items_count)).to eq(@order_items_count)
-    # end
-
-    # it "redirects to receipt page if order status is not pending" do
-    #   Order.find(session[:order_id]).update(status: "paid").save.reload
-    #
-    #   get :cart
-    #
-    #   expect(response).to have_http_status(302)
-    #   expect(response).to redirect_to(receipt_path)
-    # end
+    it "assigns @order_items"
   end
 
   describe "POST #add_to_cart" do

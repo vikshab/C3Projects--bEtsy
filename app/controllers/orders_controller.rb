@@ -11,12 +11,12 @@ class OrdersController < ApplicationController
       OrderItem.create(product_id: product.id, order_id: session[:order_id], quantity_ordered: 1)
     end
 
-    redirect_to product_path(product) # this should redirect to product show page
+    redirect_to product_path(product)
   end
 
   def cart; end
 
-  def checkout; end # of a particular item in a cart; increases the quantity of an item in the cart
+  def checkout; end
 
   def update
     # add buyer info to order & change status

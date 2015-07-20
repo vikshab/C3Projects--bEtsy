@@ -35,9 +35,13 @@ class OrderItem < ActiveRecord::Base
   end
 
   def product_has_stock? # !Q is this the right way to do this?
-    stock = product.has_available_stock?
-    errors.add(:product_id, "Product must have available stock.") unless stock
-    return stock
+    # stock = product.has_available_stock?
+    unless product.has_available_stock?
+      errors.add(:quantity_ordered, "Product must have available stock.")
+      return false
+    end
+    
+    return true
   end
 
   def product_absent_from_order?
