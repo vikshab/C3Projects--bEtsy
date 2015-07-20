@@ -12,16 +12,10 @@ Rails.application.routes.draw do
   patch 'products/retire/:id' => 'products#retire', as: "retire"
 
   resources :users, path: "merchants" do
-    resources :products, only: [:new]
+    resources :products, only: [:new, :create]
   end
 
   get "/categories/:category_name" => "categories#show", as: "category"
-
-  resources :users do
-    member do
-      resources :products, only: [:new]
-    end
-  end
 
   resources :orders
 
