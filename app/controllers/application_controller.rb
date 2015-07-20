@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_order
 
   def find_categories
-      @categories = Category.all
+    @categories = Category.all
   end
 
   def current_order
-    if !session[:order_id].nil?
+    if session[:order_id]
       Order.find(session[:order_id])
     else
       Order.create
