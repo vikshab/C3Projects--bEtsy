@@ -8,4 +8,5 @@ module ApplicationHelper
     output.html_safe
   end
 
+  # @categories = Category.all
 end

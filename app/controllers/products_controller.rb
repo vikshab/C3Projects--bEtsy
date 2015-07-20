@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
     @product.update(user_params[:product])
 
     if @product.save
-      redirect_to product_path(@product.id)
+      redirect_to user_path(@product.user_id)
     else
       render :edit
     end
@@ -47,10 +47,18 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def retire
+    @product = Product.find(params[:id])
+    @product.retire_product
+    @product.save
+    redirect_to user_path(@product.user_id)
+  end
+
+
   private
 
   def user_params
-    params.permit(product: [:name, :price, :desc, :stock, :photo_url, :category_id, :user_id])
+    params.permit(product: [:name, :price, :desc, :stock, :photo_url, :user_id, :retired])
   end
 
 end

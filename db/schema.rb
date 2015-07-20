@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(version: 20150717012326) do
     t.integer  "stock"
     t.string   "photo_url"
     t.integer  "user_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "retired",    default: "no"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "retired",    default: false
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"

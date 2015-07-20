@@ -1,5 +1,5 @@
 class AddColumntoProduct < ActiveRecord::Migration
   def change
-    add_column :products, :retired, :string, default: "no"
+    add_column :products, :retired, :boolean, default: false
   end
 end

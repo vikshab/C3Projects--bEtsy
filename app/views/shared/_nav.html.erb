@@ -1,0 +1,52 @@
+<nav>
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+    <div class="navbar-header">
+      <%= link_to("Bitsy", root_path, class: "navbar-brand") %> </a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "All Products", products_path %></li>
+            <li role="separator" class="divider"></li>
+
+            <li class="dropdown-header">Categories</li>
+            <% @categories.each do |category|  %>
+              <li><%= link_to "#{category.name.capitalize}", "#{category_path(category.id)}" %></li>
+            <% end %>
+            <li role="separator" class="divider"></li>
+
+            <li class="dropdown-header">Merchants</li>
+            <li><a href="#">Brittany</a></li>
+            <li><a href="#">Elia</a></li>
+            <li><a href="#">Victoria</a></li>
+            <li><a href="#">Anita</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+
+        <% if session[:user_id] == nil  %>
+          <li><button type="button"  class="btn btn-default navbar-btn"><%= link_to "Login", login_path %></button></li>
+          <li><%= link_to "Sign Up", new_user_path, class: "navbar-link" %></li>
+        <% else %>
+          <li><button type="button" class="btn btn-default navbar-btn">
+              <%= link_to "Logout", logout_path, method: :delete,
+                  data: {:confirm => "Are you sure you want to logout?"} %>
+          </button></li>
+
+        <% end %>
+        <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-shopping-cart cart" aria-hidden="true"></span></i></a></li>
+      </div>
+    </div>
+  </div>
+</nav>

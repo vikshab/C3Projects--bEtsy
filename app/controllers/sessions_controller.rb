@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :find_user, only: [:destroy, :create]
+  before_action :find_user, only: [ :create]
 
   def new
 
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   def destroy
     # session[:user_id] = @user.id
     session[:user_id] = nil
-    render root_path
+    redirect_to root_path
   end
 
 end
