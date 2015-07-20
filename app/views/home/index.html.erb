@@ -11,7 +11,7 @@
         <%= image_tag(product.photo_url, class: "img-responsive product-thumb") %>
         <div class="caption">
           <h5 class="pull-right"> <%= number_to_currency(product.price) %></h5>
-          <h4><a href="#"><%= product.name %></a></h4>
+          <h4><%=link_to "#{product.name}", product_path(product.id) %></h4>
           <p><%= link_to("See more about the product", product_path(product.id)) %></p>
         </div>
         <div class="ratings">
