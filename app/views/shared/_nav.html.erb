@@ -42,6 +42,7 @@
           <li><%= link_to "My Home", user_path(session[:user_id]), class: "btn btn-default navbar-btn" %> </li>
         <% end %>
         <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-shopping-cart cart" aria-hidden="true"></span></a></li>
+        <li class="navbar-text"><%= "#{current_order.order_items.size}" %></li>
       </div>
     </div>
   </div>

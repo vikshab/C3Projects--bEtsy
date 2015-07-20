@@ -37,7 +37,8 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:buyer_name,
+    params.require(:order).permit(:subtotal,
+                                  :buyer_name,
                                   :buyer_email,
                                   :buyer_zip,
                                   :buyer_state,

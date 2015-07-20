@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   patch 'products/retire/:id' => 'products#retire', as: "retire"
 
   resources :users, path: "merchants" do
-      resources :products, except: [:show, :index]
-    end
+    resources :products, only: [:new]
+  end
 
   get "/categories/:category_name" => "categories#show", as: "category"
 
@@ -25,6 +25,11 @@ Rails.application.routes.draw do
 
   resources :orders
 
+  # RoR paths
+  resources :carts, only: [:show]
+  resources :order_items, only: [:create, :update, :destroy]
+
+  # sessions paths
   get    "/login", to: "sessions#new"
   post   "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
