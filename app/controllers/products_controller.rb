@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :require_login, except: [:index, :show, :user_products]
+  before_action :require_login, except: [:index, :show, :merchant_products]
 
   def index
     @products = Product.active_product
@@ -53,10 +53,9 @@ class ProductsController < ApplicationController
     redirect_to user_path(@product.user_id)
   end
 
-
   def merchant_products
-    user = User.find(params[:id])
-    @products = user.products
+    @merchant = @merchants.find(params[:id])
+    @products = @merchant.products
   end
 
   private
