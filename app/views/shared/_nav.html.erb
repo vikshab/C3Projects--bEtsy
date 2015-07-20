@@ -36,7 +36,7 @@
       <ul class="nav navbar-nav navbar-right">
 
         <% if session[:user_id] == nil  %>
-          <li><button type="button"  class="btn btn-default navbar-btn"><%= link_to "Login", login_path %></button></li>
+          <li><%= button_to "Login", login_path, method: :get, class: "btn btn-default navbar-btn" %></li>
           <li><%= link_to "Sign Up", new_user_path, class: "navbar-link" %></li>
         <% else %>
           <li><button type="button" class="btn btn-default navbar-btn">
