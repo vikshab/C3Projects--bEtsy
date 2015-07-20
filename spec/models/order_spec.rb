@@ -4,14 +4,13 @@ RSpec.describe Order, type: :model do
   describe "database relationships" do
     it "has order items" do
       order = Order.create
+      product = Product.create(name: "asdkhjadsf", seller_id: 1, stock: 1, price: 1)
+      OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 1)
 
-      no_order_items = 10
-      no_order_items.times do
-        OrderItem.create(order_id: 1, product_id: 1, quantity_ordered: 1)
-      end
-
-      expect(order.order_items.count).to eq(no_order_items)
+      expect(order.order_items.count).to eq(1)
     end
+
+    it "has_many :products, through: :order_items"
   end
 
   describe "model validations" do
@@ -58,46 +57,45 @@ RSpec.describe Order, type: :model do
     end
   end
 
-  describe "scopes" do
-    before :each do
-      statuses = ["pending", "paid", "complete", "cancelled"]
+  describe "methods" do
+    context "pending" do
+      it "can test whether an order is pending" do
+        passing_test = "pending"
+        failing_tests = ["paid", "complete", "cancelled"]
 
-      statuses.each do |status|
-        5.times do
-          Order.create(status: status)
+        expect(Order.create(status: passing_test).pending?).to be(true)
+
+        failing_tests.each do |failure|
+          expect(Order.create(status: failure).pending?).to be(false)
         end
       end
     end
 
-    it "orders can be grabbed based on pending status" do
-      expect(Order.count).to eq(20)
-      expect(Order.pending.count).to eq(5)
-    end
-  end
-
-  describe "methods" do
     context "order_price" do
       before :each do
         @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
+        @product2 = Product.create(name: "dsafkhlaer", price: 125, seller_id: 1, stock: 25)
         @order = Order.create
-        @item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 5)
+        @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 2)
       end
 
       it "has a price based on its order items" do
         expect(@order.order_price).to eq(@item.item_price)
         expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
 
-        item2 = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 25)
+
+        item2 = OrderItem.create(product_id: @product2.id, order_id: @order.id, quantity_ordered: 2)
         @order.reload
         expect(@order.order_price).to eq(@item.item_price + item2.item_price)
-        expect(@order.order_price).to eq((@item.quantity_ordered * @product.price) + (item2.quantity_ordered * @product.price))
+        expect(@order.order_price).to eq((@item.quantity_ordered * @product.price) + (item2.quantity_ordered * @product2.price))
       end
 
       it "and only its order items" do
         expect(@order.order_price).to eq(@item.item_price)
         expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
 
-        item2 = OrderItem.create(product_id: 1, order_id: 2, quantity_ordered: 25)
+        item2 = OrderItem.create(product_id: @product2, order_id: 2, quantity_ordered: 25)
+        @order.reload
         expect(@order.order_price).to eq(@item.item_price)
         expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
       end
