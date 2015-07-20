@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
 
  validates :name, presence: true, uniqueness: true
  validates :price, presence: true, numericality: {only_float: true, greater_than: 0}
+ validates :user_id, presence: true
 
 # ASSOCIATIONS -----------------------------------------------------------------
 

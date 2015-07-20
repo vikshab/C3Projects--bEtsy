@@ -20,10 +20,10 @@
             <li role="separator" class="divider"></li>
 
             <li class="dropdown-header">Merchants</li>
-            <li><a href="#">Brittany</a></li>
-            <li><a href="#">Elia</a></li>
-            <li><a href="#">Victoria</a></li>
-            <li><a href="#">Anita</a></li>
+            <% @merchants.each do |merchant| %>
+            <li><%= link_to "#{merchant.name.capitalize}", "#{merchant_products_path(merchant.id)}" %></li>
+            <% end %>
+            <li role="separator" class="divider"></li>
           </ul>
         </li>
       </ul>
