@@ -2,12 +2,14 @@
   <tr>
     <th>Quantity</th>
     <th>Item Name</th>
+    <th>Seller</th>
     <th>Cost</th>
   </tr>
   <% @order.order_items.each do |item| %>
     <tr>
       <td><%= item.quantity_ordered %></td>
       <td><%= item.product.name %></td>
+      <td><%= item.product.seller.username %></td>
       <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
       <td>$<%= item.item_price / 100.0 %></td>
     </tr>
