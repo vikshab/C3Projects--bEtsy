@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   # before_action :require_login, except: [:index, :show]
 
   def index
-    @products = Product.all
+    @products = Product.active_product
   end
 
   def show
@@ -39,7 +39,6 @@ class ProductsController < ApplicationController
     end
   end
 
-
   def destroy
     show
     @product.destroy
@@ -49,7 +48,7 @@ class ProductsController < ApplicationController
 
   def retire
     @product = Product.find(params[:id])
-    @product.retire_product
+    @product.retire_toggle!
     @product.save
     redirect_to user_path(@product.user_id)
   end

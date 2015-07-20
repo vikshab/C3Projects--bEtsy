@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @products = Product.all.sample(6)
+    @products = Product.active_product.sample(6)
   end
 end

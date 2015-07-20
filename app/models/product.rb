@@ -9,15 +9,13 @@ class Product < ActiveRecord::Base
   has_many :reviews
   has_many :order_items
 
+  scope :active_product, -> { where(retired: false) }
   # @products = Product.all
   # @products.each do |product|
   #   @avg_ratings = { product.id => (Review::avg_rating(product.id)) }
   # end
 
-  def retire_product
+  def retire_toggle!
     self.retired ? self.retired = false : self.retired = true
   end
-
-
-
 end
