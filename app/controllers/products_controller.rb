@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @reviews = @products.reviews
+    @reviews = @product.reviews
     @average_rating = @product.average_rating
   end
 
