@@ -1,6 +1,9 @@
 class Order < ActiveRecord::Base
   # ASSOCIATIONS --------------------------------------------------------
   has_many :order_items
+  # rich on rails before helpers
+  before_create :set_order_status
+  before_save :update_subtotal
 
   # VALIDATIONS ----------------------------------------------------------
   validates :buyer_name, presence: true
@@ -18,17 +21,28 @@ class Order < ActiveRecord::Base
                             length: { is: 4 }
 
   validate :email_must_contain_at
-  
+
   # SCOPES ------------------------------------------------------------
 
-
-
-  def email_must_contain_at
-    return if self.buyer_email == nil # guard clause, inline conditional
-    unless self.buyer_email.chars.include?("@")
-      # refactor to include regex
-      errors.add(:buyer_email, "Invalid email. Please enter a correct email address.")
-    end
+  def subtotal
+    order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum
   end
 
+private
+
+    def set_order_status
+      self.status = "pending"
+    end
+
+    def update_subtotal
+      self[:subtotal] = subtotal
+    end
+
+    def email_must_contain_at
+      return if self.buyer_email == nil # guard clause, inline conditional
+      unless self.buyer_email.chars.include?("@")
+        # refactor to include regex
+        errors.add(:buyer_email, "Invalid email. Please enter a correct email address.")
+      end
+    end
 end

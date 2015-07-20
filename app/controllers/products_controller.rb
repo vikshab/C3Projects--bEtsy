@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   # before_action :require_login, except: [:index, :show]
 
   def index
-    @products = Product.all
+    @products = Product.active_product
   end
 
   def show
