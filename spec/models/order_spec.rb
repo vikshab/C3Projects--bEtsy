@@ -21,7 +21,7 @@ RSpec.describe Order, type: :model do
       end
 
       it "has only a few valid statuses" do
-        valid_statuses = ["pending", "paid", "complete", "cancelled"]
+        valid_statuses = ["pending", "paid", "complete", "canceled"]
         invalid_statuses = ["", "shipped", "PAID", "done", "returned"]
 
         valid_statuses.each do |status|
@@ -36,18 +36,37 @@ RSpec.describe Order, type: :model do
       end
 
       # data validations
-      it "validates :status, presence: true, format: { with: VALID_STATUS_REGEX }"
-      it "validates_presence_of :buyer_email, unless: :pending?"
-      it "validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?"
+      it "validates :status, presence: true, format: { with: VALID_STATUS_REGEX }" do
+        # TODO
+      end
 
-      it "validates_presence_of :buyer_name, unless: :pending?"
-      it "validates_presence_of :buyer_address, unless: :pending?"
+      it "validates_presence_of :buyer_email, unless: :pending?" do
+        # TODO
+      end
 
-      it "validates_presence_of :buyer_card_short, unless: :pending?"
-      it "validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?"
+      it "validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?" do
+        # TODO
+      end
 
-      it "validates_presence_of :buyer_card_expiration, unless: :pending?"
+      it "validates_presence_of :buyer_name, unless: :pending?" do
+        # TODO
+      end
 
+      it "validates_presence_of :buyer_address, unless: :pending?" do
+        # TODO
+      end
+
+      it "validates_presence_of :buyer_card_short, unless: :pending?" do
+        # TODO
+      end
+
+      it "validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?" do
+        # TODO
+      end
+
+      it "validates_presence_of :buyer_card_expiration, unless: :pending?" do
+        # TODO
+      end
     end
 
     context "buyer_info" do
@@ -75,7 +94,7 @@ RSpec.describe Order, type: :model do
     context "pending" do
       it "can test whether an order is pending" do
         passing_test = "pending"
-        failing_tests = ["paid", "complete", "cancelled"]
+        failing_tests = ["paid", "complete", "canceled"]
 
         expect(Order.create(status: passing_test).pending?).to be(true)
 
