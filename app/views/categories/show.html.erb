@@ -2,7 +2,7 @@
 
 
 <div class="container">
-<h1><%= @category.name.capitalize %> </h1>
+<h1><%= (@category.name).pluralize(10).capitalize %> </h1>
   <div class="row">
   <% @products.each do |product| %>
     <div class="col-xs-4">

@@ -16,6 +16,10 @@
  @import "bootstrap";
  @import url(http://fonts.googleapis.com/css?family=Cherry+Swash:400,700);
 
+$jumbo_color: #FF5454;
+$jumbo_shadow: #858585;
+$jumbo_border: #B4B4B4;
+
  .navbar-brand {
   font-family: 'Cherry Swash', cursive;
   font-size: 1.8em;
@@ -58,14 +62,14 @@ footer {
 .jumbotron {
   width: 100%;
   background: url(symphony.png) repeat;
-  border-bottom: 3px solid #B4B4B4;
+  border-bottom: 3px solid $jumbo_border;
 }
 
 .jumbotron h1 {
   font-family: 'Cherry Swash', cursive;
-  color: #FF5454;
+  color: $jumbo_color;
   font-weight: bold;
-  text-shadow: 2px 2px 2px #858585;
+  text-shadow: 2px 2px 2px $jumbo_shadow;
 }
 
 .form-header h1, h2, h3 {
