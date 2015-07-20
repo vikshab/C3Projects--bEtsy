@@ -34,7 +34,7 @@
         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <% if session[:user_id] == nil  %>
+        <% if session[:user_id].nil?  %>
           <li><%= button_to "Login", login_path, method: :get, class: "btn btn-default navbar-btn" %></li>
           <li><%= link_to "Sign Up", new_user_path, class: "navbar-link" %></li>
         <% else %>
