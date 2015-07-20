@@ -16,14 +16,27 @@
     <td><%= @product.stock %></td>
     <td>Reviews</td>
     <td><%= image_tag("#{@product.photo_url}") %></td>
-  </table>
+</table>
 
-  <div id="reviews">
-    <h3><%= @product.reviews.count %> Reviews</h3>
-    <%= render @product.reviews %>
-
-    <% if !session[:user_id] %>
-      <h3>Add a review:</h3>
-      <%= render "reviews/form" %>
-    <% end %>
+<div class="row">
+<%= form_for @order_item do |f| %>
+ <div class="input-group">
+   <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
+   <div class="input-group-btn">
+     <%= f.hidden_field :product_id, value: @product.id %>
+     <%= f.hidden_field :order_id %>
+     <%= f.submit "Add to Cart", class: "btn btn-primary" %>
+   </div>
   </div>
+ <% end %>
+</div>
+
+<div id="reviews">
+  <h3><%= @product.reviews.count %> Reviews</h3>
+  <%= render @product.reviews %>
+
+  <% if !session[:user_id] %>
+    <h3>Add a review:</h3>
+    <%= render "reviews/form" %>
+  <% end %>
+</div>

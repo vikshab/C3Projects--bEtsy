@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :find_categories
   before_action :find_merchants
+  helper_method :current_order
 
   def find_categories
     @categories = Category.all
@@ -11,5 +12,12 @@ class ApplicationController < ActionController::Base
 
   def find_merchants
     @merchants = User.all
+
+  def current_order
+    if session[:order_id]
+      Order.find(session[:order_id])
+    else
+      Order.create
+    end
   end
 end
