@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  # before_action :require_login, except: [:index, :show]
+  before_action :require_login, except: [:index, :show, :user_products]
 
   def index
     @products = Product.active_product
@@ -54,10 +54,14 @@ class ProductsController < ApplicationController
   end
 
 
+  def user_products
+    user = User.find(params[:id])
+    @products = user.products
+  end
+
   private
 
   def user_params
     params.permit(product: [:name, :price, :desc, :stock, :photo_url, :user_id, :retired])
   end
-
 end

@@ -7,7 +7,6 @@
     <th>Stock</th>
     <th>Reviews</th>
     <th>Photo_url</th>
-    <th colspan="2"></th>
   </tr>
 
   <tr>
@@ -17,14 +16,14 @@
     <td><%= @product.stock %></td>
     <td>Reviews</td>
     <td><%= image_tag("#{@product.photo_url}") %></td>
-    <td><%= link_to "Edit", edit_product_path(@product.id) %></td>
-    <td><%= link_to "Delete", product_path(@product.id), method: "delete" %></td>
-</table>
-<%= link_to "Add New Product", new_product_path %>
-<div id="reviews">
-  <h3><%= @product.reviews.count %> Reviews</h3>
-  <%= render @product.reviews %>
+  </table>
 
-  <h3>Add a review:</h3>
-  <%= render "reviews/form" %>
-</div>
+  <div id="reviews">
+    <h3><%= @product.reviews.count %> Reviews</h3>
+    <%= render @product.reviews %>
+
+    <% if !session[:user_id] %>
+      <h3>Add a review:</h3>
+      <%= render "reviews/form" %>
+    <% end %>
+  </div>

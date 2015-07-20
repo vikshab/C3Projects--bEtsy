@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   post   "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  get "/users/:id/products", to: "products#user_products", as: "user_products"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
