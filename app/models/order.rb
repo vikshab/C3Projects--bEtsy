@@ -11,10 +11,9 @@ class Order < ActiveRecord::Base
   # validations helper regex
   # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  VALID_STATUS_REGEX = /(pending)|(paid)|(complete)|(cancelled)/
 
   # data validations
-  validates :status, presence: true, inclusion: { in: %w(pending paid complete cancelled),
+  validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
     message: "%{value} is not a valid status" }
 
   validates_presence_of :buyer_email, unless: :pending?
