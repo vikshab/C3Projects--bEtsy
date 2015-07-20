@@ -15,7 +15,7 @@
 
             <li class="dropdown-header">Categories</li>
             <% @categories.each do |category|  %>
-              <li><%= link_to "#{category.name.capitalize}", "#{category_path(category.id)}" %></li>
+              <li><%= link_to "#{category.name.capitalize}", "#{category_path(category.name)}" %></li>
             <% end %>
             <li role="separator" class="divider"></li>
 
