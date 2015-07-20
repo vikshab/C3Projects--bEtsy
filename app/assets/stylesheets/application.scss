@@ -13,3 +13,21 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
+
+ .jumbotron {
+   padding: 10px;
+ }
+
+ .page-header {
+   margin: auto;
+   height: 120px;
+   background: url(penguin.png);
+   background-size: 100px;
+   background-repeat: no-repeat;
+   background-position: center;
+ }
+
+ .page-header h1 {
+   text-align: center;
+   padding-top: 110px;
+ }

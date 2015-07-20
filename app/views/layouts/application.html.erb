@@ -8,25 +8,27 @@
 </head>
 <body>
   <header class="jumbotron" id="top">
-    <h1>Tux</h1>
-    <nav class="navbar"> -
-      <%= link_to "Home", root_path %> -
-      <%= link_to "All Products", products_path %> -
-      <%= link_to "All Categories", categories_path %> -
-      <%= link_to "All Sellers", sellers_path %> -
-      <% cart_display_text = "Cart" %>
-      <% if @order.order_items && @order.order_items.count > 0 %>
-        <% cart_display_text += " (#{ @order.order_items.count })" %>
-      <% end %>
-      <%= link_to cart_display_text, cart_path %> -
-    </nav>
+    <div class="page-header">
+      <h1>Tux</h1>
+    </div>
+      <nav class="navbar"> -
+        <%= link_to "Home", root_path %> -
+        <%= link_to "All Products", products_path %> -
+        <%= link_to "All Categories", categories_path %> -
+        <%= link_to "All Sellers", sellers_path %> -
+        <% cart_display_text = "Cart" %>
+        <% if @order.order_items && @order.order_items.count > 0 %>
+          <% cart_display_text += " (#{ @order.order_items.count })" %>
+        <% end %>
+        <%= link_to cart_display_text, cart_path %> -
+      </nav>
   </header>
 
   <main class="container-fluid">
     <% if flash[:error] %>
       <h4 class="alert alert-warning"><%= flash[:error] %></h4>
     <% end %>
-    
+
     <%= yield %>
   </main>
 
