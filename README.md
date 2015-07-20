@@ -53,14 +53,14 @@ Build an online system for listing, selling, reviewing, and buying a wide variet
 
 As a guest to the website (not signed in) I **can**:
 
-- Browse all products
-- Browse products by category
-- Browse products by merchant (users)
-- View any individual product with additional details
-- Leave a review for a product providing:
+- √ Browse all products
+- √ Browse products by category
+- √ Browse products by merchant (users)
+- √ View any individual product with additional details
+- √ Leave a review for a product providing:
     - A Text review
     - A rating out of 5
-- Add in-stock products to my cart
+- √ Add in-stock products to my cart
 - Remove products from my cart
 - Change the quantity of an existing product in my cart
 - Purchase the items in my cart, providing:
@@ -81,27 +81,27 @@ As a guest to the website (not signed in) I **can**:
     - Order total price
     - DateTime the order was placed
     - The current status of the order
-- Sign up to be a merchant, providing:
+- √ Sign up to be a merchant, providing:
     - Email Address
     - Username
     - Password (plain text passwords cannot be stored in the database)
     - Password confirmation
-- Sign in to my merchant account
+- √ Sign in to my merchant account
 
 As a guest I **cannot**:
 
-- Add products to the cart that are out of stock.
-- View any link or page to manage any products
-- View any of the account pages
+- √ Add products to the cart that are out of stock.
+- √ View any link or page to manage any products
+- √ View any of the account pages
 
 #### Authenticated Users
 
 As a signed-in user, I **can**:
 
-- Do everything a guest user can do except for sign up and sign in.
-- Sign out
+- √ Do everything a guest user can do except for sign up and sign in.
+- √ Sign out
 - Create new categories (categories are shared between all merchants)
-- Create a new product providing:
+- √ Create a new product providing:
     - name
     - description
     - price
@@ -132,7 +132,7 @@ As a signed-in user, I **can**:
 
 As a signed-in user, I **cannot**:
 
-- Review my own products
+- √ Review my own products
 - View order items from a shared order that belong to another merchant
 - View another users private data (i.e. order fulfillment or product management)
 
