@@ -2,20 +2,10 @@
   <div class = "col-xs-5" >
     <%= form_for [@product, @product.reviews.build], class: "form-group" do |f| %>
       <h3>Rating:</h3>
-      <%= f.label :rating, render_stars(1), class: "radio-inline star" %>
-      <%= f.radio_button :rating, 1%>
-
-      <%= f.label :rating, render_stars(2), class: "radio-inline star" %>
-      <%= f.radio_button :rating, 2 %>
-
-      <%= f.label :rating, render_stars(3), class: "radio-inline" %>
-      <%= f.radio_button :rating, 3 %>
-
-      <%= f.label :rating, render_stars(4), class: "radio-inline" %>
-      <%= f.radio_button :rating, 4 %>
-
-      <%= f.label :rating, render_stars(5), class: "radio-inline" %>
-      <%= f.radio_button :rating, 5 %>
+      <% (1..5).each do |num| %>
+        <%= f.label :rating, render_stars(num), class: "radio-inline star" %>
+        <%= f.radio_button :rating, num %>
+      <% end %>
       <br><br>
       <%= f.label :body, "Review:" %>
       <%= f.text_area :body, class: "form-control", rows: "5" %><br>
