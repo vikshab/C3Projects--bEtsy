@@ -34,6 +34,20 @@ RSpec.describe Order, type: :model do
           expect(order.errors.keys).to include(:status)
         end
       end
+
+      # data validations
+      it "validates :status, presence: true, format: { with: VALID_STATUS_REGEX }"
+      it "validates_presence_of :buyer_email, unless: :pending?"
+      it "validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?"
+
+      it "validates_presence_of :buyer_name, unless: :pending?"
+      it "validates_presence_of :buyer_address, unless: :pending?"
+
+      it "validates_presence_of :buyer_card_short, unless: :pending?"
+      it "validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?"
+
+      it "validates_presence_of :buyer_card_expiration, unless: :pending?"
+
     end
 
     context "buyer_info" do

@@ -21,13 +21,13 @@ class Order < ActiveRecord::Base
 
   validates_presence_of :buyer_name, unless: :pending?
   validates_presence_of :buyer_address, unless: :pending?
-  # !W !Q TODO: validate address or name somehow?
+  # TODO: validate address or name somehow?
 
   validates_presence_of :buyer_card_short, unless: :pending?
   validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?
 
   validates_presence_of :buyer_card_expiration, unless: :pending?
-  # !W TODO: validate card expiration is after today / Date.now
+  # TODO: validate card expiration is after today / Date.now
 
 
   def order_price
