@@ -78,19 +78,19 @@ RSpec.describe Product, type: :model do
     end
   end
 
-  describe "#self.average_rating(id)" do
+  describe "#average_rating" do
     it "returns an average rating for a product" do
       product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
       review = Review.create(rating: 1, product_id: 1)
       review2 = Review.create(rating: 3, product_id: 1)
 
-      expect(Product.average_rating(1)).to eq 2
+      expect(product.average_rating).to eq 2
     end
 
     it "returns a message if no ratings" do
       product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
 
-      expect(Product.average_rating(1)).to eq "No reviews"
+      expect(product.average_rating).to eq "No reviews"
     end
   end
 
