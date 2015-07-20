@@ -40,7 +40,7 @@ class OrderItem < ActiveRecord::Base
       errors.add(:quantity_ordered, "Product must have available stock.")
       return false
     end
-    
+
     return true
   end
 
