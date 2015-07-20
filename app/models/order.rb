@@ -45,4 +45,5 @@ private
         errors.add(:buyer_email, "Invalid email. Please enter a correct email address.")
       end
     end
+    
 end
