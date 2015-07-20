@@ -10,6 +10,13 @@ RSpec.describe Product, type: :model do
       expect(product.errors.keys).to include(:name)
     end
 
+    it "requires a user_id all the time" do
+      product = Product.new(name: "cat", price: 9)
+
+      expect(product).to_not be_valid
+      expect(product.errors.keys).to include(:user_id)
+    end
+
     it "requires a price all the time" do
       product = Product.new
 
@@ -18,9 +25,9 @@ RSpec.describe Product, type: :model do
     end
 
     it "excludes dublicate names" do
-      product1 = Product.create(name: "box", price: 3)
-      product2 = Product.create(name: "box", price: 5)
-      product3 = Product.create(name: "box", price: 10)
+      product1 = Product.create(name: "box", price: 3, user_id: 1)
+      product2 = Product.create(name: "box", price: 5, user_id: 1)
+      product3 = Product.create(name: "box", price: 10, user_id: 1)
 
       expect(Product.count).to eq 1
     end
