@@ -18,10 +18,6 @@ class Order < ActiveRecord::Base
                             length: { is: 4 }
 
   validate :email_must_contain_at
-  
-  # SCOPES ------------------------------------------------------------
-
-
 
   def email_must_contain_at
     return if self.buyer_email == nil # guard clause, inline conditional
@@ -31,4 +27,5 @@ class Order < ActiveRecord::Base
     end
   end
 
+  # SCOPES ------------------------------------------------------------
 end
