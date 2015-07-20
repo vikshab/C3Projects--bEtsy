@@ -17,26 +17,23 @@ class Order < ActiveRecord::Base
   # data validations
   validates :status, presence: true, format: { with: VALID_STATUS_REGEX }
 
-  validates_presence_of :buyer_email, scope: :not_pending
-  validates_format_of :buyer_email, with: VALID_EMAIL_REGEX
+  validates_presence_of :buyer_email, unless: :pending?
+  validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?
 
-  validates_presence_of :buyer_name, scope: :not_pending
-  validates_presence_of :buyer_address, scope: :not_pending
+  validates_presence_of :buyer_name, unless: :pending?
+  validates_presence_of :buyer_address, unless: :pending?
   # !W !Q TODO: validate address or name somehow?
 
-  validates_presence_of :buyer_card_short, scope: :not_pending
-  validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000
+  validates_presence_of :buyer_card_short, unless: :pending?
+  validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?
 
-  validates_presence_of :buyer_card_expiration, scope: :not_pending
+  validates_presence_of :buyer_card_expiration, unless: :pending?
   # !W TODO: validate card expiration is after today / Date.now
 
 
-  # scopes
-  scope :not_pending, -> { where.not(status: "pending") } # this is used by the validations
-
   def order_price
     # come back and talk about the method names
-    # but fwiw Order.price makes sense to me. -J
+    # but fwiw Order.price makes sense to me. more detailed explanation in Orderitem model. -J
     array_of_totals = order_items.map { |item| item.item_price }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
   end
@@ -46,6 +43,11 @@ class Order < ActiveRecord::Base
   end
 
   def mutable?
+    status == "pending"
+  end
+
+  # for validations, update other code to use this instead of mutable.
+  def pending?
     status == "pending"
   end
 end
