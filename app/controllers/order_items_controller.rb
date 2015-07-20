@@ -5,6 +5,8 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.new(order_item_params)
     @order.save
     session[:order_id] = @order.id
+    
+    redirect_to product_path(@order_item.product_id)
   end
 
   def update
@@ -24,6 +26,6 @@ class OrderItemsController < ApplicationController
 private
 
     def order_item_params
-      params.require(:order_item).permit(:quantity, :product_id)
+      params.require(:order_item).permit(:quantity, :product_id, :order_id)
     end
 end
