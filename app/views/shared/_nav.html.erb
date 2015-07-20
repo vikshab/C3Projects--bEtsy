@@ -39,11 +39,7 @@
           <li><%= button_to "Login", login_path, method: :get, class: "btn btn-default navbar-btn" %></li>
           <li><%= link_to "Sign Up", new_user_path, class: "navbar-link" %></li>
         <% else %>
-          <li><button type="button" class="btn btn-default navbar-btn">
-              <%= link_to "Logout", logout_path, method: :delete,
-                  data: {:confirm => "Are you sure you want to logout?"} %>
-          </button></li>
-
+          <li><%= button_to "Logout", logout_path, method: :delete, class: "btn btn-default navbar-btn" %></li>
         <% end %>
         <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-shopping-cart cart" aria-hidden="true"></span></i></a></li>
       </div>
