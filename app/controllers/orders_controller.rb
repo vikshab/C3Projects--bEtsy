@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: [:cart, :checkout, :update, :receipt]
+  before_action :set_order, only: [:add_to_cart, :cart, :checkout, :update, :receipt]
   before_action :check_access, only: [:cart, :checkout, :receipt]
 
   def add_to_cart
@@ -46,11 +46,14 @@ class OrdersController < ApplicationController
       return order_info
     end
 
-    def find_order
-      @order = Order.find_by(id: session[:order_id])
+    def set_order
+      if session[:order_id] && Order.find_by(id: session[:order_id])
+        @order = Order.find(session[:order_id])
+      else
+        @order = Order.create
+        session[:order_id] = @order.id
+      end
 
-      # !W this is not final
-      redirect_to root_path if @order.nil? # I'm pretty sure this will never be true -J
     end
 
     def check_access
