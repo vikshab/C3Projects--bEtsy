@@ -84,6 +84,8 @@ RSpec.describe OrderItemsController, type: :controller do
 
     context "#destroy: removing item from cart" do
       it "destroys the item" do
+        expect( OrderItem.find(1) ).to eq(@item)
+
         delete :destroy, id: 1
 
         expect{ OrderItem.find(1) }.to raise_exception(ActiveRecord::RecordNotFound)
