@@ -2,15 +2,23 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   describe "database relationships" do
-    it "has order items" do
-      order = Order.create
-      product = Product.create(name: "asdkhjadsf", seller_id: 1, stock: 1, price: 1)
-      OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 1)
+    before :each do
+      @order = Order.create
 
-      expect(order.order_items.count).to eq(1)
+      product1 = Product.create(name: "asdkhjadsf", seller_id: 1, stock: 1, price: 1)
+      OrderItem.create(order_id: @order.id, product_id: product1.id, quantity_ordered: 1)
+
+      product2 = Product.create(name: "3948jmow3f43ou9kv", seller_id: 1, stock: 1, price: 1)
+      OrderItem.create(order_id: @order.id, product_id: product2.id, quantity_ordered: 1)
     end
 
-    it "has_many :products, through: :order_items"
+    it "has order items" do
+      expect(@order.order_items.count).to eq(2)
+    end
+
+    it "has_many :products, through: :order_items" do
+      expect(@order.products.count).to eq(2)
+    end
   end
 
   describe "model validations" do
@@ -163,9 +171,26 @@ RSpec.describe Order, type: :model do
       end
 
       it "buyer_card_expiration must be on or after today's date" do
-        today = ["1/1/1998"]
-        valid_dates = ["1/1/1998", "6/28/2016"]
-        invalid_dates = ["1/1/1901", "7/16/1969", "1/28/1986"]
+        valid_dates = [Date.today, Date.today + 100, Date.today + 365]
+
+        valid_dates.each do |date|
+          order = Order.create
+          order.update(status: "paid", buyer_card_expiration: Date.parse(date.to_s))
+
+          puts order.confirmed_payment
+
+          expect(order.errors.keys).to_not include(:buyer_card_expiration)
+        end
+
+        invalid_dates = ["1/1/1970", "16/7/1969", "28/1/1986", Date.today - 1]
+        invalid_dates.each do |date|
+          order = Order.create
+          order.update(status: "paid", buyer_card_expiration: Date.parse(date.to_s))
+
+          puts order.confirmed_payment
+
+          expect(order.errors.keys).to include(:buyer_card_expiration)
+        end
       end
     end
   end

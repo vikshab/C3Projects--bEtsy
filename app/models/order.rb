@@ -1,8 +1,10 @@
 class Order < ActiveRecord::Base
-  after_initialize :set_confirmed_payment_false
-  before_update :buyer_card_unexpired? # this should return false if the card is expired
-
   attr_accessor :confirmed_payment
+
+  after_initialize do |order|
+    order.confirmed_payment = false
+  end
+  # before_update :buyer_card_unexpired? # this should return false if the card is expired
 
   # DB relationships
   has_many :order_items, dependent: :destroy
@@ -32,10 +34,9 @@ class Order < ActiveRecord::Base
     validates_format_of :buyer_card_short, with: VALID_BUYER_CARD_SHORT_REGEX
 
     validates_presence_of :buyer_card_expiration
-    # TODO: validate card expiration is on or after today / Date.today
-    # guard clause that validation should only run if status pending
+    validate :buyer_card_unexpired?, unless: :confirmed_payment
+    # validates :buyer_card_expiration, payment: true, unless: :confirmed_payment
   end
-
 
   def order_price
     # TODO: come back and talk about the method names
@@ -49,22 +50,16 @@ class Order < ActiveRecord::Base
   end
 
   def buyer_card_unexpired?
-    unexpired = true
+    # if order is not pending and payment has not yet been confirmed,
+    # then confirm the payment -- which in this case means check the
+    # expiration date is on or after today.
+    unexpired = buyer_card_expiration >= Date.today
 
-    unless (pending? && confirmed_payment)
-      # if order is not pending and payment has not yet been confirmed,
-      # then confirm the payment -- which in this case means check the
-      # expiration date is on or after today.
-      unexpired = buyer_card_expiration >= Date.today
-
-      if unexpired
-        confirmed_payment = true
-      else
-        errors[:buyer_card_expiration] = "Card expiration date is not valid."
-      end
+    if unexpired
+      @confirmed_payment = true
+    else
+      errors[:buyer_card_expiration] << "Card expiration date is not valid."
     end
-
-    return unexpired
   end
 
   def mutable?
@@ -77,6 +72,6 @@ class Order < ActiveRecord::Base
   end
 
   def set_confirmed_payment_false
-    confirmed_payment = false
+    @confirmed_payment = false
   end
 end
