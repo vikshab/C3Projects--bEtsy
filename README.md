@@ -39,9 +39,9 @@
 
 ### Getting Started
 
-1. As a group decide on an app name (this may help lead the aesthetic) **Bitsy**
-1. As a group decide on a team name (this will amuse me) **Malenkiy**
-1. Create a branch on the master repo with your team name **malenkiy/master**
+1. As a group decide on an app name (this may help lead the aesthetic)
+1. As a group decide on a team name (this will amuse me)
+1. Create a branch on the master repo with your team name
 1. Have one person on your team fork/clone the project master as per usual.
   1. Figure out your workflow for the project, re: Git and Task management
 
