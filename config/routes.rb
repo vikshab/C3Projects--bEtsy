@@ -2,11 +2,14 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   resources :categories, except: :destroy
-  resources :sellers, only: [:index, :show]
-  resources :products, only: [:index, :show]
-
+  resources :sellers, only: [:index, :show] do
+    resources :products, only: [:new, :create]
+  end
+  resources :products, except: [:new, :create, :destroy]
+  
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
   post '/products/:id/reviews/new', to: 'reviews#create'
+
 
   scope :cart do
     get "/", to: "orders#cart", as: "cart"
