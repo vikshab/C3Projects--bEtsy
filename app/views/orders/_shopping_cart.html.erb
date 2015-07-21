@@ -15,6 +15,6 @@
     <p class="text-center">Please <%= link_to "go back", root_path %> and add some items to your cart.</p>
 <% else %>
     <% @order_items.each do |order_item| %>
-      <%= render 'carts/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
+      <%= render 'orders/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
   <% end %>
 <% end %>
