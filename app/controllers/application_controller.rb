@@ -15,9 +15,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_order
+    # if someone's adding a 2nd item, finds the session already created
     if session[:order_id]
       Order.find(session[:order_id])
     else
+    # if someone adds to cart initially, creates a session tied to order
       Order.create
     end
   end

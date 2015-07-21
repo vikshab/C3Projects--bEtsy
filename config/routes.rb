@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   resources :orders
 
   # RoR paths
-  resources :carts, only: [:show]
   resources :order_items, only: [:create, :update, :destroy]
 
   # sessions paths
