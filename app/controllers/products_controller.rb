@@ -17,6 +17,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(create_params)
+    @product.seller_id = params[:seller_id]
     if @product.save
       redirect_to product_path(@product)
     else
@@ -41,10 +42,11 @@ class ProductsController < ApplicationController
   end
 
   def set_seller
-    @seller = Seller.find(params[:id])
+    @seller = Seller.find(params[:seller_id])
   end
 
   def create_params
-    params.require(:product).permit(:name, :price, :seller_id, :stock, :description, :photo_url)
+    params.require(:product).permit(:name, :price, :stock, :description, :photo_url)
+
   end
 end
