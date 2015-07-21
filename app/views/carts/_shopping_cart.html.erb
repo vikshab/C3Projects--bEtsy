@@ -8,11 +8,13 @@
   </div>
 <% end %>
 <% if @order_items.size == 0 %>
-  <p class="text-center">
-    There are no items in your shopping cart.  Please <%= link_to "go back", root_path %> and add some items to your cart.
-  </p>
+    <h4 class="text-center">
+      Your cart is empty.<br>
+      <%= image_tag "cart.png" %>
+    </h4>
+    <p class="text-center">Please <%= link_to "go back", root_path %> and add some items to your cart.</p>
 <% else %>
-  <% @order_items.each do |order_item| %>
-    <%= render 'carts/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
+    <% @order_items.each do |order_item| %>
+      <%= render 'carts/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
   <% end %>
 <% end %>

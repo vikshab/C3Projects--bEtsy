@@ -14,6 +14,7 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.find(params[:id])
     @order_item.update(order_item_params)
     @order_items = @order.order_items
+    redirect_to cart_path(@order)
   end
 
   def destroy
@@ -21,6 +22,7 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.find(params[:id])
     @order_item.destroy
     @order_items = @order.order_items
+    redirect_to cart_path(@order)
   end
 
 private
