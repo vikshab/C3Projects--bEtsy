@@ -8,13 +8,9 @@
 </head>
 <body>
 
-  <header class="jumbotron" id="top">
+  <header>
     <div class="container-fluid">
-      <div class="page-header">
-        <h1>Tux</h1>
-      </div>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="navbar-header">
               <%= link_to root_path, class: "navbar-brand" do %>
                 <%= image_tag("penguin.png", size: "20x20", alt: "Home") %> <div class="tux">Tux</div>
@@ -36,7 +32,6 @@
                 <% end %>
                 <li><%= link_to cart_display_text, cart_path %></li>
               </ul>
-          </div>
         </nav>
     </div>
   </header>
