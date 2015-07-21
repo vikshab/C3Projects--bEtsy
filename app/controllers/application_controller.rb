@@ -15,11 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
   def current_order
-    reset_session
     if session[:order_id]
       Order.find(session[:order_id])
     else
-      Order.new
+      Order.create
     end
   end
 
