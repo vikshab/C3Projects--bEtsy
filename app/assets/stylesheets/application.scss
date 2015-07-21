@@ -14,15 +14,26 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
- .jumbotron {
-   padding: 10px;
- }
+.jumbotron {
+  padding: 10px;
+}
 
- .page-header {
-   margin: auto;
-   height: 100px;
- }
+.page-header {
+  margin: auto;
+}
 
- .page-header h1 {
-   text-align: center;
- }
+.page-header h1 {
+  text-align: center;
+}
+
+
+.navbar-brand img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.tux {
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+}

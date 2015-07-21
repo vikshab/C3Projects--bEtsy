@@ -16,7 +16,9 @@
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
-              <%= link_to image_tag("penguin.png", size: "25x25", alt: "Home"), root_path, class: "navbar-brand" %>
+              <%= link_to root_path, class: "navbar-brand" do %>
+                <%= image_tag("penguin.png", size: "20x20", alt: "Home") %> <div class="tux">Tux</div>
+              <% end %>
             </div>
 
               <ul class="nav navbar-nav">
