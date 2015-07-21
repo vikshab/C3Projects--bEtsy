@@ -66,14 +66,14 @@ ActiveRecord::Schema.define(version: 20150720232631) do
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
-    t.float    "price"
+    t.decimal  "price",      precision: 12, scale: 2
     t.text     "desc"
     t.integer  "stock"
     t.string   "photo_url"
     t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "retired",    default: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.boolean  "retired",                             default: false
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"

@@ -107,9 +107,9 @@ As a signed-in user, I **can**:
     - price
     - photo URL
     - stock
-- Assign my products to any number of categories
-- Retire a product from being sold, which hides it from browsing
-- View an account page to edit/update my existing products
+- √ Assign my products to any number of categories
+- √ Retire a product from being sold, which hides it from browsing
+- √ View an account page to edit/update my existing products
 - View an account page showing my order fulfillment
 - On the order fulfillment page:
     - Total Revenue

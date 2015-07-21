@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :orders
 
+  get "/cart" => "orders#show", as: "cart"
+
   # RoR paths
   resources :order_items, only: [:create, :update, :destroy]
 
