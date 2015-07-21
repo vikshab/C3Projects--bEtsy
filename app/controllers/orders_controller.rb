@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:add_to_cart, :cart, :checkout, :update, :receipt]
+  before_action :set_order, only: [:cart, :checkout, :add_to_cart, :update, :receipt]
   before_action :set_product, only: [:add_to_cart]
+
+  def cart; end
+
+  def checkout; end
 
   def add_to_cart # TODO: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
     order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
@@ -12,10 +16,6 @@ class OrdersController < ApplicationController
 
     redirect_to product_path(@product)
   end
-
-  def cart; end
-
-  def checkout; end
 
   def update
     # add buyer info to order & change status
