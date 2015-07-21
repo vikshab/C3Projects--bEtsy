@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   before_action :find_categories
   before_action :find_merchants
   helper_method :current_order
-  # helper_method :current_cart
 
   def find_categories
     @categories = Category.all
@@ -22,16 +21,4 @@ class ApplicationController < ActionController::Base
       Order.create
     end
   end
-
-  # def current_cart
-  #   if session[:cart_id]
-  #     @current_cart ||= Cart.find(session[:cart_id])
-  #     session[:cart_id]=nil if @current_cart.purhased_at
-  #   end
-  #   if session[:cart_id].nil?
-  #     @current_cart = Cart.create!
-  #     session[:cart_id] = @current.cart.id
-  #   end
-  #   @current_cart
-  # end
 end
