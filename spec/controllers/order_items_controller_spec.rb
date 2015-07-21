@@ -14,7 +14,6 @@ RSpec.describe OrderItemsController, type: :controller do
 
     context "decreasing quantity" do
       it "assigns @item" do
-        # @item = OrderItem.find_by(id: params[:id])
         patch :less, id: 1
 
         expect(assigns(:item)).to eq(@item)
@@ -39,12 +38,12 @@ RSpec.describe OrderItemsController, type: :controller do
         end
 
         expect(assigns(:item).quantity_ordered).to eq(1)
+        expect(assigns(:item).errors.keys).to include(:quantity_ordered)
       end
     end
 
     context "increases quantity of cart item" do
       it "assigns @item" do
-        # @item = OrderItem.find_by(id: params[:id])
         patch :more, id: 1
 
         expect(assigns(:item)).to eq(@item)
@@ -69,6 +68,7 @@ RSpec.describe OrderItemsController, type: :controller do
         end
 
         expect(assigns(:item).quantity_ordered).to eq(@max_quantity)
+        expect(assigns(:item).errors.keys).to include(:quantity_ordered)
       end
 
       it "even if some of the stock is tied up in other pending orders" do
@@ -81,6 +81,7 @@ RSpec.describe OrderItemsController, type: :controller do
         end
 
         expect(assigns(:item).quantity_ordered).to eq(@max_quantity - already_tied_quantity)
+        expect(assigns(:item).errors.keys).to include(:quantity_ordered)
       end
     end
   end

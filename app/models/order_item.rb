@@ -21,9 +21,9 @@ class OrderItem < ActiveRecord::Base
 
   def more!
     reload # removing this line == DANGER WILL ROBINSON
-    # if the OrderItem isn't reloaded, ln28 will resolve based on a cached operation
-    # in other words, if line 28 has recently been evaluated for this OrderItem,
-    # then __in will not be evaluated__ and the cached value (true) will be used
+    # if the OrderItem isn't reloaded, ln30 will resolve based on a cached operation
+    # in other words, if line 30 has recently been evaluated for this OrderItem,
+    # then __it will not be evaluated__ and the cached value (true) will be used
     # instead. by reloading, we force a new SQL query to be run to check anew
     # whether product_has_stock?
 
@@ -33,7 +33,11 @@ class OrderItem < ActiveRecord::Base
   end
 
   def less!
-    update_column(:quantity_ordered, quantity_ordered - 1) if quantity_ordered > 1
+    if quantity_ordered > 1
+      update_column(:quantity_ordered, quantity_ordered - 1)
+    else
+      errors.add(:quantity_ordered, "You must remove this from your cart if you want to reduce its quantity any further.")
+    end
   end
 
   # TODO group: note that we need to talk about this more
@@ -58,10 +62,9 @@ class OrderItem < ActiveRecord::Base
       errors.add(:quantity_ordered, "Product must have available stock.")
       return false
     end
-
   end
 
-  def product_absent_from_order?
+  def product_absent_from_order? # OPTIMIZE is this the right way to do this?
     order.order_items.each do |item|
       if item.product_id == product_id
         errors.add(:product_id, "That product is already part of this order.")
