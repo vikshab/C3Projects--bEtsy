@@ -1,12 +1,8 @@
 class Order < ActiveRecord::Base
-  before_save :buyer_card_unexpired? # this should return false if the card is expired.
+  after_initialize :set_confirmed_payment_false
+  before_update :buyer_card_unexpired? # this should return false if the card is expired
 
   attr_accessor :confirmed_payment
-
-  def initialize
-    super
-    confirmed_payment = false
-  end
 
   # DB relationships
   has_many :order_items, dependent: :destroy
@@ -16,8 +12,8 @@ class Order < ActiveRecord::Base
 
 
   # validations helper regex
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   VALID_BUYER_CARD_SHORT_REGEX = /\A\d{4}\z/
 
   # data validations
@@ -36,11 +32,9 @@ class Order < ActiveRecord::Base
     validates_format_of :buyer_card_short, with: VALID_BUYER_CARD_SHORT_REGEX
 
     validates_presence_of :buyer_card_expiration
+    # TODO: validate card expiration is on or after today / Date.today
+    # guard clause that validation should only run if status pending
   end
-end
-
-  # TODO: validate card expiration is after today / Date.now
-  # guard clause that validation should only run if status pending
 
 
   def order_price
@@ -57,8 +51,11 @@ end
   def buyer_card_unexpired?
     unexpired = true
 
-    unless pending? && confirmed_payment
-      unexpired = buyer_card_expiration > Date.now
+    unless (pending? && confirmed_payment)
+      # if order is not pending and payment has not yet been confirmed,
+      # then confirm the payment -- which in this case means check the
+      # expiration date is on or after today.
+      unexpired = buyer_card_expiration >= Date.today
 
       if unexpired
         confirmed_payment = true
@@ -77,5 +74,9 @@ end
   # for validations, update other code to use this instead of mutable.
   def pending?
     status == "pending"
+  end
+
+  def set_confirmed_payment_false
+    confirmed_payment = false
   end
 end

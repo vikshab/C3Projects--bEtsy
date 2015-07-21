@@ -161,6 +161,12 @@ RSpec.describe Order, type: :model do
           expect(order.errors.keys).to include(:buyer_card_short)
         end
       end
+
+      it "buyer_card_expiration must be on or after today's date" do
+        today = ["1/1/1998"]
+        valid_dates = ["1/1/1998", "6/28/2016"]
+        invalid_dates = ["1/1/1901", "7/16/1969", "1/28/1986"]
+      end
     end
   end
 
