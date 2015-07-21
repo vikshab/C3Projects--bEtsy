@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   before_action :require_login, except: [:new, :create]
+  before_action :correct_user, except: [:new, :create]
+  # need this so it can see the helper methods
+  include ApplicationHelper
   # def index
   #   @users = User.all
   # end
@@ -22,6 +25,11 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
+
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
+    end
 
   private
 
