@@ -3,10 +3,12 @@ Rails.application.routes.draw do
 
   resources :categories, except: :destroy
   resources :sellers, only: [:index, :show]
-  resources :products, except: :destroy
+  resources :products, except: [:destroy, :new, :create]
 
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
   post '/products/:id/reviews/new', to: 'reviews#create'
+  get '/sellers/:id/products/new', to: 'products#new', as: "new_product"
+  post '/sellers/:id/products/new', to: 'products#create'
 
   scope :cart do
     get "/", to: "orders#cart", as: "cart"
