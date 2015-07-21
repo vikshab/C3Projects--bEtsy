@@ -1,9 +1,9 @@
 <div class="container">
 <h2>Add a Product</h2>
 <div class="form-group">
-  <div class="col-xs-4 col-xs-offset-2">
     <%= form_for @product, html: {class: "form"} do |f| %>
-
+  <div class="col-xs-4 col-xs-offset-2">
+    <%= render partial: "shared/error_messages", locals: { data_type: @product } %>
       <h3>Describe your product</h3>
 
       <%= f.label :name %>
@@ -20,7 +20,7 @@
       <% end %>
     </div>
 
- 
+
   <div class="col-xs-4">
     <h3>Add product details</h3>
 
@@ -33,9 +33,9 @@
     <%= f.label :photo_url %><br>
     <%= f.collection_select :photo_url, Product.all, :photo_url, :photo_url, include_blank: "--Select a Photo--" %>
 
-    <%= f.hidden_field :user_id, value: @user.id %>
+    <%= f.hidden_field :user_id, value: @user_id %>
     <br><br>
-    <%= f.submit "Add Product", class: "btn btn-default", method: :post %>
+    <%= f.submit "Add Product", class: "btn btn-default" %>
   <% end %>
   </div>
  </div>
