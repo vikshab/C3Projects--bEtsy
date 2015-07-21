@@ -1,21 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
-  describe "GET cart" do
+  describe "GET #cart" do
     before :each do
       @order = Order.create
       session[:order_id] = @order.id
-
-      @order_items_count = number_of_cart_items_wanted = 3
-      prod_name = "a"
-      number_of_cart_items_wanted.times do
-        product = Product.create(name: prod_name, seller_id: 1, price: 1, stock: 10)
-        OrderItem.create(order_id: @order.id, product_id: product.id, quantity_ordered: 5)
-        prod_name = prod_name.next
-      end
     end
 
-    it "successfully grabs the #cart action" do
+    it "is a success" do
       get :cart
 
       expect(response).to be_success
@@ -35,94 +27,20 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
-  describe "POST #add_to_cart" do
+  context "GET #checkout" do
     before :each do
       @order = Order.create
       session[:order_id] = @order.id
 
-      @product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
+      seller = Seller.new( { username: "I am a seller name", email: "email@example.com" } )
+      seller.password = seller.password_confirmation = "IAmAPassword"
+      seller.save
+
+      product = Product.create(name: "I am a product", price: 1000, seller_id: seller.id)
+      OrderItem.create(order_id: @order.id, product_id: product.id, quantity_ordered: 5)
     end
 
-    it "assigns @order" do
-      post :add_to_cart, id: 1
-
-      expect(assigns(:order)).to eq(@order)
-    end
-
-    it "assigns @product" do
-      post :add_to_cart, id: 1
-
-      expect(assigns(:product)).to eq(@product)
-    end
-
-    it "redirects to the product #show page after save" do
-      # OrderItem.create(product_id: @product.id, order_id: session[:order_id], quantity_ordered: 1)
-      post :add_to_cart, id: 1
-
-      expect(response).to redirect_to(product_path(@product))
-    end
-
-    it "creates a new order_item for the current order" do
-      post :add_to_cart, id: 1
-      Order.last.reload
-
-      # # !Q why are the object_ids different?
-      # puts Order.last.id
-      # puts OrderItem.last.order_id
-      # puts Order.last.object_id
-      # puts OrderItem.last.order.object_id
-      # puts Order.last.status
-      # puts OrderItem.last.order.status
-      # Order.find(OrderItem.last.order_id).update(status: "paid")
-      # Order.find(OrderItem.last.order_id).reload
-      # puts Order.last.id
-      # puts OrderItem.last.order_id
-      # puts Order.last.object_id
-      # puts OrderItem.last.order.object_id
-      # puts Order.last.status
-      # puts OrderItem.last.order.status
-
-      expect(Order.last.order_items.first.product).to eq(@product)
-    end
-
-    context "with the current product already part of the current order" do
-      before :each do
-        post :add_to_cart, id: 1
-        products = Order.last.order_items.map { |item| item.product }
-      end
-
-      it "does not create a new order_item" do
-        5.times do
-          post :add_to_cart, id: 1
-          Order.last.reload
-          products = Order.last.order_items.map { |item| item.product }
-          expect(products.length).to be(1)
-        end
-
-        Product.create(name: 'b', price: 1, seller_id: 1, stock: 1)
-
-        post :add_to_cart, id: 2
-        Order.last.reload
-        products = Order.last.order_items.map { |item| item.product }
-        expect(products.length).to be(2)
-      end
-    end
-  end
-
-  context "GET checkout" do
-    before :each do
-      @order = Order.create
-      session[:order_id] = @order.id
-
-      # # TODO: FOR LINDEY AND JERI: Commenting this out fixed several tests. Something here has problems.
-      #   # NOTE: Ash also changed `'1'` -> `@order.id` on `order_id: ` in OrderItem.create below.
-      # @order_items_count = number_of_cart_items_wanted = 10
-      # number_of_cart_items_wanted.times do
-      #   OrderItem.create(order_id: @order.id, product_id: (1..10).to_a.sample, quantity_ordered: 5)
-      # end
-    end
-
-    it "successfully grabs the #cart action" do
+    it "is a success" do
       get :checkout
 
       expect(response).to be_success
@@ -140,6 +58,65 @@ RSpec.describe OrdersController, type: :controller do
 
       expect(assigns(:order)).to eq(@order)
     end
+  end
+
+  describe "POST #add_to_cart" do
+    before :each do
+      @order = Order.create
+      session[:order_id] = @order.id
+
+      seller = Seller.new( { username: "I am a seller name", email: "email@example.com" } )
+      seller.password = seller.password_confirmation = "IAmAPassword"
+      seller.save
+
+      @product = Product.create(name: "I am a product", price: 1000, seller_id: seller.id, stock: 10)
+    end
+
+    it "assigns @order" do
+      post :add_to_cart, { id: @product.id }
+
+      expect(assigns(:order)).to eq(@order)
+    end
+
+    it "assigns @product" do
+      post :add_to_cart, { id: @product.id }
+
+      expect(assigns(:product)).to eq(@product)
+    end
+
+    it "redirects to product#show" do
+      post :add_to_cart, { id: @product.id }
+
+      expect(response).to redirect_to(product_path(@product))
+    end
+
+    context "when product is unique in cart" do
+      it "creates a new order_item for the current order" do
+        expect{ post :add_to_cart, { id: @product.id } }.to change{ OrderItem.count }
+      end
+    end
+
+    context "when product is already in cart" do
+      before :each do
+        OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+      end
+
+      it "does not create a new OrderItem" do
+        post :add_to_cart, { id: @product.id }
+
+        expect(OrderItem.all.count).to eq(1)
+        expect(OrderItem.first.quantity_ordered).to eq(1)
+      end
+
+      it "adds an error message" do
+        post :add_to_cart, { id: @product.id }
+
+        expect(flash[:error]).to include(:product_not_unique)
+      end
+    end
+
+    # TODO: anw, this is where you left off.
+
 
     # it "assigns @order_items" do
     #   get :checkout
@@ -158,6 +135,44 @@ RSpec.describe OrdersController, type: :controller do
     #   expect(response).to have_http_status(302)
     #   expect(response).to redirect_to(receipt_path)
     # end
+
+    # context "with the current product already part of the current order" do
+    #   before :each do
+    #     post :add_to_cart, id: 1
+    #     products = Order.last.order_items.map { |item| item.product }
+    #   end
+
+    #   it "does not create a new order_item" do
+    #     5.times do
+    #       post :add_to_cart, id: 1
+    #       Order.last.reload
+    #       products = Order.last.order_items.map { |item| item.product }
+    #       expect(products.length).to be(1)
+    #     end
+
+    #     Product.create(name: 'b', price: 1, seller_id: 1, stock: 1)
+
+    #     post :add_to_cart, id: 2
+    #     Order.last.reload
+    #     products = Order.last.order_items.map { |item| item.product }
+    #     expect(products.length).to be(2)
+    #   end
+    # end
+  end
+
+  describe "PATCH #update" do
+    before :each do
+      @order = Order.create
+      session[:order_id] = @order.id
+
+      @checkout_buyer_params = { order: {buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: 1234, buyer_card_expiration: Time.now } }
+    end
+
+    it "assigns @order" do
+      patch :update, @checkout_buyer_params
+
+      expect(assigns(:order)).to eq(@order)
+    end
   end
 
   describe "GET receipt" do
@@ -235,20 +250,5 @@ RSpec.describe OrdersController, type: :controller do
     #     expect(response).to redirect_to(root_path)
     #   end
     # end
-  end
-
-  describe "PATCH #update" do
-    before :each do
-      @order = Order.create
-      session[:order_id] = @order.id
-
-      @checkout_buyer_params = { order: {buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: 1234, buyer_card_expiration: Time.now } }
-    end
-
-    it "assigns @order" do
-      patch :update, @checkout_buyer_params
-
-      expect(assigns(:order)).to eq(@order)
-    end
   end
 end
