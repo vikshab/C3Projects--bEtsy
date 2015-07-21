@@ -24,6 +24,7 @@ class Order < ActiveRecord::Base
   # TODO: validate address or name somehow?
 
   validates_presence_of :buyer_card_short, unless: :pending?
+  # validates_format_
   validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?
 
   validates_presence_of :buyer_card_expiration, unless: :pending?

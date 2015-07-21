@@ -128,7 +128,7 @@ RSpec.describe Order, type: :model do
       it "requires an email with a valid format" do
         valid_emails = ["bob@bob.bob.bob", "12345@bob.bob", "bob@bob.bob",
           "....@bob.bob", "1......2....3......4............5@bob.bob",
-          "bob.bob@bob.bob"]
+          "bob.bob@bob.bob", "bob-bob@bob.bob", "bob@bob-bob.bob"]
 
         valid_emails.each do |email|
           order = Order.create(status: "paid", buyer_email: email)
@@ -136,7 +136,9 @@ RSpec.describe Order, type: :model do
         end
 
         invalid_emails = ["bob@@bob.bob", "bob@bob..bob", "bob@bob", "bob.bob",
-          "bob", "@bob", "bob@12345", "bob@手紙.bob", "bob@bob.手紙"]
+          "bob", "@bob", "bob@12345", "bob@手紙.bob", "bob@bob.手紙", "",
+          "bob bobson@bob.bob", "bob@bob bobson.bob", "bob-bob@bob-bob@bob.bob",
+          "    bob@bob.bob", " bob@bob.bob", "bob@bob.bob "]
 
         invalid_emails.each do |email|
           order = Order.create(status: "paid", buyer_email: email)
@@ -144,7 +146,25 @@ RSpec.describe Order, type: :model do
         end
       end
 
-      it "validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?"
+      it "buyer_card_short must be 4 digits" do
+        valid_cards = ["1234", "8000", "0001", 5_000, 8_210, 0_001]
+        # FIXME this spec *should* be red, since 0001 & 0_001 are not accepted. the validation we have is WRONG.
+
+        valid_cards.each do |card|
+          order = Order.create(status: "paid", buyer_card_short: card)
+          puts order.errors.keys
+          puts card
+          puts "\n\n"
+          expect(order.errors.keys).to_not include(:buyer_card_short)
+        end
+
+        invalid_cards = [1, 24, 5.123, 5.12, -500, -1234, "abcd"]
+
+        invalid_cards.each do |card|
+          order = Order.create(status: "paid", buyer_card_short: card)
+          expect(order.errors.keys).to include(:buyer_card_short)
+        end
+      end
     end
   end
 
