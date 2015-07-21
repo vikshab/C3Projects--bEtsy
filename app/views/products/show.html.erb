@@ -6,13 +6,13 @@
 
 <h4><%= display_dollars(@product.price) %></h4>
 
-<%= link_to "Add to Cart", add_item_path(@product), method: :post %>
+<%= link_to "Add to Cart", add_item_path(@product), method: :post, class: "btn btn-default" %>
 
 <h3>Reviews</h3>
 
 <h4>Average Rating: <%= @average_rating %></h4>
 
-<%= link_to "Add Review", new_review_path %>
+<%= link_to "Add Review", new_review_path, class: "btn btn-default" %>
 
 <% @reviews.each do |review| %>
   <ul>
