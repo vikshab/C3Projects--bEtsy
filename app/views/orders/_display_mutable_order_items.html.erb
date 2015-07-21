@@ -18,7 +18,11 @@
       <td><%= link_to item.product.seller.username, seller_path(item.product.seller) %></td>
       <td><%= display_dollars(item.item_price) %></td>
       <td>
-        <%= link_to "x", kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } %>
+        <div class="garbage-icon">          
+          <%= link_to kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } do %>
+            <span class="glyphicon glyphicon-trash"></span>
+          <% end %>
+        </div>
       </td>
     </tr>
   <% end %>
