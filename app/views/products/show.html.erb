@@ -1,5 +1,7 @@
-<h1><%= @product.name %></h1>
-<h4>Average Rating: <%= @average_rating %></h4>
+<div class="page-header">
+  <h1><%= @product.name %> <small>Average Rating: <%= @average_rating %></small></h1>
+</div>
+<h4>Sold by: <%= @product.seller.username %> </h4>
 <h4><%= display_dollars(@product.price) %></h4>
 
 <%= image_tag "#{@product.photo_url}" %>
