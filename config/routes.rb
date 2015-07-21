@@ -5,14 +5,14 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
-  resources :products do
+  resources :products, except: [:new] do
     resources :reviews
   end
 
   patch 'products/retire/:id' => 'products#retire', as: "retire"
 
   resources :users, path: "merchants" do
-    resources :products, only: [:new, :create]
+    resources :products, only: [:new]
   end
 
   get "/categories/:category_name" => "categories#show", as: "category"
