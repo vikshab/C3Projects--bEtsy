@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: [:update, :show, :destroy]
+  before_action :find_order, only: [:update, :destroy]
 
   def new
     @order = Order.new
@@ -29,21 +29,14 @@ class OrdersController < ApplicationController
   end
 
   def show
-    # not sure if we need this one yet
+    # calls the items from the Order associated with a session
+    @order_items = current_order.order_items
   end
 
   private
 
     def order_params
-      params.require(:order).permit(:subtotal,
-                                    :buyer_name,
-                                    :buyer_email,
-                                    :buyer_zip,
-                                    :buyer_state,
-                                    :buyer_address,
-                                    :buyer_city,
-                                    :buyer_expcc,
-                                    :buyer_last4cc)
+      params.require(:order).permit(:id)
     end
 
     def find_order
