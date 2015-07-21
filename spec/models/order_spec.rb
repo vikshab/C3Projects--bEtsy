@@ -147,12 +147,8 @@ RSpec.describe Order, type: :model do
       end
 
       it "buyer_card_short must be 4 digits" do
-        valid_cards = ["1234", "8000", 5_000, 8_210]
-        # FIXME: I don't get it. these match in rubular with one false positive
-        # on -1234 because I omitted the start & end of string matchers.
-        # http://rubular.com/r/tabyn4oPEI
-        # this needs to also test for: "0001", "0000", "0999", all of which
-        # should PASS.
+        valid_cards = ["1234", "8000", 5_000, 8_210, "0001", "0000", "0999"]
+
         valid_cards.each do |card|
           order = Order.create(status: "paid", buyer_card_short: card)
           expect(order.errors.keys).to_not include(:buyer_card_short)
