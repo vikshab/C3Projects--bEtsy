@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :set_product, except: [:index, :new]
+  before_action :set_product, except: [:index, :new, :create]
+  before_action :set_seller, only: [:new, :create]
 
   def index
     @products = Product.all
@@ -37,6 +38,10 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
+  end
+
+  def set_seller
+    @seller = Seller.find(params[:id])
   end
 
   def create_params
