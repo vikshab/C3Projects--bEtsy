@@ -46,6 +46,13 @@
         <h4 class="alert alert-warning"><%= flash[:error] %></h4>
       <% end %>
 
+      <% if flash[:messages] %>
+        <h4 class="alert alert-success"><%= flash[:messages] %></h4>
+      <% end %>
+      <% if flash[:errors] %>
+        <h4 class="alert alert-warning"><%= flash[:error] %></h4>
+      <% end %>
+
       <%= yield %>
     </div>
   </main>
