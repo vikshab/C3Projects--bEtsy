@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit]
+  before_action :set_product, except: [:index, :new]
 
   def index
     @products = Product.all
@@ -8,6 +8,19 @@ class ProductsController < ApplicationController
   def show
     @reviews = @product.reviews
     @average_rating = @product.average_rating
+  end
+
+  def new
+    @product = Product.new
+  end
+
+  def create
+    @product = Product.new(create_params)
+    if @product.save
+      redirect_to product_path(@product)
+    else
+      render :new
+    end
   end
 
   def edit; end
