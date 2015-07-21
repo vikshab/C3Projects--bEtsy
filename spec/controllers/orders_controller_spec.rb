@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
+  let(:seller) { Seller.new( { username: "I am a seller name", email: "email@example.com", password: "IAmAPassword", password_confirmation: "IAmAPassword" } ) }
+  let(:product) { Product.create(name: "I am a product", price: 1000, seller_id: seller.id, stock: 10) }
+
   describe "GET #cart" do
     before :each do
       @order = Order.create
@@ -114,56 +117,23 @@ RSpec.describe OrdersController, type: :controller do
         expect(flash[:errors]).to include(:product_not_unique)
       end
     end
-
-    # TODO: anw, this is where you left off.
-
-
-    # it "assigns @order_items" do
-    #   get :checkout
-    #
-    #   expect(assigns(:order_items)).to eq(OrderItem.all)
-    #   expect(assigns(:order_items_count)).to eq(@order_items_count)
-    # end
-
-    # it "redirects to receipt page if order status is not pending" do
-    #   Order.find(session[:order_id]).update(status: "paid")
-    #   Order.find(session[:order_id]).save
-    #   Order.find(session[:order_id]).reload
-    #
-    #   get :checkout
-    #
-    #   expect(response).to have_http_status(302)
-    #   expect(response).to redirect_to(receipt_path)
-    # end
-
-    # context "with the current product already part of the current order" do
-    #   before :each do
-    #     post :add_to_cart, id: 1
-    #     products = Order.last.order_items.map { |item| item.product }
-    #   end
-
-    #   it "does not create a new order_item" do
-    #     5.times do
-    #       post :add_to_cart, id: 1
-    #       Order.last.reload
-    #       products = Order.last.order_items.map { |item| item.product }
-    #       expect(products.length).to be(1)
-    #     end
-
-    #     Product.create(name: 'b', price: 1, seller_id: 1, stock: 1)
-
-    #     post :add_to_cart, id: 2
-    #     Order.last.reload
-    #     products = Order.last.order_items.map { |item| item.product }
-    #     expect(products.length).to be(2)
-    #   end
-    # end
   end
 
   describe "PATCH #update" do
     before :each do
       @order = Order.create
       session[:order_id] = @order.id
+
+      seller
+      product
+    end
+
+    before :each do
+      @order = Order.create
+      session[:order_id] = @order.id
+
+      seller
+      product
 
       @checkout_buyer_params = { order: {buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: 1234, buyer_card_expiration: Time.now } }
     end
@@ -252,3 +222,45 @@ RSpec.describe OrdersController, type: :controller do
     # end
   end
 end
+
+
+    # it "assigns @order_items" do
+    #   get :checkout
+    #
+    #   expect(assigns(:order_items)).to eq(OrderItem.all)
+    #   expect(assigns(:order_items_count)).to eq(@order_items_count)
+    # end
+
+    # it "redirects to receipt page if order status is not pending" do
+    #   Order.find(session[:order_id]).update(status: "paid")
+    #   Order.find(session[:order_id]).save
+    #   Order.find(session[:order_id]).reload
+    #
+    #   get :checkout
+    #
+    #   expect(response).to have_http_status(302)
+    #   expect(response).to redirect_to(receipt_path)
+    # end
+
+    # context "with the current product already part of the current order" do
+    #   before :each do
+    #     post :add_to_cart, id: 1
+    #     products = Order.last.order_items.map { |item| item.product }
+    #   end
+
+    #   it "does not create a new order_item" do
+    #     5.times do
+    #       post :add_to_cart, id: 1
+    #       Order.last.reload
+    #       products = Order.last.order_items.map { |item| item.product }
+    #       expect(products.length).to be(1)
+    #     end
+
+    #     Product.create(name: 'b', price: 1, seller_id: 1, stock: 1)
+
+    #     post :add_to_cart, id: 2
+    #     Order.last.reload
+    #     products = Order.last.order_items.map { |item| item.product }
+    #     expect(products.length).to be(2)
+    #   end
+    # end
