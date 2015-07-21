@@ -2,11 +2,12 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:add_to_cart, :cart, :checkout, :update, :receipt]
   before_action :set_product, only: [:add_to_cart]
 
-  def add_to_cart
-    if @order.already_has_product?(@product)
-      flash[:error] = "This item is already in your cart!" # TODO: perhaps change this to incrementing the count in the cart?
+  def add_to_cart # TODO: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
+    order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+    if order_item.save
+      flash[:message] = "The item has been added to your cart!"
     else
-      OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+      flash[:error] = order_item.errors
     end
 
     redirect_to product_path(@product)
