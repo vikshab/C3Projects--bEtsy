@@ -1,17 +1,15 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: [:cart, :checkout, :update, :receipt]
-  before_action :check_access, only: [:cart, :checkout, :receipt]
+  before_action :set_order, only: [:add_to_cart, :cart, :checkout, :update, :receipt]
+  before_action :set_product, only: [:add_to_cart]
 
   def add_to_cart
-    product = Product.find(params[:id])
-
-    if Order.find(session[:order_id]).already_has_product? product
-      flash[:error] = "This item is already in your cart!"
+    if @order.already_has_product?(@product)
+      flash[:error] = "This item is already in your cart!" # TODO: perhaps change this to incrementing the count in the cart?
     else
-      OrderItem.create(product_id: product.id, order_id: session[:order_id], quantity_ordered: 1)
+      OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
     end
 
-    redirect_to product_path(product)
+    redirect_to product_path(@product)
   end
 
   def cart; end
@@ -46,14 +44,16 @@ class OrdersController < ApplicationController
       return order_info
     end
 
-    def find_order
-      @order = Order.find_by(id: session[:order_id])
-
-      # !W this is not final
-      redirect_to root_path if @order.nil? # I'm pretty sure this will never be true -J
+    def set_order
+      if session[:order_id] && Order.find_by(id: session[:order_id])
+        @order = Order.find(session[:order_id])
+      else
+        @order = Order.create
+        session[:order_id] = @order.id
+      end
     end
 
-    def check_access
-      redirect_to root_path if @order.nil? # I'm pretty sure this will never be true -J
+    def set_product
+      @product = Product.find(params[:id])
     end
 end
