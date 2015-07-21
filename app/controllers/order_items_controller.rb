@@ -8,7 +8,7 @@ class OrderItemsController < ApplicationController
     else
       # !W we should talk about whether this error message should be shown
       # and what it should truly say in production
-      flash[:error] = "You cannot increase the quantity of #{ @item.product.name } any further, because there are only #{ @item.quantity_ordered } in stock."
+      flash[:error] = @item.errors[:quantity_ordered]
     end
 
     redirect_to cart_path

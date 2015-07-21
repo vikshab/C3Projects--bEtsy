@@ -20,7 +20,13 @@ class OrderItem < ActiveRecord::Base
   end
 
   def more!
-    increment!(:quantity_ordered, 1) if product_has_stock?
+    reload
+
+    # if the OrderItem isn't reloaded, this will resolve based on a cached operation
+    # by reloading, we force a new SQL query to check whether product_has_stock?
+    if product_has_stock?
+      increment!(:quantity_ordered, 1)
+    end
   end
 
   def less!
@@ -44,12 +50,13 @@ class OrderItem < ActiveRecord::Base
 
   def product_has_stock? # !Q is this the right way to do this?
     # stock = product.has_available_stock?
-    unless product.has_available_stock?
+    if product.has_available_stock?
+      return true
+    else
       errors.add(:quantity_ordered, "Product must have available stock.")
       return false
     end
 
-    return true
   end
 
   def product_absent_from_order?
