@@ -26,13 +26,13 @@
                     <li><%= link_to "All Sellers", sellers_path %></li>
                   </ul>
                 </li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
                 <% cart_display_text = "Cart" %>
                 <% if @order.order_items && @order.order_items.count > 0 %>
                   <% cart_display_text += " (#{ @order.order_items.count })" %>
                 <% end %>
-              </ul>
-
-              <ul class="nav navbar-nav navbar-right">
                 <li><%= link_to cart_display_text, cart_path %></li>
               </ul>
         </nav>
@@ -48,14 +48,13 @@
   </main>
 
   <footer>
-    <nav class="navbar"> -
-      <%= link_to "Top", "#top" %> -
-      <%= link_to "Home", root_path %> -
-      <%= link_to "All Products", products_path %> -
-      <%= link_to "All Categories", categories_path %> -
-      <%= link_to "All Sellers", sellers_path %> -
-      <%= link_to cart_display_text, cart_path %> -
-    </nav>
+    <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-bottom">
+        <ul class="nav navbar-nav">
+          <li><%= link_to "Top", "#top" %></li>
+        </ul>
+      </nav>
+    </div>
   </footer>
 </body>
 </html>
