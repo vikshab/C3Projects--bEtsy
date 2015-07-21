@@ -20,11 +20,11 @@ class OrderItem < ActiveRecord::Base
   end
 
   def more!
-    increment!(:quantity_ordered, 1)
+    increment!(:quantity_ordered, 1) if product_has_stock?
   end
 
   def less!
-    update_column(:quantity_ordered, quantity_ordered - 1)
+    update_column(:quantity_ordered, quantity_ordered - 1) if quantity_ordered > 1
   end
 
   # group: note that we need to talk about this more

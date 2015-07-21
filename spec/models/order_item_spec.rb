@@ -177,6 +177,34 @@ RSpec.describe OrderItem, type: :model do
       @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
     end
 
+    context "more!" do
+      it "increments the quantity_ordered" do
+        item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+        item.more!
+        expect(item.quantity_ordered).to eq(2)
+      end
+
+      it "unless that quantity is beyond the stock available" do
+        item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
+        item.more!
+        expect(item.quantity_ordered).to eq(5)
+      end
+    end
+
+    context "less!" do
+      it "increments the quantity_ordered" do
+        item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
+        item.less!
+        expect(item.quantity_ordered).to eq(4)
+      end
+
+      it "unless that quantity is one or less" do
+        item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+        item.less!
+        expect(item.quantity_ordered).to eq(1)
+      end
+    end
+
     context "price" do
       it "has a price through its association to product" do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)

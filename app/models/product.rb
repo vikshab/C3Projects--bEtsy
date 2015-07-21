@@ -25,11 +25,7 @@ class Product < ActiveRecord::Base
   end
 
   def has_available_stock?
-    if (quantity_tied_up_in_pending_transactions + 1) <= stock
-      return true
-    else
-      return false
-    end
+    (quantity_tied_up_in_pending_transactions + 1) <= stock
   end
 
   def update_stock
