@@ -99,33 +99,33 @@ RSpec.describe ProductsController, type: :controller do
     context "valid product params" do
       before :each do
         @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
-        @product = { :product => { name: 'a', price: 1, seller_id: 1, stock: 1 }, id: 1 }
+        @new_params = { :product => { name: 'a', price: 1, seller_id: 1, stock: 1 }, id: 1 }
       end
 
       it "creates a product" do
-        post :create, @product
+        post :create, @new_params
         expect(Product.count).to eq 1
       end
 
       it "redirects to the product show page" do
-        post :create, @product
-        expect(subject).to redirect_to("/products/#{@product[:id]}")
+        post :create, @new_params
+        expect(subject).to redirect_to("/products/#{@new_params[:id]}")
       end
     end
 
     context "invalid product params" do
       before :each do
         @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
-        @product = { :product => { name: '', price: 1, seller_id: 1, stock: 1 }, id: 1 }
+        @new_params = { :product => { name: '', price: 1, seller_id: 1, stock: 1 }, id: 1 }
       end
 
       it "does not persist invalid records" do
-        post :create, @product
+        post :create, @new_params
         expect(Product.count).to eq 0
       end
 
       it "renders the new page so the record can be fixed" do
-        post :create, @product
+        post :create, @new_params
         expect(response).to render_template("new")
       end
     end
