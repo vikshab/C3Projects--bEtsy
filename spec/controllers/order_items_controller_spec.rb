@@ -12,39 +12,8 @@ RSpec.describe OrderItemsController, type: :controller do
       @item = OrderItem.create(order_id: 1, product_id: 1, quantity_ordered: @initial_quantity)
     end
 
-    context "decreasing quantity" do
+    context "#more: increasing quantity of cart item" do
       it "assigns @item" do
-        # @item = OrderItem.find_by(id: params[:id])
-        patch :less, id: 1
-
-        expect(assigns(:item)).to eq(@item)
-      end
-
-      it "redirects back to the cart" do
-        patch :less, id: 1
-
-        expect(response).to redirect_to(cart_path)
-        expect(response).to have_http_status(302)
-      end
-
-      it "decreases the quantity by one" do
-        patch :less, id: 1
-
-        expect(assigns(:item).quantity_ordered).to eq(@initial_quantity - 1)
-      end
-
-      it "doesn't decrease the quantity below one" do
-        (@initial_quantity + 1).times do
-          patch :less, id: 1
-        end
-
-        expect(assigns(:item).quantity_ordered).to eq(1)
-      end
-    end
-
-    context "increases quantity of cart item" do
-      it "assigns @item" do
-        # @item = OrderItem.find_by(id: params[:id])
         patch :more, id: 1
 
         expect(assigns(:item)).to eq(@item)
@@ -82,6 +51,51 @@ RSpec.describe OrderItemsController, type: :controller do
 
         expect(assigns(:item).quantity_ordered).to eq(@max_quantity - already_tied_quantity)
       end
+    end
+
+    context "#less: decreasing quantity of cart item" do
+      it "assigns @item" do
+        patch :less, id: 1
+
+        expect(assigns(:item)).to eq(@item)
+      end
+
+      it "redirects back to the cart" do
+        patch :less, id: 1
+
+        expect(response).to redirect_to(cart_path)
+        expect(response).to have_http_status(302)
+      end
+
+      it "decreases the quantity by one" do
+        patch :less, id: 1
+
+        expect(assigns(:item).quantity_ordered).to eq(@initial_quantity - 1)
+      end
+
+      it "doesn't decrease the quantity below one" do
+        (@initial_quantity + 1).times do
+          patch :less, id: 1
+        end
+
+        expect(assigns(:item).quantity_ordered).to eq(1)
+      end
+    end
+
+    context "#destroy: removing item from cart" do
+      it "destroys the item" do
+        delete :destroy, id: 1
+
+        expect{ OrderItem.find(1) }.to raise_exception(ActiveRecord::RecordNotFound)
+      end
+
+      it "redirects back to the cart" do
+        delete :destroy, id: 1
+
+        expect(response).to redirect_to(cart_path)
+        expect(response).to have_http_status(302)
+      end
+
     end
   end
 end
