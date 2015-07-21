@@ -18,7 +18,7 @@
       <td><%= link_to item.product.seller.username, seller_path(item.product.seller) %></td>
       <td><%= display_dollars(item.item_price) %></td>
       <td>
-        <div class="garbage-icon">          
+        <div class="garbage-icon">
           <%= link_to kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } do %>
             <span class="glyphicon glyphicon-trash"></span>
           <% end %>
@@ -28,7 +28,7 @@
   <% end %>
   <tr>
     <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
-    <th colspan="2">Total:</th>
-    <th colspan="3"><%= display_dollars(@order.order_price) %></th>
+    <th colspan="3">Total:</th>
+    <th colspan="2"><%= display_dollars(@order.order_price) %></th>
   </tr>
 </table>
