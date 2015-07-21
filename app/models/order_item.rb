@@ -13,10 +13,18 @@ class OrderItem < ActiveRecord::Base
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
 
-  # this should probably be in helpers/order_items_helpers
-  # if this is only going to be used in the cart, maybe just use it inline inside the view
+  # TODO this should probably be in helpers/order_items_helpers
+  # OPTIMIZE if this is only going to be used in the cart, maybe just use it inline inside the view
   def remove_prompt_text
     "Are you sure you want to remove this item (#{ product.name }) from your cart?"
+  end
+
+  def more!
+    increment!(:quantity_ordered, 1)
+  end
+
+  def less!
+    update_column(:quantity_ordered, quantity_ordered - 1)
   end
 
   # group: note that we need to talk about this more
