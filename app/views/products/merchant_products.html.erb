@@ -1,7 +1,5 @@
-<% @products.each do |product| %>
-  <p>Name: <%= product.name %></p>
-  <p>Description: <%= product.desc %></p>
-  <p>Price: <%= product.price %></p>
-  <p>On stock:<%= product.stock %></p>
-<% end %>
-<p>Total: <%= @products.count %></p>
+<%= render partial: "shared/show_products", locals:
+                                              {
+                                                sort_by: @merchant.products.active_product,
+                                                label: "#{@merchant.name.capitalize}'s Products"
+                                              } %>

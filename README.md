@@ -61,8 +61,8 @@ As a guest to the website (not signed in) I **can**:
     - A Text review
     - A rating out of 5
 - √ Add in-stock products to my cart
-- Remove products from my cart
-- Change the quantity of an existing product in my cart
+- √ Remove products from my cart
+- √ Change the quantity of an existing product in my cart
 - Purchase the items in my cart, providing:
     - Email Address
     - Mailing Address

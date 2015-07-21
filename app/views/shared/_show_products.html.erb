@@ -1,0 +1,21 @@
+<div class="container">
+<h2> <%= label %></h2>
+  <div class="row">
+  <% sort_by.each do |product| %>
+    <div class="col-xs-4 col-lg-4">
+      <div class="thumbnail">
+        <%= image_tag(product.photo_url, class: "img-responsive product-thumb") %>
+        <div class="caption">
+          <h5 class="pull-right"> <%= number_to_currency(product.price) %></h5>
+          <h4><%= product.name %></h4>
+          <p><%= link_to("See more about the product", product_path(product.id)) %></p>
+        </div>
+        <div class="ratings">
+          <p class="pull-right"><%= product.reviews.count %> Reviews</p>
+          <p><%= render_stars(avg_rating(product.id)) %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
