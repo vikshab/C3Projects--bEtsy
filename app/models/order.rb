@@ -11,6 +11,8 @@ class Order < ActiveRecord::Base
   # validations helper regex
   # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  VALID_BUYER_CARD_SHORT_REGEX = /\A\d{4}\z/ # I don't get it. this matches in rubular.
+  # FIXME this regex is apparently broken in the specs. second set of eyes?
 
   # data validations
   validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
@@ -24,8 +26,7 @@ class Order < ActiveRecord::Base
   # TODO: validate address or name somehow?
 
   validates_presence_of :buyer_card_short, unless: :pending?
-  # validates_format_
-  validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?
+  validates_format_of :buyer_card_short, with: VALID_BUYER_CARD_SHORT_REGEX, unless: :pending?
 
   validates_presence_of :buyer_card_expiration, unless: :pending?
   # TODO: validate card expiration is after today / Date.now
