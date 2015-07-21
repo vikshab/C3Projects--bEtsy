@@ -1,28 +1,27 @@
-<div class = "row no-jumbo form-header">
-  <div class="col-sm-4 col-sm-offset-5">
-    <h2>Add a Product</h2>
-  </div>
-</div>
+<div class="container">
+<h2>Add a Product</h2>
+<div class="form-group">
+  <div class="col-xs-4 col-xs-offset-2">
+    <%= form_for @product, html: {class: "form"} do |f| %>
 
-<div class="row form-group">
-  <%= form_for @product, html: {class: "form"} do |f| %>
+      <h3>Describe your product</h3>
 
-  <div class="col-sm-4 col-sm-offset-1">
-    <h3>Describe your product</h3>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
 
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
+      <%= f.label :description %>
+      <%= f.text_area :desc, class: "form-control" %>
 
-    <%= f.label :description %>
-    <%= f.text_area :desc, class: "form-control" %>
+      <%= f.label :categories %><br>
+      <%= collection_check_boxes(:product, :category_ids, Category.all, :id, :name) do |b| %>
+        <%= b.label class: "checkbox-inline" do %>
+          <%= b.check_box + b.text.capitalize %>
+        <% end %>
+      <% end %>
+    </div>
 
-    <%= @categories.each do |category| %>
-      <%= f.label category.name %>
-      <%= f.check_box(:categories, {}, "#{category.name}", "") %>
-    <% end %>
-  </div>
-
-  <div class="col-sm-3">
+ 
+  <div class="col-xs-4">
     <h3>Add product details</h3>
 
     <%= f.label :stock %>
@@ -31,14 +30,13 @@
     <%= f.label :price %>
     <%= f.number_field :price, class: "form-control", step: 0.01 %>
 
-    <%= f.label :photo_url %>
-    <%= f.text_field :photo_url, class: "form-control" %>
+    <%= f.label :photo_url %><br>
+    <%= f.collection_select :photo_url, Product.all, :photo_url, :photo_url, include_blank: "--Select a Photo--" %>
 
     <%= f.hidden_field :user_id, value: @user.id %>
+    <br><br>
+    <%= f.submit "Add Product", class: "btn btn-default", method: :post %>
+  <% end %>
   </div>
-
-  <div class="col-sm-4 col-sm-offset-1">
-    <%= f.submit "Add Product", class: "btn btn-default" %>
-    <% end %>
-  </div>
+ </div>
 </div>
