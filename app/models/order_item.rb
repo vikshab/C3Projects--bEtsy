@@ -13,13 +13,34 @@ class OrderItem < ActiveRecord::Base
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
 
-  # this should probably be in helpers/order_items_helpers
-  # if this is only going to be used in the cart, maybe just use it inline inside the view
+  # TODO this should probably be in helpers/order_items_helpers
+  # OPTIMIZE if this is only going to be used in the cart, maybe just use it inline inside the view
   def remove_prompt_text
     "Are you sure you want to remove this item (#{ product.name }) from your cart?"
   end
 
-  # group: note that we need to talk about this more
+  def more!
+    reload # removing this line == DANGER WILL ROBINSON
+    # if the OrderItem isn't reloaded, ln30 will resolve based on a cached operation
+    # in other words, if line 30 has recently been evaluated for this OrderItem,
+    # then __it will not be evaluated__ and the cached value (true) will be used
+    # instead. by reloading, we force a new SQL query to be run to check anew
+    # whether product_has_stock?
+
+    if product_has_stock?
+      increment!(:quantity_ordered, 1)
+    end
+  end
+
+  def less!
+    if quantity_ordered > 1
+      update_column(:quantity_ordered, quantity_ordered - 1)
+    else
+      errors.add(:quantity_ordered, "You must remove this from your cart if you want to reduce its quantity any further.")
+    end
+  end
+
+  # TODO group: note that we need to talk about this more
 
   # fyi, leaving these comments here in case future me is not articulate.
   # I'm always more interested in doing what other people understand better!
@@ -34,17 +55,16 @@ class OrderItem < ActiveRecord::Base
     quantity_ordered * product.price
   end
 
-  def product_has_stock? # !Q is this the right way to do this?
-    # stock = product.has_available_stock?
-    unless product.has_available_stock?
+  def product_has_stock? # OPTIMIZE is this the right way to do this?
+    if product.has_available_stock?
+      return true
+    else
       errors.add(:quantity_ordered, "Product must have available stock.")
       return false
     end
-
-    return true
   end
 
-  def product_absent_from_order?
+  def product_absent_from_order? # OPTIMIZE is this the right way to do this?
     order.order_items.each do |item|
       if item.product_id == product_id
         errors.add(:product_id, "That product is already part of this order.")

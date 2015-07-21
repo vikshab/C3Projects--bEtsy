@@ -8,11 +8,14 @@
   </tr>
   <% @order.order_items.each do |item| %>
     <tr>
-      <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
-      <td><!--˅˄-->
-        <%= link_to "-", less_item_path(item), method: :patch %>
+      <td>
+        <% if item.quantity_ordered > 1 %>
+          <%= link_to "-", less_item_path(item), method: :patch %>
+        <% end %>
         <%= item.quantity_ordered %>
-        <%= link_to "+", more_item_path(item), method: :patch %>
+        <% if item.product.has_available_stock? %>
+          <%= link_to "+", more_item_path(item), method: :patch %>
+        <% end %>
       </td>
       <td><%= link_to item.product.name, product_path(item.product) %></td>
       <td><%= link_to item.product.seller.username, seller_path(item.product.seller) %></td>
@@ -23,7 +26,6 @@
     </tr>
   <% end %>
   <tr>
-    <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
     <th colspan="2">Total:</th>
     <th colspan="3"><%= display_dollars(@order.order_price) %></th>
   </tr>

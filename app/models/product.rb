@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   validates :stock, presence: true, numericality: { only_integer: true }
 
   def average_rating
-    rating_total = 0
+    rating_total = 0.0
     total_num_reviews = self.reviews.count
 
     return "No reviews" if total_num_reviews == 0
@@ -20,16 +20,12 @@ class Product < ActiveRecord::Base
       rating_total += review[:rating]
     end
 
-    average_rating = rating_total/total_num_reviews
+    average_rating = (rating_total/total_num_reviews).round(1)
     return average_rating
   end
 
   def has_available_stock?
-    if (quantity_tied_up_in_pending_transactions + 1) <= stock
-      return true
-    else
-      return false
-    end
+    (quantity_tied_up_in_pending_transactions + 1) <= stock
   end
 
   def update_stock
