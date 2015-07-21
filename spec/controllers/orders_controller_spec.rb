@@ -111,7 +111,7 @@ RSpec.describe OrdersController, type: :controller do
       it "adds an error message" do
         post :add_to_cart, { id: @product.id }
 
-        expect(flash[:error]).to include(:product_not_unique)
+        expect(flash[:errors]).to include(:product_not_unique)
       end
     end
 

@@ -9,9 +9,9 @@ class OrdersController < ApplicationController
   def add_to_cart # TODO: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
     order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
     if order_item.save
-      flash[:message] = "The item has been added to your cart!"
+      flash[:messages] = "The item has been added to your cart!"
     else
-      flash[:error] = order_item.errors
+      flash[:errors] = order_item.errors
     end
 
     redirect_to product_path(@product)
