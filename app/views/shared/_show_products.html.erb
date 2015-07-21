@@ -1,7 +1,7 @@
 <div class="container">
-<h2> <%= (sort_by.name).pluralize(10).capitalize %> <%= type %></h2>
+<h2> <%= label %></h2>
   <div class="row">
-  <% sort_by.products.active_product.each do |product| %>
+  <% sort_by.each do |product| %>
     <div class="col-xs-4 col-lg-4">
       <div class="thumbnail">
         <%= image_tag(product.photo_url, class: "img-responsive product-thumb") %>
