@@ -15,7 +15,7 @@ class OrderItemsController < ApplicationController
     @item.less!
 
     flash[:error] = @item.errors if @item.errors
-
+    
     redirect_to cart_path
   end
 
