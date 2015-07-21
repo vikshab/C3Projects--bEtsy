@@ -1,39 +1,50 @@
 class Order < ActiveRecord::Base
+  before_save :buyer_card_unexpired? # this should return false if the card is expired.
+
+  attr_accessor :confirmed_payment
+
+  def initialize
+    super
+    confirmed_payment = false
+  end
+
   # DB relationships
   has_many :order_items, dependent: :destroy
   # should destroy all of the associated OrderItems if an Order is destroyed.
-  # we can use this as part of the cleaning task we set up to kill any pending
-  # orders inactive for whatever time we set.
-  # (20-30 minutes? a day? anything inactive for over 2hrs, but only run task once a day?)
+  # TODO: but do we want to destroy Orders?
   has_many :products, through: :order_items
 
 
   # validations helper regex
-  # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  VALID_BUYER_CARD_SHORT_REGEX = /\A\d{4}\z/ # I don't get it. this matches in rubular.
-  # FIXME this regex is apparently broken in the specs. second set of eyes?
+  # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
+  VALID_BUYER_CARD_SHORT_REGEX = /\A\d{4}\z/
 
   # data validations
   validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
     message: "%{value} is not a valid status" }
 
-  validates_presence_of :buyer_email, unless: :pending?
-  validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?
+  with_options unless: :pending? do
+    validates_presence_of :buyer_email
+    validates_format_of :buyer_email, with: VALID_EMAIL_REGEX
 
-  validates_presence_of :buyer_name, unless: :pending?
-  validates_presence_of :buyer_address, unless: :pending?
-  # TODO: validate address or name somehow?
+    # TODO: should we validate buyer name & address any futher?
+    validates_presence_of :buyer_name
+    validates_presence_of :buyer_address
 
-  validates_presence_of :buyer_card_short, unless: :pending?
-  validates_format_of :buyer_card_short, with: VALID_BUYER_CARD_SHORT_REGEX, unless: :pending?
+    validates_presence_of :buyer_card_short
+    validates_format_of :buyer_card_short, with: VALID_BUYER_CARD_SHORT_REGEX
 
-  validates_presence_of :buyer_card_expiration, unless: :pending?
+    validates_presence_of :buyer_card_expiration
+  end
+end
+
   # TODO: validate card expiration is after today / Date.now
+  # guard clause that validation should only run if status pending
 
 
   def order_price
-    # come back and talk about the method names
+    # TODO: come back and talk about the method names
     # but fwiw Order.price makes sense to me. more detailed explanation in Orderitem model. -J
     array_of_totals = order_items.map { |item| item.item_price }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
@@ -41,6 +52,22 @@ class Order < ActiveRecord::Base
 
   def already_has_product?(product)
     products.include? product
+  end
+
+  def buyer_card_unexpired?
+    unexpired = true
+
+    unless pending? && confirmed_payment
+      unexpired = buyer_card_expiration > Date.now
+
+      if unexpired
+        confirmed_payment = true
+      else
+        errors[:buyer_card_expiration] = "Card expiration date is not valid."
+      end
+    end
+
+    return unexpired
   end
 
   def mutable?
