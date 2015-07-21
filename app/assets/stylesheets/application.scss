@@ -46,6 +46,11 @@
   border: 0px;
 }
 
+.table tr td {
+  border-top: none !important;
+  border: none !important;
+}
+
 body {
   padding-top: 70px;
 }
