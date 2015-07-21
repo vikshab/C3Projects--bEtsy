@@ -22,7 +22,7 @@ RSpec.describe Order, type: :model do
 
       it "has only a few valid statuses" do
         valid_statuses = ["pending", "paid", "complete", "canceled"]
-        invalid_statuses = ["", "shipped", "PAID", "done", "returned"]
+        invalid_statuses = ["", "shipped", "PAID", "cancelled", "done", "returned"]
 
         valid_statuses.each do |status|
           order = Order.create(status: status)
@@ -34,45 +34,10 @@ RSpec.describe Order, type: :model do
           expect(order.errors.keys).to include(:status)
         end
       end
-
-      # data validations
-      it "validates :status, presence: true, format: { with: VALID_STATUS_REGEX }" do
-        # TODO
-      end
-
-      it "validates_presence_of :buyer_email, unless: :pending?" do
-        # TODO
-      end
-
-      it "validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?" do
-        # TODO
-      end
-
-      it "validates_presence_of :buyer_name, unless: :pending?" do
-        # TODO
-      end
-
-      it "validates_presence_of :buyer_address, unless: :pending?" do
-        # TODO
-      end
-
-      it "validates_presence_of :buyer_card_short, unless: :pending?" do
-        # TODO
-      end
-
-      it "validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?" do
-        # TODO
-      end
-
-      it "validates_presence_of :buyer_card_expiration, unless: :pending?" do
-        # TODO
-      end
     end
 
     context "buyer_info" do
-      it "does not require any buyer info" do
-        # !W !I !R NOTE: this is screaming for a more complicated validation.
-        # if the status is not pending, we will definitely need all the buyer info!
+      it "does not require any buyer info for pending orders" do
         order = Order.create
 
         buyer_fields = [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration]
@@ -82,11 +47,104 @@ RSpec.describe Order, type: :model do
         end
       end
 
-      # it "only accepts valid email addresses" do
-      #   # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
-      #   # VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-      #   # validates :buyer_email, presence: false, format: { with: VALID_EMAIL_REGEX }
-      # end
+      context "buyer info is required on all non-pending orders" do
+        before :each do
+          @order1 = Order.create(status: "paid")
+          @order2 = Order.create(status: "complete")
+          @order3 = Order.create(status: "canceled")
+        end
+
+        it "requires buyer email address" do
+          expect(@order1.errors.keys).to include(:buyer_email)
+          expect(@order2.errors.keys).to include(:buyer_email)
+          expect(@order3.errors.keys).to include(:buyer_email)
+
+          @order1 = Order.create(status: "paid", buyer_email: "bob@bob.bob")
+          @order2 = Order.create(status: "complete", buyer_email: "bob@bob.bob")
+          @order3 = Order.create(status: "canceled", buyer_email: "bob@bob.bob")
+
+          expect(@order1.errors.keys).to_not include(:buyer_email)
+          expect(@order2.errors.keys).to_not include(:buyer_email)
+          expect(@order3.errors.keys).to_not include(:buyer_email)
+        end
+
+        it "requires buyer name" do
+          expect(@order1.errors.keys).to include(:buyer_name)
+          expect(@order2.errors.keys).to include(:buyer_name)
+          expect(@order3.errors.keys).to include(:buyer_name)
+
+          @order1 = Order.create(status: "paid", buyer_name: "bob bobson")
+          @order2 = Order.create(status: "complete", buyer_name: "bob bobson")
+          @order3 = Order.create(status: "canceled", buyer_name: "bob bobson")
+
+          expect(@order1.errors.keys).to_not include(:buyer_name)
+          expect(@order2.errors.keys).to_not include(:buyer_name)
+          expect(@order3.errors.keys).to_not include(:buyer_name)
+        end
+
+        it "requires buyer address" do
+          expect(@order1.errors.keys).to include(:buyer_address)
+          expect(@order2.errors.keys).to include(:buyer_address)
+          expect(@order3.errors.keys).to include(:buyer_address)
+
+          @order1 = Order.create(status: "paid", buyer_address: "1234 fake st")
+          @order2 = Order.create(status: "complete", buyer_address: "1234 fake st")
+          @order3 = Order.create(status: "canceled", buyer_address: "1234 fake st")
+
+          expect(@order1.errors.keys).to_not include(:buyer_address)
+          expect(@order2.errors.keys).to_not include(:buyer_address)
+          expect(@order3.errors.keys).to_not include(:buyer_address)
+        end
+
+        it "requires buyer card short" do
+          expect(@order1.errors.keys).to include(:buyer_card_short)
+          expect(@order2.errors.keys).to include(:buyer_card_short)
+          expect(@order3.errors.keys).to include(:buyer_card_short)
+
+          @order1 = Order.create(status: "paid", buyer_card_short: "1234")
+          @order2 = Order.create(status: "complete", buyer_card_short: "1234")
+          @order3 = Order.create(status: "canceled", buyer_card_short: "1234")
+
+          expect(@order1.errors.keys).to_not include(:buyer_card_short)
+          expect(@order2.errors.keys).to_not include(:buyer_card_short)
+          expect(@order3.errors.keys).to_not include(:buyer_card_short)
+        end
+
+        it "requires buyer card expiration" do
+          expect(@order1.errors.keys).to include(:buyer_card_expiration)
+          expect(@order2.errors.keys).to include(:buyer_card_expiration)
+          expect(@order3.errors.keys).to include(:buyer_card_expiration)
+
+          @order1 = Order.create(status: "paid", buyer_card_expiration: "6/2016")
+          @order2 = Order.create(status: "complete", buyer_card_expiration: "6/2016")
+          @order3 = Order.create(status: "canceled", buyer_card_expiration: "6/2016")
+
+          expect(@order1.errors.keys).to_not include(:buyer_card_expiration)
+          expect(@order2.errors.keys).to_not include(:buyer_card_expiration)
+          expect(@order3.errors.keys).to_not include(:buyer_card_expiration)
+        end
+      end
+
+      it "requires an email with a valid format" do
+        valid_emails = ["bob@bob.bob.bob", "12345@bob.bob", "bob@bob.bob",
+          "....@bob.bob", "1......2....3......4............5@bob.bob",
+          "bob.bob@bob.bob"]
+
+        valid_emails.each do |email|
+          order = Order.create(status: "paid", buyer_email: email)
+          expect(order.errors.keys).to_not include(:buyer_email)
+        end
+
+        invalid_emails = ["bob@@bob.bob", "bob@bob..bob", "bob@bob", "bob.bob",
+          "bob", "@bob", "bob@12345", "bob@手紙.bob", "bob@bob.手紙"]
+
+        invalid_emails.each do |email|
+          order = Order.create(status: "paid", buyer_email: email)
+          expect(order.errors.keys).to include(:buyer_email)
+        end
+      end
+
+      it "validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?"
     end
   end
 
