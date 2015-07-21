@@ -30,7 +30,7 @@
         <ul class="nav navbar-nav navbar-right">
           <!-- cart_display_text = "Cart"
            if @order.order_items && @order.order_items.count > 0
-             cart_display_text += " (#{ @order.order_items.count })"
+             cart_display_text += <span class="badge">" (#{ @order.order_items.count })"</span>
           end
            <li>link_to cart_display_text, cart_path</li> -->
         </ul>
