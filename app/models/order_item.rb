@@ -21,7 +21,7 @@ class OrderItem < ActiveRecord::Base
 
   def more!
     reload # removing this line == DANGER WILL ROBINSON
-    # if the OrderItem isn't reloaded, this will resolve based on a cached operation
+    # if the OrderItem isn't reloaded, ln28 will resolve based on a cached operation
     # in other words, if line 28 has recently been evaluated for this OrderItem,
     # then __in will not be evaluated__ and the cached value (true) will be used
     # instead. by reloading, we force a new SQL query to be run to check anew
