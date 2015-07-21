@@ -15,6 +15,11 @@
 
     <%= f.label :description %>
     <%= f.text_area :desc, class: "form-control" %>
+
+    <%= @categories.each do |category| %>
+      <%= f.label category.name %>
+      <%= f.check_box(:categories, {}, "#{category.name}", "") %>
+    <% end %>
   </div>
 
   <div class="col-sm-3">
