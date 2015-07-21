@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :categories, except: :destroy
   resources :sellers, only: [:index, :show]
-  resources :products, only: [:index, :show]
+  resources :products, except: :destroy
 
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
   post '/products/:id/reviews/new', to: 'reviews#create'
