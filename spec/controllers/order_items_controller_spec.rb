@@ -51,6 +51,8 @@ RSpec.describe OrderItemsController, type: :controller do
 
         expect(assigns(:item).quantity_ordered).to eq(@max_quantity - already_tied_quantity)
       end
+
+      pending "assigns flash[:errors]"
     end
 
     context "#less: decreasing quantity of cart item" do
@@ -80,12 +82,23 @@ RSpec.describe OrderItemsController, type: :controller do
 
         expect(assigns(:item).quantity_ordered).to eq(1)
       end
+
+      pending "assigns flash[:errors]"
+
+      it "even if some of the stock is tied up in other pending orders" do
+        already_tied_quantity = 5
+        Order.create(status: "pending")
+        OrderItem.create(order_id: 2, product_id: 1, quantity_ordered: already_tied_quantity)
+
+        delete :destroy, id: 1
+
+        expect{ OrderItem.find(1) }.to raise_exception(ActiveRecord::RecordNotFound)
+      end
     end
 
     context "#destroy: removing item from cart" do
       it "destroys the item" do
         expect( OrderItem.find(1) ).to eq(@item)
-
         delete :destroy, id: 1
 
         expect{ OrderItem.find(1) }.to raise_exception(ActiveRecord::RecordNotFound)

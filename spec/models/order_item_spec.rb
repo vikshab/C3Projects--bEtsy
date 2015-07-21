@@ -188,6 +188,7 @@ RSpec.describe OrderItem, type: :model do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
         item.more!
         expect(item.quantity_ordered).to eq(5)
+        expect(item.errors.keys).to include(:quantity_ordered)
       end
     end
 
@@ -202,6 +203,7 @@ RSpec.describe OrderItem, type: :model do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
         item.less!
         expect(item.quantity_ordered).to eq(1)
+        expect(item.errors.keys).to include(:quantity_ordered)
       end
     end
 
