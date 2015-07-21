@@ -39,11 +39,13 @@
   </header>
 
   <main class="container-fluid">
-    <% if flash[:error] %>
-      <h4 class="alert alert-warning"><%= flash[:error] %></h4>
-    <% end %>
+    <div class="col-lg-12">
+      <% if flash[:error] %>
+        <h4 class="alert alert-warning"><%= flash[:error] %></h4>
+      <% end %>
 
-    <%= yield %>
+      <%= yield %>
+    </div>
   </main>
 
   <footer>
