@@ -52,7 +52,6 @@ class ProductsController < ApplicationController
 
   def merchant_products
     @merchant = @merchants.find(params[:id])
-    @products = @merchant.products.active_product
   end
 
   private
