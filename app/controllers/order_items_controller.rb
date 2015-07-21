@@ -6,7 +6,7 @@ class OrderItemsController < ApplicationController
     if @item.product.has_available_stock?
       @item.more!
     else
-      # !W we should talk about whether this error message should be shown
+      # TODO: we should talk about whether this error message should be shown
       # and what it should truly say in production
       flash[:error] = @item.errors[:quantity_ordered]
     end
@@ -17,12 +17,11 @@ class OrderItemsController < ApplicationController
   # less decreases the quantity of an item in the cart
   def less # OrderItem.less <-- gimme less of this OrderItem
     if @item.quantity_ordered == 1
-      # !W we should talk about whether this error message should be shown
+      # TODO: we should talk about whether this error message should be shown
       # and what it should truly say in production
       flash[:error] = "You cannot decrease the quantity of #{ @item.product.name } any further. You must remove it from your cart."
     else
       @item.less!
-      # session[:cart][:@item.product_id.to_sym] -= 1
     end
 
     redirect_to cart_path
