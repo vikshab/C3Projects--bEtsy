@@ -38,8 +38,9 @@ RSpec.describe OrderItemsController, type: :controller do
         end
 
         expect(assigns(:item).quantity_ordered).to eq(1)
-        expect(assigns(:item).errors.keys).to include(:quantity_ordered)
       end
+      
+      pending "assigns flash[:errors]"
     end
 
     context "increases quantity of cart item" do
@@ -68,8 +69,9 @@ RSpec.describe OrderItemsController, type: :controller do
         end
 
         expect(assigns(:item).quantity_ordered).to eq(@max_quantity)
-        expect(assigns(:item).errors.keys).to include(:quantity_ordered)
       end
+
+      pending "assigns flash[:errors]"
 
       it "even if some of the stock is tied up in other pending orders" do
         already_tied_quantity = 5
@@ -81,8 +83,9 @@ RSpec.describe OrderItemsController, type: :controller do
         end
 
         expect(assigns(:item).quantity_ordered).to eq(@max_quantity - already_tied_quantity)
-        expect(assigns(:item).errors.keys).to include(:quantity_ordered)
       end
+      
+      pending "assigns flash[:errors]"
     end
   end
 end
