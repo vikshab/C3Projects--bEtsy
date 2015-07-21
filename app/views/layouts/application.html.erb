@@ -33,6 +33,8 @@
              cart_display_text += <span class="badge">" (#{ @order.order_items.count })"</span>
           end
            <li>link_to cart_display_text, cart_path</li> -->
+           <li><%= link_to "Login", login_path %></li>
+           <li><%= button_to "Logout", logout_path, method: :delete %></li>
         </ul>
       </nav>
     </div>

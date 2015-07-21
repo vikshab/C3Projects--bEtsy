@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, except: [:index, :new, :create]
   before_action :set_seller, only: [:new, :create]
+  before_action :require_seller_login, only: [:new, :update, :edit, :create]
 
   def index
     @products = Product.all
@@ -47,6 +48,5 @@ class ProductsController < ApplicationController
 
   def create_params
     params.require(:product).permit(:name, :price, :stock, :description, :photo_url)
-
   end
 end

@@ -1,12 +1,16 @@
 Rails.application.routes.draw do
   root "welcome#index"
 
+  get "/login", to: "sessions#new", as: "login"
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy", as: "logout"
+
   resources :categories, except: :destroy
   resources :sellers, only: [:index, :show] do
     resources :products, only: [:new, :create]
   end
   resources :products, except: [:new, :create, :destroy]
-  
+
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
   post '/products/:id/reviews/new', to: 'reviews#create'
 
