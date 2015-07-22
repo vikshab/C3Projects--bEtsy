@@ -7,51 +7,67 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header class="jumbotron" id="top">
-    <h1>Tux</h1>
-    <nav class="navbar"> -
-      <%= link_to "Home", root_path %> -
-      <%= link_to "All Products", products_path %> -
-      <%= link_to "All Categories", categories_path %> -
-      <%= link_to "All Sellers", sellers_path %> -
-      <% if session[:order_id] %>
-        <%= link_to cart_display_text, cart_path %> -
-      <% end %>
-    </nav>
+  <header>
+    <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+          <%= link_to root_path, class: "navbar-brand" do %>
+            <%= image_tag("penguin.png", size: "20x20", alt: "Home") %> <div class="tux">Tux</div>
+          <% end %>
+        </div>
 
-    <nav> <!-- # TODO: delete this after it's merged :) -->
-    <!-- # TODO: Add show/hide display logic -->
-      <%= link_to "Login", login_path %>
-      <%= button_to "Logout", logout_path, method: :delete %>
-    </nav>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Search by <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Products", products_path %></li>
+              <li><%= link_to "Categories", categories_path %></li>
+              <li><%= link_to "Sellers", sellers_path %></li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <% if session[:order_id] %>
+            <li><%= link_to cart_display_text, cart_path %></li>
+          <% end %>
+          <% if session[:seller_id].nil? %>
+            <li><%= link_to "Login", login_path %></li>
+            <li><%= link_to "Signup", new_seller_path %></li>
+          <% else %>
+            <li><%= link_to "Dashboard", dashboard_path(session[:seller_id]) %></li>
+            <li><%= link_to "Logout", logout_path, method: :delete %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main class="container-fluid">
-    <% if flash[:error] %> <!-- # TODO: come back to this (plural vs not) -->
-      <h4 class="alert alert-warning"><%= flash[:error] %></h4>
-    <% end %>
+    <div class="col-lg-12">
+      <% if flash[:error] %> <!-- # TODO: come back to this (plural vs not) -->
+        <h4 class="alert alert-warning"><%= flash[:error] %></h4>
+      <% end %>
 
-    <% if flash[:messages] %>
-      <h4 class="alert alert-success"><%= flash[:messages] %></h4>
-    <% end %>
+      <% if flash[:messages] %>
+        <h4 class="alert alert-success"><%= flash[:messages] %></h4>
+      <% end %>
+      <% if flash[:errors] %>
+        <h4 class="alert alert-warning"><%= flash[:errors] %></h4>
+      <% end %>
 
-    <% if flash[:errors] %>
-      <h4 class="alert alert-warning"><%= flash[:errors] %></h4>
-    <% end %>
-    <%= yield %>
+      <%= yield %>
+    </div>
   </main>
 
   <footer>
-    <nav class="navbar"> -
-      <%= link_to "Top", "#top" %> -
-      <%= link_to "Home", root_path %> -
-      <%= link_to "All Products", products_path %> -
-      <%= link_to "All Categories", categories_path %> -
-      <%= link_to "All Sellers", sellers_path %> -
-      <% if session[:order_id] %>
-        <%= link_to cart_display_text, cart_path %> -
-      <% end %>
-    </nav>
+    <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-bottom">
+        <ul class="nav navbar-nav">
+          <li><%= link_to "Top", "#top" %></li>
+        </ul>
+      </nav>
+    </div>
   </footer>
 </body>
 </html>

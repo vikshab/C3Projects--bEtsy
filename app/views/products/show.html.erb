@@ -1,31 +1,46 @@
-<h1><%= @product.name %></h1>
+<div class="page-header">
+  <h1><%= @product.name %>
+    <small>Average Rating:
+      <% if @average_rating == 0 %>
+        <%= "No Reviews" %>
+      <% else %>
+        <%= @average_rating %>
+      <% end %>
+    </small>
+  </h1>
+  <h2 class="product-info">
+    <small class="spacing">Price: <%= display_dollars(@product.price) %></small>
+    <small>Sold by: <%= @product.seller.username %></small>
+  </h2>
+</div>
 
-<%= image_tag "#{@product.photo_url}" %>
+<!-- Image and Description information -->
+<div class="row">
+  <div class="col-lg-2">
+    <%= image_tag "#{@product.photo_url}", size: "200" %>
+  </div>
+  <div class="col-lg-9 col-lg-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading">Product Description:</div>
+      <div class="panel-body">
+        <%= @product.description %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p><%= @product.description %></p>
+ <!-- Button links -->
+ <!-- Logic for Seller. if seller: Show edit, hide review -->
+ <div class="product-buttons">   
+  <%= link_to "Add to Cart", add_item_path(@product), method: :post, class: "btn btn-primary" %>
+  <% if session[:seller_id] == @product.seller_id %>
+    <%= link_to "Edit this Product", edit_product_path(@product), class: "btn btn-info" %>
+  <% else %>
+    <%= link_to "Add Review", new_review_path, class: "btn btn-default" %>
+  <% end %>
+ </div>
 
-<h4><%= display_dollars(@product.price) %></h4>
-
-<%= link_to "Add to Cart", add_item_path(@product), method: :post %>
-
-<h3>Reviews</h3>
-
-<h4>Average Rating:
-<% if @average_rating == 0 %>
-  <%= "No Reviews" %>
-<% else %>
-  <%= @average_rating %>
+<!-- Reviews -->
+<% if @product.reviews.count >= 1 %>
+  <%= render "show_reviews", reviews: @reviews %>
 <% end %>
-</h4>
-
-<%= link_to "Add Review", new_review_path %>
-
-<% @reviews.each do |review| %>
-  <ul>
-    <li><%= review.rating %></li>
-    <li><%= review.description %></li>
-  </ul>
-<% end %>
-
-
-<!-- Add stuff for categories?? -->

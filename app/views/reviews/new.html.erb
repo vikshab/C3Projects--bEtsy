@@ -1,14 +1,25 @@
-<h1>Add a Review</h1>
+<div class="page-header">
+  <h1>Add a Review</h1>
+</div>
+<div class="row">
+  <div class="col-lg-4 col-lg-offset-4">
+    <%= form_for @review, url: "/products/#{@product.id}/reviews/new" do |f| %>
+    <fieldset>
+      <div class="input-group col-lg-12">
+        <%= f.label :rating %>
+        <%= f.text_field :rating, class: "form-control" %>
+      </div>
 
-<%= form_for @review, url: "/products/#{@product.id}/reviews/new" do |f| %>
-<fieldset>
-  <%= f.label :rating %>
-  <%= f.text_field :rating %>
+      <div class="input-group col-lg-12">
+        <%= f.label :description %>
+        <%= f.text_area :description, in: 1..5, step: 1, class: "form-control" %>
+      </div>
 
-  <%= f.label :description %>
-  <%= f.text_area :description, in: 1..5, step: 1 %>
-
-  <%= f.hidden_field :product_id, :value => @product.id %>
-</fieldset>
-  <%= f.submit %>
-<% end %>
+      <%= f.hidden_field :product_id, :value => @product.id %>
+      <div class="form-actions">
+        <%= f.submit "Submit Review", class: "btn btn-default" %>
+      </div>
+    </fieldset>
+    <% end %>
+  </div>
+</div>
