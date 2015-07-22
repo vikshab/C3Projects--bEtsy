@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
     else
       flash[:errors] = @order.errors
       @order.status = "pending"
-      redirect_to checkout_path
+      redirect_to checkout_path # TODO: might want to change this so that inputted data remains?
     end
   end
 
