@@ -1,34 +1,22 @@
 <h1><center>SHOPPING CART</h1>
   <!-- To much logic to the view page need to be somewhere else -->
-  <% @order = Order.find(session[:order_id]) %>
-  <% items = @order.order_items %>
-  <% array = [] %>
-  <% array1 = [] %>
+  <% if session[:order_id].nil? == false %>
+    <% @order = Order.find(session[:order_id]) %>
+    <% items = @order.order_items %>
+    <% array = [] %>
+    <% array_sum = [] %>
 
-  <% items.each do |item| %>
-    <% item.quantity.to_i %>
-    <% item.total_price.to_i %>
-
-    <% array.push(item.quantity.to_i) %>
-    <% array1.push(item.total_price.to_i) %>
-
+    <% items.each do |item| %>
+      <% array.push(item.quantity.to_i) %>
+      <% array_sum.push(item.total_price.to_i) %>
     <% end %>
 
     <% quantity = 0 %>
     <% sum = 0 %>
-
-    <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag</h3>
-    <h3><center>Total $<%= array1.inject{ |sum,element| sum + element} %></h3>
-
-
-
-
-
-
-
-
-
-
+    <h2><center>SUMMARRY</h2>
+    <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag<h5><%= link_to("CLEAR BAG", order_path(@order.id), method: :delete) %></h5></h3>
+    <h3><center>Subtotal $<%= array_sum.inject{ |sum,element| sum + element} %></h3>
+ <% end %>
 
 <div class="navbar navbar-defaut" role="navigation">
   <div class="navbar-header">
