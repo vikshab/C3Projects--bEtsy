@@ -1,15 +1,3 @@
-<!-- To much logic to the view page need to be somewhere else -->
-<% @order = Order.find(session[:order_id]) %>
-<% items = @order.order_items %>
-<% array = [] %>
-<% items.each do |item| %>
-  <% item.quantity.to_i %>
-  <% array.push(item.quantity.to_i) %>
-<% end %>
-
-<% quantity = 0 %>
-<h3>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag</h3>
-
 <div class="well">
   <div class="row">
     <div class="col-xs-8">
