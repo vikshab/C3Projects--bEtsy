@@ -11,7 +11,7 @@
       <td><%= item.product.name %></td>
       <td><%= item.product.seller.username %></td>
       <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
-      <td><%= display_dollars(item.item_price) %></td>
+      <td><%= display_dollars(item.total_item_price) %></td>
     </tr>
   <% end %>
   <tr>
