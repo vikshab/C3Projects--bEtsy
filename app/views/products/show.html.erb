@@ -5,9 +5,10 @@
 
   <div class="col-md-3">
     <h2><%= @product.name %></h2>
-    <h3>Description</h3>
-    <h2><small><%= @product.desc %></small></h2>
-    <h4><small>$<%= @product.price %><small></h4>
+    <h3>Description
+    <p><small><%= @product.desc %></small></p></h3>
+    
+    <h4 class="price">$<%= @product.price %></h4>
 
     <%= form_for @order_item do |f| %>
      <div class="input-group">

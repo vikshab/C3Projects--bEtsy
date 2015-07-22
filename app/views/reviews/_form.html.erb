@@ -6,7 +6,7 @@
         <%= f.radio_button :rating, num %>
       <% end %>
       <br><br>
-      <%= f.label :body, "Review:" %>
+      <h5><%= f.label :body, "Write Your Own Review:" %></h5>
       <%= f.text_area :body, class: "form-control", rows: "5" %><br>
 
       <%= f.submit "Submit", class: "btn btn-default" %>
