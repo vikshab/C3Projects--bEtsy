@@ -35,12 +35,12 @@ private
       self[:subtotal] = subtotal
     end
 
-    def email_must_contain_at
-      return if self.buyer_email == nil # guard clause, inline conditional
-      unless self.buyer_email.chars.include?("@")
-        # refactor to include regex
-        errors.add(:buyer_email, "Invalid email. Please enter a correct email address.")
-      end
-    end
+    # def email_must_contain_at
+    #   return if self.buyer_email == nil # guard clause, inline conditional
+    #   unless self.buyer_email.chars.include?("@")
+    #     # refactor to include regex
+    #     errors.add(:buyer_email, "Invalid email. Please enter a correct email address.")
+    #   end
+    # end
     
 end

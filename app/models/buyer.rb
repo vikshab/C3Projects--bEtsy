@@ -17,4 +17,15 @@ class Buyer < ActiveRecord::Base
                       length: { is: 4 }
 
   validate :email_must_contain_at
+
+  private
+
+  def email_must_contain_at
+    return if self.email == nil # guard clause, inline conditional
+    unless self.email.chars.include?("@")
+      # refactor to include regex
+      errors.add(:email, "Invalid email. Please enter a correct email address.")
+    end
+  end
+
 end
