@@ -3,13 +3,32 @@
   <% @order = Order.find(session[:order_id]) %>
   <% items = @order.order_items %>
   <% array = [] %>
+  <% array1 = [] %>
+
   <% items.each do |item| %>
     <% item.quantity.to_i %>
+    <% item.total_price.to_i %>
+
     <% array.push(item.quantity.to_i) %>
+    <% array1.push(item.total_price.to_i) %>
+
     <% end %>
 
     <% quantity = 0 %>
+    <% sum = 0 %>
+
     <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag</h3>
+    <h3><center>Total $<%= array1.inject{ |sum,element| sum + element} %></h3>
+
+
+
+
+
+
+
+
+
+
 
 <div class="navbar navbar-defaut" role="navigation">
   <div class="navbar-header">
