@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
     no_orders: "You don't have any orders." # used in OrdersController's index (/sellers/1/orders)
   }
 
+  # TODO: write tests for require_seller_login & set_seller
   def require_seller_login
     redirect_to login_path, flash: { errors: ERRORS[:not_logged_in] } unless session[:seller_id]
   end
