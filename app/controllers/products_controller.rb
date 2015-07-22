@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :require_login, only: [:new, :create, :edit, :update, :destroy, :retire]
-  before_action :find_product, only: [:show, :edit, :update, :destroy, :retire]
+  before_action :find_product,  only: [:show, :edit, :update, :destroy, :retire]
 
   def index
     @products = Product.active_product
@@ -19,6 +19,7 @@ class ProductsController < ApplicationController
     @product = Product.new(user_params[:product])
     @user_id = session[:user_id]
     if @product.save
+      raise
       redirect_to product_path(@product)
     else
       render 'new'
