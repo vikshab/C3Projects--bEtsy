@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update]
-  before_action :set_seller, only: [:new, :create]
+  before_action :set_seller, only: [:new, :create, :seller]
   before_action :require_seller_login, only: [:new, :update, :edit, :create]
 
   def index
@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(create_params)
-      redirect_to product_path(@product)
+      redirect_to seller_products_path(@product.seller_id) 
     else
       flash.now[:errors] = @product.errors
       render :edit
