@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe OrderItemsController, type: :controller do
-
   describe "updating quantities of items in the cart" do
     before :each do
       @max_quantity = 10

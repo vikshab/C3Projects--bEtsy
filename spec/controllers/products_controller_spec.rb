@@ -81,6 +81,11 @@ RSpec.describe ProductsController, type: :controller do
         @product.reload
         expect(response).to render_template("edit", session[:seller_id])
       end
+
+      it "assigns flash[:errors]" do
+        put :update, @new_params
+        expect(flash[:errors]).to include(:name)
+      end
     end
   end
 
@@ -128,7 +133,7 @@ RSpec.describe ProductsController, type: :controller do
         session[:seller_id] = @seller.id
       end
 
-      it "does not persist invalid records" do 
+      it "does not persist invalid records" do
         post :create, @new_params
         expect(Product.count).to eq 0
       end
@@ -136,6 +141,11 @@ RSpec.describe ProductsController, type: :controller do
       it "renders the new page so the record can be fixed" do
         post :create, @new_params
         expect(response).to render_template("new", session[:seller_id])
+      end
+
+      it "assigns flash[:errors]" do
+        post :create, @new_params
+        expect(flash[:errors]).to include(:name)
       end
     end
   end
