@@ -1,5 +1,5 @@
 class OrderItemsController < ApplicationController
-  before_action :find_item, except: :add_to_cart
+  before_action :set_item, except: :add_to_cart
 
   # more increases the quantity of an item in the cart
   def more # OrderItem.more <-- gimme more of this OrderItem
@@ -27,7 +27,7 @@ class OrderItemsController < ApplicationController
   end
 
   private
-    def find_item
+    def set_item
       @item = OrderItem.find_by(id: params[:id])
     end
 end
