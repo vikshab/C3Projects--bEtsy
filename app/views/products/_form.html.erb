@@ -12,10 +12,14 @@
 
       <%= f.label :categories %><br>
       <%= collection_check_boxes(:product, :category_ids, Category.all, :id, :name) do |b| %>
+
         <%= b.label class: "checkbox-inline" do %>
           <%= b.check_box + b.text.capitalize %>
         <% end %>
       <% end %>
+
+      <%= f.label :categories, 'New Category' %>
+      <%= f.text_field :categories, class: "form-control" %>
     </div>
 
 

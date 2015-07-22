@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :require_login, except: [:index, :show, :merchant_products]
+  before_action :require_login, only: [:new, :create, :edit, :update, :destroy, :retire]
   before_action :find_product, only: [:show, :edit, :update, :destroy, :retire]
 
   def index
