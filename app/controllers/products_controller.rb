@@ -38,17 +38,16 @@ class ProductsController < ApplicationController
     end
   end
 
+  def seller; end
+
+
+
   private
+    def set_product
+      @product = Product.find(params[:id])
+    end
 
-  def set_product
-    @product = Product.find(params[:id])
-  end
-
-  def set_seller
-    @seller = Seller.find(params[:seller_id])
-  end
-
-  def create_params
-    params.require(:product).permit(:name, :price, :stock, :description, :photo_url)
-  end
+    def create_params
+      params.require(:product).permit(:name, :price, :stock, :description, :photo_url)
+    end
 end

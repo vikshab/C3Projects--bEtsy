@@ -2,18 +2,25 @@ require 'rails_helper'
 
 RSpec.describe OrderItem, type: :model do
   before :each do
+    @seller = Seller.new(username: "a", email: "bob@bob.bob")
+    @seller.password = @seller.password_confirmation = "password"
+    @seller.save
     @product = Product.create(name: "a", price: 1, seller_id: 1, stock: 5)
     @order = Order.create
     @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
   end
 
   describe "database relationships" do
+    it "belongs to an order" do
+      expect(@item.order).to eq(@order)
+    end
+
     it "belongs to a product" do
       expect(@item.product).to eq(@product)
     end
 
-    it "belongs to an order" do
-      expect(@item.order).to eq(@order)
+    it "has a seller through its product" do
+      expect(@item.seller.id).to eq(@seller.id)
     end
   end
 

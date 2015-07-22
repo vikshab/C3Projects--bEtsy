@@ -4,3 +4,5 @@
 <h2><%= @seller.username %></h2>
 
 <!-- # TODO: Put links to seller products page and seller orders page -->
+<%= link_to "View Products", seller_products_path(@seller), class: "btn btn-default" %>
+<%= link_to "View Orders", seller_orders_path(@seller), class: "btn btn-default" %>
