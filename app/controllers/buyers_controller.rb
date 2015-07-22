@@ -29,7 +29,7 @@ class BuyersController < ApplicationController
       inventory = inventory - bought
       product.update(stock: inventory)
     end
-
+    
     @order.update(status: "paid")
     session[:order_id] = nil
   end

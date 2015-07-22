@@ -71,11 +71,11 @@ As a guest to the website (not signed in) I **can**:
     - Credit cart expiration
     - Credit Card CVV (security code) **Anita**
     - Billing zip code
-- Purchasing an order makes the following changes:
-    - Reduces the number of inventory for each product **Victoria**
-    - Changes the order state from "pending" to "paid" **Victoria**
-    - Clears the current cart **Victoria**
-- After purchasing an order, I can view a confirmation screen including: **Brittany**
+- √ Purchasing an order makes the following changes:
+    - Reduces the number of inventory for each product **Victoria && Brittany**
+    - Changes the order state from "pending" to "paid" **Victoria && Brittany**
+    - Clears the current cart **Victoria && Brittany**
+- √ After purchasing an order, I can view a confirmation screen including: **Brittany**
     - Each item in the order with a quantity and line-item subtotal
     - A link to the item description page
     - Order total price
