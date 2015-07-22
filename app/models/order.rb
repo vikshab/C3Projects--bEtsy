@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
     validate :buyer_card_unexpired
   end
 
-  def order_price(seller_id=nil)
+  def total_order_price(seller_id=nil)
     # TODO: come back and talk about the method names
     # but fwiw Order.price makes sense to me. more detailed explanation in Orderitem model. -J
     items = seller_id ? order_items.select{ |item| item.seller.id == seller_id } : order_items
