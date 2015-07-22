@@ -17,9 +17,9 @@
       <!-- For errors when the user adds more quantity than available  -->
       <% if flash[:error] %>
           <h4><strong><%= flash[:error] %></strong></h4>
-          <% end %>
+      <% end %>
 
-          <% @order_items.each do |order_item| %>
-          <%= render 'orders/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
+      <% @order_items.each do |order_item| %>
+        <%= render 'orders/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
   <% end %>
 <% end %>
