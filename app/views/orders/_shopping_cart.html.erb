@@ -14,23 +14,12 @@
     </h4>
     <p class="text-center">Please <%= link_to "go back", root_path %> and add some items to your cart.</p>
 <% else %>
-    <!-- To much logic to the view page need to be somewhere else -->
-    <% @order = Order.find(session[:order_id]) %>
-    <% items = @order.order_items %>
-    <% array = [] %>
-    <% items.each do |item| %>
-      <% item.quantity.to_i %>
-      <% array.push(item.quantity.to_i) %>
-    <% end %>
+      <!-- For errors when the user adds more quantity than available  -->
+      <% if flash[:error] %>
+          <h4><strong><%= flash[:error] %></strong></h4>
+          <% end %>
 
-    <% quantity = 0 %>
-    <h3>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag</h3>
-    <!-- For errors when the user adds more quantity than available  -->
-    <% if flash[:error] %>
-          <%= flash[:error] %>
-    <% end %>
-
-    <% @order_items.each do |order_item| %>
-      <%= render 'orders/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
+          <% @order_items.each do |order_item| %>
+          <%= render 'orders/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
   <% end %>
 <% end %>

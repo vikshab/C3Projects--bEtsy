@@ -1,4 +1,15 @@
 <h1><center>SHOPPING CART</h1>
+  <!-- To much logic to the view page need to be somewhere else -->
+  <% @order = Order.find(session[:order_id]) %>
+  <% items = @order.order_items %>
+  <% array = [] %>
+  <% items.each do |item| %>
+    <% item.quantity.to_i %>
+    <% array.push(item.quantity.to_i) %>
+    <% end %>
+
+    <% quantity = 0 %>
+    <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag</h3>
 
 <div class="navbar navbar-defaut" role="navigation">
   <div class="navbar-header">
