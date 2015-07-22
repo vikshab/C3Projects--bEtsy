@@ -1,27 +1,28 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:add_to_cart, :cart, :checkout, :update, :receipt]
+  before_action :set_order, only: [:cart, :checkout, :add_to_cart, :update, :receipt]
   before_action :set_seller_order, only: [:show]
   before_action :set_product, only: [:add_to_cart]
   before_action :set_seller, only: [:index, :show]
   before_action :require_seller_login, only: [:index, :show]
 
 
-  def add_to_cart
-    if @order.already_has_product?(@product)
-      flash[:errors] = ERRORS[:already_in_cart] # TODO: perhaps change this to incrementing the count in the cart?
+  def cart; end
+
+  def checkout; end
+
+  def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
+    order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+    if order_item.save
+      flash[:messages] = MESSAGES[:successful_add_to_cart]
     else
-      OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+      flash[:errors] = order_item.errors
     end
 
     redirect_to product_path(@product)
   end
 
-  def cart; end
-
-  def checkout; end
-
   def update
-    if @order.update(checkout_params)
+    if @order.checkout(checkout_params)
       redirect_to receipt_path
     else
       flash.now[:errors] = @order.errors
@@ -32,10 +33,9 @@ class OrdersController < ApplicationController
   def receipt
     if @order.status == "paid"
       render :receipt
-
-      reset_session # FIXME: this will interfere with login
+      session[:order_id] = nil
     else
-      redirect_to root_path # TODO: redirect to somewhere more logical
+      redirect_to root_path
     end
   end
 
@@ -50,11 +50,7 @@ class OrdersController < ApplicationController
 
   private
     def checkout_params
-      order_info = params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
-      order_info[:status] = "paid"
-      order_info[:buyer_card_expiration] = Date.parse(order_info[:buyer_card_expiration])
-
-      return order_info
+      params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
     end
 
     def set_order

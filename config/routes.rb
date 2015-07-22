@@ -19,9 +19,9 @@ Rails.application.routes.draw do
 
   scope :cart do
     get "/", to: "orders#cart", as: "cart"
-    get "checkout", to: "orders#checkout"
-    patch "checkout", to: "orders#update"
-    get "receipt", to: "orders#receipt"
+    get "/checkout", to: "orders#checkout", as: "checkout"
+    patch "/checkout", to: "orders#update"
+    get "/receipt", to: "orders#receipt", as: "receipt"
   end
 
   # adding an item to the cart

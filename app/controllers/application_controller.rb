@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
   MESSAGES = {
     successful_login: "You have logged in!", # used in SessionsController's create
     successful_logout: "You have logged out!", # used in SessionController's destroy
-    successful_signup: "You have signed up!"
+    successful_signup: "You have signed up!",
+    successful_add_to_cart: "The item has been added to your cart!"
   }
 
   ERRORS = {
     not_logged_in: "Please log in to see this page.", # used in ApplicationController's require_seller_login
-    already_in_cart: "This item is already in your cart!", # used in OrderController's add_to_cart
     login_error: "Try Again!", # OPTIMZE this error message? used in SessionsController's create
     no_orders: "You don't have any orders." # used in OrdersController's index (/sellers/1/orders)
   }
