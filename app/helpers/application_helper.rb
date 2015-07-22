@@ -9,4 +9,8 @@ module ApplicationHelper
 
     return display_text
   end
+
+  def product_short_description(product)
+    product.description[0..150] + '...'
+  end
 end

@@ -8,8 +8,7 @@
       <%= link_to image_tag("#{product.photo_url}", class: "img-responsive", size: "100"), product_path(product) %>
       <div class="caption">
         <h3><%= display_dollars(product.price) %></h3>
-        <% product_short_description = product.description[0..100] + '...' %>
-        <p><%= product_short_description %></p>
+        <p><%= product_short_description(product) %></p>
         <%= link_to "Details", product_path(product), class: "btn btn-default" %>
         <%= link_to "Add to Cart", add_item_path(product), method: :post, class: "btn btn-primary" %>
       </div>
