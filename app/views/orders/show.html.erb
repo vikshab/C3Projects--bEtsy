@@ -28,6 +28,6 @@
   <% end %>
   <tr>
     <th colspan="3">Order Total</th>
-    <th colspan="2"><%= display_dollars(@order.order_price(@seller.id)) %></th>
+    <th colspan="2"><%= display_dollars(@order.total_order_price(@seller.id)) %></th>
   </tr>
 </table>
