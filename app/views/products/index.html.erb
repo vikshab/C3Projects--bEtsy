@@ -1,0 +1,21 @@
+<table>
+  <% @products.each do |product| %>
+  <tr>
+    <th>Product name</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Stock</th>
+    <th>Photo_url</th>
+    <th>See the product</th>
+  </tr>
+
+  <tr>
+    <td><%= product.name %></td>
+    <td><%= product.desc %></td>
+    <td><%= product.price %></td>
+    <td><%= product.stock %></td>
+    <td><%= image_tag("#{product.photo_url}") %></td>
+    <td><%= link_to "Show", product_path(product.id), method: "get" %></td>
+  </tr>
+  <% end %>
+</table>

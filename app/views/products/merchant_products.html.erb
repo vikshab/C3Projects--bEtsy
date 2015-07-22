@@ -1,0 +1,5 @@
+<%= render partial: "shared/show_products", locals:
+                                              {
+                                                sort_by: @merchant.products.active_product,
+                                                label: "#{@merchant.name.capitalize}'s Products"
+                                              } %>

@@ -1,3 +1,15 @@
+### Team Malenkiy
+- Team members are:
+  - Brittany W
+  - Elia G
+  - Victoria S
+  - Anita W
+- "Malenkiy" means "tiny" in Russian
+
+### Bitsy
+- Our store is called Bitsy, which sells all the itsy bitsy, teeny weeny, itty bitty, small, tiny things that one might need in their life.
+  - Each team member seeded the database with at least 5 products, so we were able to have a lot of products to work with in our store display.
+
 # C3Projects--bEtsy
 [b]Etsy will be an online store where a wide variety of products can be listed and sold by any user. In this project we will focus on reinforcing the major components of Rails, Model Validation, as well as introducing some more complex logic such as user authentication.
 
@@ -41,16 +53,16 @@ Build an online system for listing, selling, reviewing, and buying a wide variet
 
 As a guest to the website (not signed in) I **can**:
 
-- Browse all products
-- Browse products by category
-- Browse products by merchant (users)
-- View any individual product with additional details
-- Leave a review for a product providing:
+- √ Browse all products
+- √ Browse products by category
+- √ Browse products by merchant (users)
+- √ View any individual product with additional details
+- √ Leave a review for a product providing:
     - A Text review
     - A rating out of 5
-- Add in-stock products to my cart
-- Remove products from my cart
-- Change the quantity of an existing product in my cart
+- √ Add in-stock products to my cart
+- √ Remove products from my cart
+- √ Change the quantity of an existing product in my cart
 - Purchase the items in my cart, providing:
     - Email Address
     - Mailing Address
@@ -69,35 +81,36 @@ As a guest to the website (not signed in) I **can**:
     - Order total price
     - DateTime the order was placed
     - The current status of the order
-- Sign up to be a merchant, providing:
+- √ Sign up to be a merchant, providing:
     - Email Address
     - Username
     - Password (plain text passwords cannot be stored in the database)
     - Password confirmation
-- Sign in to my merchant account
+- √ Sign in to my merchant account
 
 As a guest I **cannot**:
 
-- Add products to the cart that are out of stock.
-- View any link or page to manage any products
-- View any of the account pages
+-  Add products to the cart that are out of stock.
+- √ View any link or page to manage any products
+- √ View any of the account pages
 
 #### Authenticated Users
 
 As a signed-in user, I **can**:
 
-- Do everything a guest user can do except for sign up and sign in.
-- Sign out
+- √ Do everything a guest user can do except for sign up and sign in.
+- Review other merchant's products
+- √ Sign out
 - Create new categories (categories are shared between all merchants)
-- Create a new product providing:
+- √ Create a new product providing:
     - name
     - description
     - price
     - photo URL
     - stock
-- Assign my products to any number of categories
-- Retire a product from being sold, which hides it from browsing
-- View an account page to edit/update my existing products
+- √ Assign my products to any number of categories
+- √ Retire a product from being sold, which hides it from browsing
+- √ View an account page to edit/update my existing products
 - View an account page showing my order fulfillment
 - On the order fulfillment page:
     - Total Revenue
@@ -120,9 +133,9 @@ As a signed-in user, I **can**:
 
 As a signed-in user, I **cannot**:
 
-- Review my own products
+- √ Review my own products
 - View order items from a shared order that belong to another merchant
-- View another users private data (i.e. order fulfillment or product management)
+- √ View another users private data (i.e. order fulfillment or product management)
 
 ### Model Validations
 

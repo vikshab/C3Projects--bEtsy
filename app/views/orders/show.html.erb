@@ -1,0 +1,10 @@
+<h1>SHOPPING CART</h1>
+
+<div class="container-fluid">
+  <%= link_to "continue shopping", products_path %>
+  <%= link_to "checkout", checkout_path, class: "btn btn-default" %>
+</div>
+
+<div class="shopping-cart">
+  <%= render "shopping_cart" %>
+</div>

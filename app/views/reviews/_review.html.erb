@@ -1,0 +1,5 @@
+<div class="review_content">
+  <p class="review_rating"><%= render_stars(review.rating) %></p>
+  <p class="review_body"><%= review.body %></p>
+  <p class="review_time"><%= time_ago_in_words(review.created_at) %> ago</p>
+</div>

@@ -1,0 +1,5 @@
+<%= render partial: "shared/show_products", locals:
+                                            {
+                                              sort_by: @category.products.active_product,
+                                              label: "#{@category.name.capitalize.pluralize} Category"
+                                            } %>

@@ -1,0 +1,11 @@
+      <!-- there is a way to do a pluralize helper, refer back to rails tutorial 7.19 -->
+<% if data_type.errors.any? %>
+<div class="has_error">
+      <%= "The form contains #{data_type.errors.count} errors." %>
+</div>
+    <ul>
+    <% data_type.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+<% end %>

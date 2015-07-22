@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  buyer_name: MyString
+  buyer_email: MyString
+  buyer_address: MyString
+  buyer_state: MyString
+  buyer_city: MyString
+  buyer_zip: 1
+  buyer_last4cc: 1
+  buyer_expcc: MyString
+
+two:
+  status: MyString
+  buyer_name: MyString
+  buyer_email: MyString
+  buyer_address: MyString
+  buyer_state: MyString
+  buyer_city: MyString
+  buyer_zip: 1
+  buyer_last4cc: 1
+  buyer_expcc: MyString

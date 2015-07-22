@@ -1,0 +1,16 @@
+<div class="row">
+  <div class = "col-xs-5" >
+    <%= form_for [@product, @product.reviews.build], class: "form-group" do |f| %>
+      <h3>Rating:</h3>
+      <% (1..5).each do |num| %>
+        <%= f.label :rating, render_stars(num), class: "radio-inline star" %>
+        <%= f.radio_button :rating, num %>
+      <% end %>
+      <br><br>
+      <%= f.label :body, "Review:" %>
+      <%= f.text_area :body, class: "form-control", rows: "5" %><br>
+
+      <%= f.submit "Submit", class: "btn btn-default" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="row no-jumbo form-header">
+  <div class = "col-md-6">
+    <h1> <%= "Hello, #{@user.name.titlecase}" %> </h1>
+    </div>
+  </div>
+<div class="row col-xs-offset-1">
+<%= link_to "Order Fulfillment Page", user_orders_path(@user), class: "btn btn-primary" %>
+<%= link_to "Add a Product", new_user_product_path(@user), class: "btn btn-default" %>
+<br>
+</div>
+<div class="row">
+  <div class = "col-md-6">
+    <table class="table table-hover">
+  <tr>
+    <th>Product Name</th>
+    <th>Edit</th>
+    <th>Retire</th>
+  </tr>
+
+  <% @products.each do |product| %>
+  <tr>
+    <td> <%= link_to "#{product.name}", product_path(product) %></td>
+    <td> <%= link_to "Edit", edit_product_path(product), class: "btn btn-default" %> </td>
+    <td> <%= button_to retire_helper(product), retire_path(product), method: "patch", class: "btn btn-primary" %> </td>
+  </tr>
+  <% end %>
+</table>
+  </div>
+</div>

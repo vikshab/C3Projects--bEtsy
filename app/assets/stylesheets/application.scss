@@ -1,0 +1,104 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ */
+
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+ @import url(http://fonts.googleapis.com/css?family=Cherry+Swash:400,700);
+
+$jumbo_color: #FF5454; /* red orange */
+$jumbo_shadow: #858585; /* darker grey */
+$border: #B4B4B4; /* dark grey */
+
+/* Navbar ------------------------------------------------------------------ */
+
+ .navbar-brand {
+  font-family: 'Cherry Swash', cursive;
+  font-size: 1.8em;
+ }
+
+ .navbar-right {
+  margin-right: 25px;
+ }
+
+ .cart {
+  font-size: 1.4em;
+ }
+
+/* Sticky footer ----------------------------------------------------------- */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin top by nav height */
+  margin-top: 60px;
+
+  /* Margin bottom by footer height */
+  margin-bottom: 70px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  border-top: 1px solid #E7E7E7;
+  background-color: #F8F8F8;
+}
+
+.container .text-muted {
+  font-size: 0.85em;
+  margin: 16px 0;
+  text-align: center;
+}
+
+/* Review ------------------------------------------------------------------- */
+
+.review_rating {
+  font-weight: bold;
+}
+
+.review_time {
+  font-style: italic;
+}
+
+/* Jumbotron ---------------------------------------------------------------- */
+
+.jumbotron {
+  width: 100%;
+  margin-top: -15px;
+  background: url(symphony.png) repeat;
+  border-bottom: 3px solid $border;
+}
+
+.jumbotron h1 {
+  font-family: 'Cherry Swash', cursive;
+  color: $jumbo_color;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px $jumbo_shadow;
+}
+
+/* Forms -------------------------------------------------------------------- */
+
+.form-header h1, h2, h3, h4 {
+  font-family: 'Cherry Swash', cursive;
+}
+
+/* Images ------------------------------------------------------------------- */
+
+.product-thumb {
+  max-width: 320px;
+  max-height: 215px;
+}

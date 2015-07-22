@@ -1,0 +1,39 @@
+  <h2><center>Edit Product</h2>
+    <div class = "form-group">
+      <div class="row">
+      <%= form_for @product, html: {class: "form"} do |f| %>
+        <%= render partial: "shared/error_messages", locals: { data_type: @product } %>
+
+        <div class="col-xs-4 col-xs-offset-2">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: "form-control" %>
+
+          <%= f.label :description %>
+          <%= f.text_area :desc, class: "form-control" %>
+
+          <%= f.label :categories %><br>
+          <%= collection_check_boxes(:product, :category_ids, Category.all, :id, :name) do |b| %>
+            <%= b.label class: "checkbox-inline" do %>
+              <%= b.check_box + b.text.capitalize %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="col-xs-4">
+          <%= f.label :stock %>
+          <%= f.number_field :stock, class: "form-control" %>
+
+          <%= f.label :price %>
+          <%= f.number_field :price, class: "form-control" %>
+
+          <%= f.label :photo_url %>
+          <%= f.text_field :photo_url, class: "form-control" %>
+
+          <%= f.label :retired %>
+          <%= f.check_box :retired, class: "form-control" %>
+          <br>
+          <%= f.submit 'Save changes', class: "btn btn-default" %>
+        <% end %>
+        </div>
+      </div>
+    </div>
