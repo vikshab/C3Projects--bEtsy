@@ -11,6 +11,7 @@ class OrderItem < ActiveRecord::Base
   validates :product_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validate :order_item_is_unique? # OPTIMIZE: I think this makes the above before_create obsolete?!
 
 
   # TODO this should probably be in helpers/order_items_helpers
@@ -73,5 +74,11 @@ class OrderItem < ActiveRecord::Base
     end
 
     return true
+  end
+
+  def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
+    if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
+      errors.add(:product_not_unique, "That product is already in your cart.")
+    end
   end
 end
