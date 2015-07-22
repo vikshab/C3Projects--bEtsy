@@ -12,12 +12,12 @@ class OrderItemsController < ApplicationController
   def update
     @order = current_order
     @order_item = @order.order_items.find(params[:id])
-    if order_item_params[:quantity].to_i < @order_item.product.stock.to_i
+    if order_item_params[:quantity].to_i <= @order_item.product.stock.to_i
       @order_item.update(order_item_params)
       @order_items = @order.order_items
       redirect_to order_path(@order)
     else
-      flash[:error] = "Only #{@order_item.product.stock.to_i} items available"
+      flash[:error] = "Sorry, only #{@order_item.product.stock.to_i} items available"
       redirect_to cart_path
     end
   end
