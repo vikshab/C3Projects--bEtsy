@@ -9,6 +9,7 @@ before_action :set_product, only: [:create, :new]
       if @review.save
         redirect_to product_path(@product)
       else
+        flash.now[:errors] = @review.errors
         render :new
       end
   end
