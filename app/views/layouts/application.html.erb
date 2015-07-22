@@ -35,6 +35,7 @@
            <li>link_to cart_display_text, cart_path</li> -->
           <% if session[:seller_id].nil? %>
             <li><%= link_to "Login", login_path %></li>
+            <li><%= link_to "Signup", new_seller_path %></li>
           <% else %>
             <li><%= link_to "Logout", logout_path, method: :delete %></li>
           <% end %>

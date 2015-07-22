@@ -5,7 +5,7 @@
       <div class="product-name">
         <h2><%= product.name %></h2>
       </div>
-      <%= link_to image_tag("#{product.photo_url}", size: "100"), product_path(product) %>
+      <%= link_to image_tag("#{product.photo_url}", class: "img-responsive", size: "100"), product_path(product) %>
       <div class="caption">
         <h3><%= display_dollars(product.price) %></h3>
         <% product_short_description = product.description[0..100] + '...' %>
