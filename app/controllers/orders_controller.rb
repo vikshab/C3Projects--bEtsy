@@ -18,12 +18,10 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order.status = "paid" # OPTIMIZE: it might make sense to make these be model methods.
-    if @order.update(checkout_params)
+    if @order.checkout(checkout_params)
       redirect_to receipt_path
     else
       flash[:errors] = @order.errors
-      @order.status = "pending"
       redirect_to checkout_path # TODO: might want to change this so that inputted data remains?
     end
   end

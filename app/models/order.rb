@@ -63,4 +63,9 @@ class Order < ActiveRecord::Base
   def pending?
     status == "pending"
   end
+
+  def checkout(checkout_params)
+    checkout_params[:status] = "paid"
+    self.update(checkout_params)
+  end
 end
