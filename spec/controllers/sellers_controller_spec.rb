@@ -34,9 +34,10 @@ RSpec.describe SellersController, type: :controller do
         expect(Seller.count).to eq 1
       end
 
-      it "redirects to the login page" do
+      it "redirects to the seller's dashboard page" do
+        session[:seller_id]
         post :create, @new_params
-        expect(subject).to redirect_to(login_path)
+        expect(subject).to redirect_to(dashboard_path(@new_params[:id]))
       end
     end
 
