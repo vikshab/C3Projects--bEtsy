@@ -30,6 +30,11 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy"
 
   get "/merchant/:id/products", to: "products#merchant_products", as: "merchant_products"
+
+  # checkout
+  get  '/checkout' => 'buyers#new'
+  post '/checkout' => 'buyers#create'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

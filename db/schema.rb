@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 20150720232631) do
     t.string   "state"
     t.integer  "zip"
     t.integer  "last4cc"
-    t.string   "expirationcc"
+    t.string   "expcc"
     t.integer  "order_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "buyers", ["order_id"], name: "index_buyers_on_order_id"
