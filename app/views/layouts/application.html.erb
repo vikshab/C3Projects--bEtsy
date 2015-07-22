@@ -14,8 +14,9 @@
       <%= link_to "All Products", products_path %> -
       <%= link_to "All Categories", categories_path %> -
       <%= link_to "All Sellers", sellers_path %> -
-      <% cart_display_text = "Cart" %>
-      <%= link_to cart_display_text, cart_path %> -
+      <% if session[:order_id] %>
+        <%= link_to cart_display_text, cart_path %> -
+      <% end %>
     </nav>
 
     <nav> <!-- # TODO: delete this after it's merged :) -->
@@ -47,7 +48,9 @@
       <%= link_to "All Products", products_path %> -
       <%= link_to "All Categories", categories_path %> -
       <%= link_to "All Sellers", sellers_path %> -
-      <%= link_to cart_display_text, cart_path %> -
+      <% if session[:order_id] %>
+        <%= link_to cart_display_text, cart_path %> -
+      <% end %>
     </nav>
   </footer>
 </body>
