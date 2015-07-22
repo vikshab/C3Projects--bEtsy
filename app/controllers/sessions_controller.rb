@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if @seller && @seller.authenticate(params[:session][:password])
       session[:seller_id] = @seller.id
       flash[:messages] = MESSAGES[:successful_login]
-      redirect_to root_path # TODO: change this to seller_path(@seller)
+      redirect_to dashboard_path(@seller)
     else
       flash.now[:errors] = ERRORS[login_error] # NOTE: in specs, can test this with: `@sellers.errors.messages`
       render :new
