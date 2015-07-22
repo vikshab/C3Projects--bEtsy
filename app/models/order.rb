@@ -5,8 +5,6 @@ class Order < ActiveRecord::Base
     order.confirmed_payment = false
   end
 
-  # before_update :buyer_card_unexpired? # this should return false if the card is expired
-
   # DB relationships
   has_many :order_items, dependent: :destroy
   # should destroy all of the associated OrderItems if an Order is destroyed.
@@ -63,11 +61,6 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def mutable?
-    status == "pending"
-  end
-
-  # for validations, update other code to use this instead of mutable.
   def pending?
     status == "pending"
   end

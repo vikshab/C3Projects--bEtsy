@@ -1,7 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:add_to_cart, :cart, :checkout, :update, :receipt]
   before_action :set_product, only: [:add_to_cart]
-  before_action :check_access, only: [:cart, :checkout, :receipt]
 
   def add_to_cart
     if @order.already_has_product?(@product)
@@ -57,9 +56,5 @@ class OrdersController < ApplicationController
 
     def set_product
       @product = Product.find(params[:id])
-    end
-
-    def check_access
-      redirect_to root_path if @order.nil? # I'm pretty sure this will never be true -J
     end
 end
