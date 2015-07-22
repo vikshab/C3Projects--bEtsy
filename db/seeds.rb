@@ -38,7 +38,8 @@ ut, pharetra nulla. Nulla dapibus sed elit blandit interdum.
 END
 
 products = [
-  { name: "Puppy", price: 300, seller_id: 2, stock: 3, photo_url: "http://upload.wikimedia.org/wikipedia/commons/9/9c/Tibetan_Terrier_Puppy.jpg",
+  { name: "Puppy", price: 300, seller_id: 2, stock: 3,
+    photo_url: "http://upload.wikimedia.org/wikipedia/commons/9/9c/Tibetan_Terrier_Puppy.jpg",
     description: lorem_ipsum_description },
   { name: "Hat", price: 2000, seller_id: 4, stock: 7,
     photo_url: "https://c1.staticflickr.com/3/2778/4364279708_c5eee8c341.jpg",
