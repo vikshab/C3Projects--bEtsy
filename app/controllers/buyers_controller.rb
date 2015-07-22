@@ -21,6 +21,17 @@ class BuyersController < ApplicationController
   def confirmation
     @buyer = Buyer.where("order_id = ?", params[:order_id])
     @order_items = OrderItem.where("order_id = ?", params[:order_id])
+    @order_items.each do |item|
+      bought = item.quantity #how many were bought
+      product = item.product
+      inventory = item.product.stock #inventory
+      inventory = inventory - bought
+      product.update(stock: inventory)
+      puts "STocks"
+      puts product.stock
+    end
+    # quantity reduced - find product, change quantity
+    # status changed to paid
   end
 
   private
