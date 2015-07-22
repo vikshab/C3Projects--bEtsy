@@ -11,9 +11,8 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
-    # user = User.find(params[:user_id])
-    @user_id = User.find(params[:user_id])
+    user = User.find(params[:user_id])
+    @product = Product.new(user_id: user.id)
   end
 
   def create
