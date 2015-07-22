@@ -25,7 +25,6 @@ class Order < ActiveRecord::Base
     validates_presence_of :buyer_email
     validates_format_of :buyer_email, with: VALID_EMAIL_REGEX
 
-    # TODO: should we validate buyer name & address any futher?
     validates_presence_of :buyer_name
     validates_presence_of :buyer_address
 
@@ -48,8 +47,8 @@ class Order < ActiveRecord::Base
   end
 
   def buyer_card_unexpired
-    # guard clause
-    return if pending? || confirmed_payment
+    # guard clause that works with the setup on lines 2 - 6
+    return if confirmed_payment
     # if order is not pending and payment has not yet been confirmed,
     # then confirm the payment -- which in this case means check the
     # expiration date is on or after today.
