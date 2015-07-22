@@ -1,4 +1,6 @@
 class SellersController < ApplicationController
+  before_action :require_seller_login, only: [:dashboard]
+
   def index
     @sellers = Seller.all
   end
@@ -19,6 +21,11 @@ class SellersController < ApplicationController
       flash.now[:errors] = @seller.errors
       render :new
     end
+  end
+
+  def dashboard
+    @seller = Seller.find(params[:id])
+    render :dashboard
   end
 
   private
