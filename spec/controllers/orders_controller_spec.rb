@@ -4,7 +4,6 @@ RSpec.describe OrdersController, type: :controller do
   let(:test_order) { Order.create }
   let(:test_seller) { Seller.create( { username: "I am a seller name", email: "email@example.com", password: "IAmAPassword", password_confirmation: "IAmAPassword" } ) }
   let(:test_product) { Product.create(name: "I am a product", price: 1000, seller_id: test_seller.id, stock: 10) }
-
   let(:future_date) { "01/01/2020" }
 
   describe "GET #cart" do
@@ -292,6 +291,99 @@ RSpec.describe OrdersController, type: :controller do
 
         expect(response).to redirect_to(root_path)
       end
+    end
+  end
+
+  describe "GET #index" do
+    before :each do
+      @seller = Seller.new(username: "a", email: "bob@bob.bob")
+      @seller.password = @seller.password_confirmation = "password"
+      @seller.save
+
+      @product1 = Product.create(name: "astronaut", price: 4_000, seller_id: @seller.id, stock: 5)
+      @product2 = Product.create(name: "dsafkhlaer", price: 125, seller_id: @seller.id, stock: 25)
+      @order = Order.create(status: "paid", buyer_name: "bob", buyer_email: "bob@bob.bob",
+        buyer_address: "1234 fake st", buyer_card_short: "4567",
+        buyer_card_expiration: Date.parse("June 5 2086"))
+      @item1 = OrderItem.create(product_id: @product1.id, order_id: @order.id, quantity_ordered: 2)
+      @item2 = OrderItem.create(product_id: @product2.id, order_id: @order.id, quantity_ordered: 2)
+
+      session[:seller_id] = @seller.id
+    end
+
+    it "is a success" do
+      get :index, seller_id: @seller.id
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
+    it "renders the index template" do
+      get :index, seller_id: @seller.id
+
+      expect(response).to render_template("index")
+    end
+
+    it "assigns @seller" do
+      get :index, seller_id: @seller.id
+
+      expect(assigns(:seller)).to eq(@seller)
+    end
+
+    it "assigns @orders" do
+      get :index, seller_id: @seller.id
+
+      expect(assigns(:orders)).to include(@order)
+    end
+  end
+
+  describe "GET #show" do
+    before :each do
+      @seller = Seller.new(username: "a", email: "bob@bob.bob")
+      @seller.password = @seller.password_confirmation = "password"
+      @seller.save
+
+      @product1 = Product.create(name: "astronaut", price: 4_000, seller_id: @seller.id, stock: 5)
+      @product2 = Product.create(name: "dsafkhlaer", price: 125, seller_id: @seller.id, stock: 25)
+      @order = Order.create(status: "paid", buyer_name: "bob", buyer_email: "bob@bob.bob",
+        buyer_address: "1234 fake st", buyer_card_short: "4567",
+        buyer_card_expiration: Date.parse("June 5 2086"))
+      @item1 = OrderItem.create(product_id: @product1.id, order_id: @order.id, quantity_ordered: 2)
+      @item2 = OrderItem.create(product_id: @product2.id, order_id: @order.id, quantity_ordered: 2)
+
+      session[:seller_id] = @seller.id
+    end
+
+    it "is a success" do
+      get :show, seller_id: @seller.id, id: @order.id
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
+    it "renders the show template" do
+      get :show, seller_id: @seller.id, id: @order.id
+
+      expect(response).to render_template("show")
+    end
+
+    it "assigns @seller" do
+      get :show, seller_id: @seller.id, id: @order.id
+
+      expect(assigns(:seller)).to eq(@seller)
+    end
+
+    it "assigns @order" do
+      get :show, seller_id: @seller.id, id: @order.id
+
+      expect(assigns(:order)).to eq(@order)
+    end
+
+    it "assigns @items" do
+      get :show, seller_id: @seller.id, id: @order.id
+
+      expect(assigns(:items)).to include(@item1)
+      expect(assigns(:items)).to include(@item2)
     end
   end
 end

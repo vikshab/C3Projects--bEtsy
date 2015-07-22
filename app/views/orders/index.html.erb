@@ -1,0 +1,22 @@
+<h2><%= @seller.username %> <small><%= @seller.email %></small></h2>
+
+<% if @orders.length > 0 %>
+  <table class="table table-striped table-condensed">
+    <tr>
+      <th>Order #</th>
+      <th>Invoice</th>
+      <th>Invoice Total</th>
+      <th>Status</th>
+      <th>Customer</th>
+    </tr>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= link_to "View Invoice for Order ##{ order.id }", seller_order_path(@seller, order) %></td>
+        <td><%= display_dollars(order.order_price(@seller.id)) %></td>
+        <td><%= order.status %></td>
+        <td><%= order.buyer_name %> <small><%= order.buyer_email %></small></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

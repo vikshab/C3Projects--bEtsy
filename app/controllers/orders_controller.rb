@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:cart, :checkout, :add_to_cart, :update, :receipt]
+  before_action :set_seller_order, only: [:show]
   before_action :set_product, only: [:add_to_cart]
+  before_action :set_seller, only: [:index, :show]
+  before_action :require_seller_login, only: [:index, :show]
+
 
   def cart; end
 
@@ -35,6 +39,15 @@ class OrdersController < ApplicationController
     end
   end
 
+  def index
+    @orders = @seller.orders
+    flash.now[:errors] = ERRORS[:no_orders] if @orders.length == 0
+  end
+
+  def show
+    @items = @order.order_items.select { |item| item.seller.id == @seller.id }
+  end
+
   private
     def checkout_params
       params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
@@ -47,6 +60,10 @@ class OrdersController < ApplicationController
         @order = Order.create
         session[:order_id] = @order.id
       end
+    end
+
+    def set_seller_order
+      @order = Order.find(params[:order_id] ? params[:order_id] : params[:id])
     end
 
     def set_product
