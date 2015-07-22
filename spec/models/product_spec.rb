@@ -24,7 +24,7 @@ RSpec.describe Product, type: :model do
       expect(product.errors.keys).to include(:price)
     end
 
-    it "excludes dublicate names" do
+    it "excludes duplicate names" do
       product1 = Product.create(name: "box", price: 3, user_id: 1, stock: 1)
       product2 = Product.create(name: "box", price: 5, user_id: 1, stock: 1)
       product3 = Product.create(name: "box", price: 10, user_id: 1, stock: 1)
