@@ -5,7 +5,7 @@ class OrderItemsController < ApplicationController
   def more # OrderItem.more <-- gimme more of this OrderItem
     @item.more!
 
-    flash[:error] = @item.errors if @item.errors
+    flash[:errors] = @item.errors if @item.errors
 
     redirect_to cart_path
   end
@@ -14,8 +14,8 @@ class OrderItemsController < ApplicationController
   def less # OrderItem.less <-- gimme less of this OrderItem
     @item.less!
 
-    flash[:error] = @item.errors if @item.errors
-    
+    flash[:errors] = @item.errors if @item.errors
+
     redirect_to cart_path
   end
 

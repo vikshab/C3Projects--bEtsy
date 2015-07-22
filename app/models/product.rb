@@ -14,7 +14,7 @@ class Product < ActiveRecord::Base
     rating_total = 0.0
     total_num_reviews = self.reviews.count
 
-    return "No reviews" if total_num_reviews == 0
+    return 0 if total_num_reviews == 0
 
     self.reviews.each do |review|
       rating_total += review[:rating]
@@ -26,6 +26,11 @@ class Product < ActiveRecord::Base
 
   def has_available_stock?
     (quantity_tied_up_in_pending_transactions + 1) <= stock
+  end
+
+  def self.top_products
+    sorted_products = Product.all.sort_by { |product| product.average_rating }.reverse!
+    top_products = sorted_products[0..9]
   end
 
   def update_stock

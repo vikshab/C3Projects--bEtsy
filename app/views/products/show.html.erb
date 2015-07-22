@@ -1,5 +1,13 @@
 <div class="page-header">
-  <h1><%= @product.name %> <small>Average Rating: <%= @average_rating %></small></h1>
+  <h1><%= @product.name %>
+    <small>Average Rating:
+      <% if @average_rating == 0 %>
+        <%= "No Reviews" %>
+      <% else %>
+        <%= @average_rating %>
+      <% end %>
+    </small>
+  </h1>
 </div>
 <h4>Sold by: <%= @product.seller.username %> </h4>
 <h4><%= display_dollars(@product.price) %></h4>
