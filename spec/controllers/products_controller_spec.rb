@@ -30,20 +30,24 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "GET #edit" do
     before :each do
+      @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
       @product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
+      session[:seller_id] = @seller.id
     end
 
     it "renders the edit view" do
       get :edit, id: @product
-      expect(response).to render_template("edit")
+      expect(response).to render_template("edit", session[:seller_id])
     end
   end
 
   describe "PUT #update" do
     context "valid product params" do
       before :each do
+        @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
         @product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
         @new_params = { :product => { name: 'b' }, id: 1 }
+        session[:seller_id] = @seller.id
       end
 
       it "updates a product" do
@@ -60,8 +64,10 @@ RSpec.describe ProductsController, type: :controller do
 
     context "invalid product params" do
       before :each do
+        @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
         @product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
         @new_params = { :product => { name: '' }, id: 1 }
+        session[:seller_id] = @seller.id
       end
 
       it "does not update the product" do
@@ -73,7 +79,7 @@ RSpec.describe ProductsController, type: :controller do
       it "renders the edit page so the record can be fixed" do
         put :update, @new_params
         @product.reload
-        expect(response).to render_template("edit")
+        expect(response).to render_template("edit", session[:seller_id])
       end
     end
   end
@@ -81,6 +87,7 @@ RSpec.describe ProductsController, type: :controller do
   describe "GET #new" do
     before :each do
       @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
+      session[:seller_id] = @seller.id
     end
 
     it "responds successfully with an HTTP 200 status code" do
@@ -100,6 +107,7 @@ RSpec.describe ProductsController, type: :controller do
       before :each do
         @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
         @new_params = { :product => { name: 'a', price: 1, seller_id: 1, stock: 1 }, seller_id: 1 }
+        session[:seller_id] = @seller.id
       end
 
       it "creates a product" do
@@ -117,16 +125,17 @@ RSpec.describe ProductsController, type: :controller do
       before :each do
         @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
         @new_params = { :product => { name: '', price: 1, seller_id: 1, stock: 1 }, seller_id: 1 }
+        session[:seller_id] = @seller.id
       end
 
-      it "does not persist invalid records" do
+      it "does not persist invalid records" do 
         post :create, @new_params
         expect(Product.count).to eq 0
       end
 
       it "renders the new page so the record can be fixed" do
         post :create, @new_params
-        expect(response).to render_template("new")
+        expect(response).to render_template("new", session[:seller_id])
       end
     end
   end
