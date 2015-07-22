@@ -18,20 +18,19 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order.status = "paid"
+    @order.status = "paid" # OPTIMIZE: it might make sense to make these be model methods.
     if @order.update(checkout_params)
       redirect_to receipt_path
     else
       flash[:errors] = @order.errors
       @order.status = "pending"
-      redirect_to cart_path
+      redirect_to checkout_path
     end
   end
 
   def receipt
     if @order.status == "paid"
       render :receipt
-
       session[:order_id] = nil
     else
       redirect_to root_path

@@ -17,13 +17,26 @@
       <% cart_display_text = "Cart" %>
       <%= link_to cart_display_text, cart_path %> -
     </nav>
+
+    <nav> <!-- # TODO: delete this after it's merged :) -->
+    <!-- # TODO: Add show/hide display logic -->
+      <%= link_to "Login", login_path %>
+      <%= button_to "Logout", logout_path, method: :delete %>
+    </nav>
   </header>
 
   <main class="container-fluid">
-    <% if flash[:error] %>
+    <% if flash[:error] %> <!-- # TODO: come back to this (plural vs not) -->
       <h4 class="alert alert-warning"><%= flash[:error] %></h4>
     <% end %>
 
+    <% if flash[:messages] %>
+      <h4 class="alert alert-success"><%= flash[:messages] %></h4>
+    <% end %>
+
+    <% if flash[:errors] %>
+      <h4 class="alert alert-warning"><%= flash[:errors] %></h4>
+    <% end %>
     <%= yield %>
   </main>
 

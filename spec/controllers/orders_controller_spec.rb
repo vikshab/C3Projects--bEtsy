@@ -207,10 +207,10 @@ RSpec.describe OrdersController, type: :controller do
         expect(test_order.status).to eq("pending")
       end
 
-      it "redirects to cart_path" do
+      it "redirects to checkout_path" do
         patch :update, invalid_checkout_buyer_params
 
-        expect(response).to redirect_to(cart_path)
+        expect(response).to redirect_to(checkout_path)
       end
 
       it "does not update the order.buyer_card_short" do

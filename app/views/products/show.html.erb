@@ -10,7 +10,13 @@
 
 <h3>Reviews</h3>
 
-<h4>Average Rating: <%= @average_rating %></h4>
+<h4>Average Rating:
+<% if @average_rating == 0 %>
+  <%= "No Reviews" %>
+<% else %>
+  <%= @average_rating %>
+<% end %>
+</h4>
 
 <%= link_to "Add Review", new_review_path %>
 
@@ -20,7 +26,6 @@
     <li><%= review.description %></li>
   </ul>
 <% end %>
-
 
 
 <!-- Add stuff for categories?? -->
