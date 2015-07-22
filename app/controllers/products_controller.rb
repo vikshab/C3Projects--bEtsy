@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(product_params[:product])
+    @product = Product.new(product_params)
     @user_id = session[:user_id]
     if @product.save
       redirect_to product_path(@product)
@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product.update(product_params[:product])
+    @product.update(product_params)
 
     if @product.save
       redirect_to user_path(@product.user_id)

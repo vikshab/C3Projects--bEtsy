@@ -4,7 +4,6 @@ class CategoriesController < ApplicationController
     @products = @category.products.active_product
   end
 
-
   private
 
   def category_params

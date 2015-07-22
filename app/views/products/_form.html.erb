@@ -18,8 +18,8 @@
       <% end %>
 
       <%= f.fields_for @product.categories.build do |ff| %>
-          <%= ff.label :name, "New Category" %>
-          <%= ff.text_field :name %>
+        <%= ff.label :name, "New Category" %>
+        <%= ff.text_field :name %>
       <% end %>
     </div>
 
