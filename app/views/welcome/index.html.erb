@@ -1,4 +1,14 @@
-<%# TODO: all of this content is a hold-over until we actually design the page %>
-<h1>Hello, world.</h1>
+<div class="jumbotron">
+  <div class="page-header">
+    <div class="tux-mascot">
+      <%= image_tag("penguin.png", size: "100x100", alt: "Tux mascot") %>
+    </div>
+    <h1>Welcome to Tux. <small>A place to buy all the things.</small></h1>
+  </div>
+</div>
+
+<div class="page-header">
+  <h2>Top rated products:</h2>
+</div>
 
 <%= render 'shared/products_list', { products: @top_products } %>
