@@ -1,11 +1,23 @@
-<h1>Log in ^_^</h1>
+<div class="page-header">
+  <h1>Log in</h1>
+</div>
 
-<%= form_for(:session, url: login_path) do |f| %>
-  <%= f.label :username %>
-  <%= f.text_field :username %>
-
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-
-  <%= f.submit "Log In" %>
-<% end %>
+<div class="row">
+  <div class="col-lg-4 col-lg-offset-4">
+    <%= form_for(:session, url: login_path) do |f| %>
+      <fieldset>
+        <div class="input-group col-lg-12">
+          <%= f.label :username %>
+          <%= f.text_field :username, class: "form-control" %>
+        </div>
+        <div class="input-group col-lg-12">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+        <div class="form-actions">
+          <%= f.submit "Log In", class: "btn btn-default" %>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
