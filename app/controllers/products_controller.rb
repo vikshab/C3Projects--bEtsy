@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, except: [:index, :new, :create]
+  before_action :set_product, only: [:show, :edit, :update]
   before_action :set_seller, only: [:new, :create]
   before_action :require_seller_login, only: [:new, :update, :edit, :create]
 
