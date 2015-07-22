@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
 
   def add_to_cart
     if @order.already_has_product?(@product)
-      flash[:errors] = ERRORS[already_in_cart] # TODO: perhaps change this to incrementing the count in the cart?
+      flash[:errors] = ERRORS[:already_in_cart] # TODO: perhaps change this to incrementing the count in the cart?
     else
       OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
     end
@@ -41,8 +41,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = @seller.orders
-    # raise
-    flash.now[:errors] = "You don't have any orders." if @orders.length == 0
+    flash.now[:errors] = ERRORS[:no_orders] if @orders.length == 0
   end
 
   def show
@@ -53,7 +52,7 @@ class OrdersController < ApplicationController
     def checkout_params
       order_info = params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
       order_info[:status] = "paid"
-      order_into[:buyer_card_expiration] = Date.parse(order_into[:buyer_card_expiration])
+      order_info[:buyer_card_expiration] = Date.parse(order_info[:buyer_card_expiration])
 
       return order_info
     end
