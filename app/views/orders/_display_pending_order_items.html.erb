@@ -22,7 +22,7 @@
       <td><%= display_dollars(item.item_price) %></td>
       <td>
         <div class="garbage-icon">
-          <%= link_to kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } do %>
+          <%= link_to kill_item_path(item), method: :delete, data: { confirm: remove_prompt_text(item) } do %>
             <span class="glyphicon glyphicon-trash"></span>
           <% end %>
         </div>
