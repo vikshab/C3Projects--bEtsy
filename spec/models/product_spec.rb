@@ -87,14 +87,45 @@ RSpec.describe Product, type: :model do
       expect(product.average_rating).to eq 2
     end
 
-    it "returns a message if no ratings" do
+    it "returns 0 if no ratings" do
       product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
 
-      expect(product.average_rating).to eq "No reviews"
+      expect(product.average_rating).to eq 0
     end
   end
 
   describe "has_available_stock?" do
     # code to test this goes here
+  end
+
+  describe "#top_products" do
+    it "returns the top_products" do
+      product1 = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
+      product2 = Product.create(name: 'b', price: 1, seller_id: 1, stock: 1)
+      product3 = Product.create(name: 'c', price: 1, seller_id: 1, stock: 1)
+      product4 = Product.create(name: 'd', price: 1, seller_id: 1, stock: 1)
+      product5 = Product.create(name: 'e', price: 1, seller_id: 1, stock: 1)
+      product6 = Product.create(name: 'f', price: 1, seller_id: 1, stock: 1)
+      product7 = Product.create(name: 'g', price: 1, seller_id: 1, stock: 1)
+      product8 = Product.create(name: 'h', price: 1, seller_id: 1, stock: 1)
+      product9 = Product.create(name: 'i', price: 1, seller_id: 1, stock: 1)
+      product10 = Product.create(name: 'j', price: 1, seller_id: 1, stock: 1)
+      product11 = Product.create(name: 'k', price: 1, seller_id: 1, stock: 1)
+      review = Review.create(rating: 1, product_id: 1)
+      review = Review.create(rating: 2, product_id: 2)
+      review = Review.create(rating: 3, product_id: 3)
+      review = Review.create(rating: 4, product_id: 4)
+      review = Review.create(rating: 5, product_id: 5)
+      review = Review.create(rating: 4, product_id: 6)
+      review = Review.create(rating: 3, product_id: 7)
+      review = Review.create(rating: 2, product_id: 8)
+      review = Review.create(rating: 1, product_id: 9)
+      review = Review.create(rating: 2, product_id: 10)
+      review = Review.create(rating: 3, product_id: 11)
+
+      expected_array = [product5, product4, product6, product11, product7, product3,
+                        product10, product8, product2, product9]
+      expect(Product.top_products).to eq expected_array
+    end
   end
 end
