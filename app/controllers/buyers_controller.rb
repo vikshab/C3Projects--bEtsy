@@ -20,6 +20,7 @@ class BuyersController < ApplicationController
 
   def confirmation
     @buyer = Buyer.where("order_id = ?", params[:order_id])
+    @order = Order.find(session[:order_id])
     @order_items = OrderItem.where("order_id = ?", params[:order_id])
     @order_items.each do |item|
       bought = item.quantity #how many were bought
@@ -27,11 +28,11 @@ class BuyersController < ApplicationController
       inventory = item.product.stock #inventory
       inventory = inventory - bought
       product.update(stock: inventory)
-      puts "STocks"
-      puts product.stock
+
+      item.order.update(status: "paid")
+
     end
-    # quantity reduced - find product, change quantity
-    # status changed to paid
+    session[:order_id] = nil
   end
 
   private
