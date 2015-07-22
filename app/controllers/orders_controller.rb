@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
 
   def checkout; end
 
-  def add_to_cart # TODO: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
+  def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
     order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
     if order_item.save
       flash[:messages] = "The item has been added to your cart!"
@@ -18,21 +18,22 @@ class OrdersController < ApplicationController
   end
 
   def update
-    # add buyer info to order & change status
-    # handling for error messages / bad input if/else type thing
-    @order.update(checkout_params)
-
-    redirect_to receipt_path
+    @order.status = "paid"
+    if @order.update(checkout_params)
+      redirect_to receipt_path
+    else
+      flash[:errors] = @order.errors
+      @order.status = "pending"
+      redirect_to cart_path
+    end
   end
 
   def receipt
     if @order.status == "paid"
       render :receipt
 
-      # will this work? no?
-      reset_session # it does!
+      session[:order_id] = nil
     else
-      # redirect to somewhere more logical
       redirect_to root_path
     end
   end
