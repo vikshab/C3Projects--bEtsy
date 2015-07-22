@@ -11,8 +11,8 @@
     <% @orders.each do |order| %>
       <tr>
         <td><%= order.id %></td>
-        <td><%= link_to "View Invoice for Order ##{ order.id }", root_path %></td>
-        <td><%= display_dollars(order.order_price) %></td>
+        <td><%= link_to "View Invoice for Order ##{ order.id }", seller_order_path(@seller, order) %></td>
+        <td><%= display_dollars(order.order_price(@seller.id)) %></td>
         <td><%= order.status %></td>
       </tr>
     <% end %>
