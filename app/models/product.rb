@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
 # ASSOCIATIONS -----------------------------------------------------------------
 
   has_and_belongs_to_many :categories
-  accepts_nested_attributes_for :categories, reject_if: proc {|attributes| attributes['name'].blank? }
+  accepts_nested_attributes_for :categories#, reject_if: proc {|attributes| attributes['name'].blank? }
   belongs_to :user
   has_many :reviews
   has_many :order_items
