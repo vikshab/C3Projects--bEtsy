@@ -37,6 +37,7 @@
             <li><%= link_to "Login", login_path %></li>
             <li><%= link_to "Signup", new_seller_path %></li>
           <% else %>
+            <!-- # TODO: NEED A SELLER <li>link_to "Dashboard", seller_path(seller)</li> -->
             <li><%= link_to "Logout", logout_path, method: :delete %></li>
           <% end %>
         </ul>
