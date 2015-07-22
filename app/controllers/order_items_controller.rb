@@ -1,4 +1,5 @@
 require 'pry'
+
 class OrderItemsController < ApplicationController
 
   def create
@@ -12,9 +13,14 @@ class OrderItemsController < ApplicationController
   def update
     @order = current_order
     @order_item = @order.order_items.find(params[:id])
-    @order_item.update(order_item_params)
-    @order_items = @order.order_items
-    redirect_to order_path(@order)
+    if order_item_params[:quantity].to_i <= @order_item.product.stock.to_i
+      @order_item.update(order_item_params)
+      @order_items = @order.order_items
+      redirect_to order_path(@order)
+    else
+      flash[:error] = "Unfortunatelly we don't have #{order_item_params[:quantity].to_i} #{@order_item.product.name}, only #{@order_item.product.stock.to_i} available"
+      redirect_to cart_path
+    end
   end
 
   def destroy
@@ -22,7 +28,7 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.find(params[:id])
     @order_item.destroy
     @order_items = @order.order_items
-    redirect_to order_path(@order)
+    redirect_to cart_path
   end
 
 private

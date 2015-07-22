@@ -1,4 +1,23 @@
 <h1>SHOPPING CART</h1>
+<h1><center>SHOPPING CART</h1>
+  <!-- To much logic to the view page need to be somewhere else -->
+  <% if session[:order_id].nil? == false %>
+    <% @order = Order.find(session[:order_id]) %>
+    <% items = @order.order_items %>
+    <% array = [] %>
+    <% array_sum = [] %>
+
+    <% items.each do |item| %>
+      <% array.push(item.quantity.to_i) %>
+      <% array_sum.push(item.total_price.to_i) %>
+    <% end %>
+
+    <% quantity = 0 %>
+    <% sum = 0 %>
+    <h2><center>SUMMARY</h2>
+    <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag<h5><%= link_to("CLEAR BAG", order_path(@order.id), method: :delete) %></h5></h3>
+    <h3><center>Subtotal $<%= array_sum.inject{ |sum,element| sum + element} %></h3>
+ <% end %>
 
 <div class="container-fluid">
   <%= link_to "continue shopping", products_path %>
