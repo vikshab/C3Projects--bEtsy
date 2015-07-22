@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   MESSAGES = {
     successful_login: "You have logged in!", # used in SessionsController's create
     successful_logout: "You have logged out!", # used in SessionController's destroy
-    successful_signup: "You have signed up!"
+    successful_signup: "You have signed up!",
+    successful_add_to_cart: "The item has been added to your cart!"
   }
 
   ERRORS = {
