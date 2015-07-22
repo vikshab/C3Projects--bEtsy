@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   after_initialize do |order|
     order.confirmed_payment = false
   end
+
   # before_update :buyer_card_unexpired? # this should return false if the card is expired
 
   # DB relationships
@@ -34,8 +35,7 @@ class Order < ActiveRecord::Base
     validates_format_of :buyer_card_short, with: VALID_BUYER_CARD_SHORT_REGEX
 
     validates_presence_of :buyer_card_expiration
-    validate :buyer_card_unexpired?, unless: :confirmed_payment
-    # validates :buyer_card_expiration, payment: true, unless: :confirmed_payment
+    validate :buyer_card_unexpired
   end
 
   def order_price
@@ -49,13 +49,14 @@ class Order < ActiveRecord::Base
     products.include? product
   end
 
-  def buyer_card_unexpired?
+  def buyer_card_unexpired
+    # guard clause
+    return if pending? || confirmed_payment
     # if order is not pending and payment has not yet been confirmed,
     # then confirm the payment -- which in this case means check the
     # expiration date is on or after today.
-    unexpired = buyer_card_expiration >= Date.today
 
-    if unexpired
+    if buyer_card_expiration && (buyer_card_expiration >= Date.today)
       @confirmed_payment = true
     else
       errors[:buyer_card_expiration] << "Card expiration date is not valid."
@@ -69,9 +70,5 @@ class Order < ActiveRecord::Base
   # for validations, update other code to use this instead of mutable.
   def pending?
     status == "pending"
-  end
-
-  def set_confirmed_payment_false
-    @confirmed_payment = false
   end
 end

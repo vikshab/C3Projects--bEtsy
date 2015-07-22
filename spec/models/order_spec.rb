@@ -176,9 +176,6 @@ RSpec.describe Order, type: :model do
         valid_dates.each do |date|
           order = Order.create
           order.update(status: "paid", buyer_card_expiration: Date.parse(date.to_s))
-
-          puts order.confirmed_payment
-
           expect(order.errors.keys).to_not include(:buyer_card_expiration)
         end
 
@@ -186,9 +183,6 @@ RSpec.describe Order, type: :model do
         invalid_dates.each do |date|
           order = Order.create
           order.update(status: "paid", buyer_card_expiration: Date.parse(date.to_s))
-
-          puts order.confirmed_payment
-
           expect(order.errors.keys).to include(:buyer_card_expiration)
         end
       end
