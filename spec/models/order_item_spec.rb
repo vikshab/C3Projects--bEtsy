@@ -7,7 +7,7 @@ RSpec.describe OrderItem, type: :model do
     @seller.save
     @product = Product.create(name: "a", price: 1, seller_id: 1, stock: 5)
     @order = Order.create
-    @item = OrderItem.create(product_id: 1, order_id: 1, quantity_ordered: 1)
+    @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
   end
 
   describe "database relationships" do
@@ -84,12 +84,15 @@ RSpec.describe OrderItem, type: :model do
         order = Order.create
         product = Product.create(name: "blabbasdk4t3ny9", stock: 50, price: 1, seller_id: 1)
 
-        valid_item = OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 1)
+        valid_item = OrderItem.new(order_id: order.id, product_id: product.id, quantity_ordered: 1)
         expect(valid_item).to be_valid
 
-        invalid_item = OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 1)
-        expect(invalid_item.errors.keys).to include(:product_id)
-        expect(invalid_item.errors[:product_id]).to include("That product is already part of this order.")
+        OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 1)
+
+        invalid_item = OrderItem.new(order_id: order.id, product_id: product.id, quantity_ordered: 1)
+        invalid_item.valid?
+        expect(valid_item).not_to be_valid
+        expect(invalid_item.errors).to include(:product_not_unique)
       end
     end
 

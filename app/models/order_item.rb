@@ -1,6 +1,5 @@
 class OrderItem < ActiveRecord::Base
   before_save :product_has_stock?
-  before_create :product_absent_from_order? # we want false if the product is present
 
   # DB relationships
   belongs_to :order
@@ -64,17 +63,6 @@ class OrderItem < ActiveRecord::Base
       errors.add(:quantity_ordered, "Product must have available stock.")
       return false
     end
-  end
-
-  def product_absent_from_order? # OPTIMIZE is this the right way to do this?
-    order.order_items.each do |item|
-      if item.product_id == product_id
-        errors.add(:product_id, "That product is already part of this order.")
-        return false
-      end
-    end
-
-    return true
   end
 
   def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
