@@ -63,18 +63,18 @@ As a guest to the website (not signed in) I **can**:
 - √ Add in-stock products to my cart
 - √ Remove products from my cart
 - √ Change the quantity of an existing product in my cart
-- √ Purchase the items in my cart, providing:
-    - Email Address
+- Purchase the items in my cart, providing: **Anita**
+    - √ Email Address
     - Mailing Address
     - Name on credit card
     - Credit card number
     - Credit cart expiration
-    - Credit Card CVV (security code) **Anita**
+    - Credit Card CVV (security code)
     - Billing zip code
 - √ Purchasing an order makes the following changes:
-    - Reduces the number of inventory for each product **Victoria && Brittany**
-    - Changes the order state from "pending" to "paid" **Victoria && Brittany**
-    - Clears the current cart **Victoria && Brittany**
+    - √ Reduces the number of inventory for each product
+    - √ Changes the order state from "pending" to "paid"
+    - √ Clears the current cart
 - √ After purchasing an order, I can view a confirmation screen including: **Brittany**
     - Each item in the order with a quantity and line-item subtotal
     - A link to the item description page
@@ -101,7 +101,7 @@ As a signed-in user, I **can**:
 - √ Do everything a guest user can do except for sign up and sign in.
 - √ Review other merchant's products
 - √ Sign out
-- Create new categories (categories are shared between all merchants) **Anita**
+- Create new categories (categories are shared between all merchants) **Elia**
 - √ Create a new product providing:
     - name
     - description
@@ -112,19 +112,19 @@ As a signed-in user, I **can**:
 - √ Retire a product from being sold, which hides it from browsing
 - √ View an account page to edit/update my existing products
 - View an account page showing my order fulfillment
-- On the order fulfillment page: **Elia & Anita**
-    - Total Revenue
-    - Total Revenue by status
-    - Total number of orders by status
-    - Filter orders displayed by status
-    - Link to each individual order
+- On the order fulfillment page: 
+    - Total Revenue **Anita**
+    - Total Revenue by status **Anita**
+    - Total number of orders by status **Anita**
+    - Filter orders displayed by status **Anita**
+    - Link to each individual order **Anita**
     - √ A list of orders including at least one of my products:
-        - Each order item sold by me with a quantity and line-item subtotal
-        - A link to the item description page
-        - DateTime the order was placed
-        - Link to transition the order item to marked as shipped
-        - The current status of the order ("pending", "paid", "complete", "cancelled")
-- View an individual order to see the user's: **Elia & Anita**
+        - √ Each order item sold by me with a quantity and line-item subtotal
+        - √ A link to the item description page
+        - √ DateTime the order was placed
+        - Link to transition the order item to marked as shipped **Elia**
+        - The current status of the order ("pending", "paid", "complete", "cancelled") **Elia**
+- View an individual order to see the user's: **Brittany** _styling_
     - Name
     - Email address
     - Mailing address
@@ -134,7 +134,7 @@ As a signed-in user, I **can**:
 As a signed-in user, I **cannot**:
 
 - √ Review my own products
-- View order items from a shared order that belong to another merchant **Elia & Anita**
+- View order items from a shared order that belong to another merchant **Anita**
 - √ View another users private data (i.e. order fulfillment or product management)
 
 ### Model Validations
