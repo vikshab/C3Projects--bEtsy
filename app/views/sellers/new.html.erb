@@ -1,18 +1,32 @@
-<h1>Sign Up</h1>
-<%= form_for @seller do |f| %>
-<fieldset>
-  <%= f.label :username %>
-  <%= f.text_field :username %>
+<div class="page-header">
+  <h1>Sign Up</h1>
+</div>
 
-  <%= f.label :email %>
-  <%= f.email_field :email %>
+<div class="row">
+  <div class="col-lg-4 col-lg-offset-4">
+    <%= form_for @seller do |f| %>
+      <fieldset>
+        <div class="input-group col-lg-12">
+          <%= f.label :username %>
+          <%= f.text_field :username, class: "form-control" %>
+        </div>
+        <div class="input-group col-lg-12">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: "form-control" %>
+        </div>
+        <div class="input-group col-lg-12">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+        <div class="input-group col-lg-12">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+        </div>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
-
-</fieldset>
-  <%= f.submit %>
-<% end %>
+      </fieldset>
+      <div class="form-actions">
+        <%= f.submit "Login", class: "btn btn-default" %>
+      </div>
+    <% end %>
+  </div>
+</div>

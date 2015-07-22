@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
 
   def self.top_products
     sorted_products = Product.all.sort_by { |product| product.average_rating }.reverse!
-    top_products = sorted_products[0..9]
+    top_products = sorted_products[0..11]
   end
 
   def update_stock

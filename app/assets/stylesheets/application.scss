@@ -13,3 +13,74 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
+
+.navbar-brand img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.navbar-right {
+  padding-right: 20px;
+}
+
+.navbar-bottom {
+  margin-top: 20px;
+}
+
+.tux {
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+}
+
+.page-header {
+  margin-top: 0px;
+  display: inline-block;
+}
+
+.page-header h1 {
+  margin-top: 0px;
+}
+
+.category-buttons {
+  border: 0px;
+}
+
+.table tr td {
+  border-top: none !important;
+  border: none !important;
+}
+
+.img {
+  height: 20px;
+  width: 20px;
+}
+
+.thumbnail {
+  height: 350px;
+}
+
+.product-name {
+  text-align: center;
+}
+
+.input-group {
+  margin-top: 10px;
+}
+
+.form-actions {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.product-info .spacing {
+  margin-right: 20px;
+}
+
+.product-buttons {
+  margin-top: 10px;
+}
+
+body {
+  padding-top: 70px;
+}
