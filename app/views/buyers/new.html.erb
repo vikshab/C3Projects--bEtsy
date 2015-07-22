@@ -10,7 +10,6 @@
 </div>
 <div class="row">
   <div class = "col-md-6 col-md-offset-3">
-    <div class="form-group">
     <%= form_for :buyer, url: checkout_path do |f| %>
     <!-- in form_for :buyer, telling us below are in the params[:session] hash -->
     <!-- url for the POST url after they click submit -->
@@ -58,6 +57,5 @@
 
       <%= f.submit "Purchase", class: "btn btn-primary" %>
     <% end %>
-    </div>
   </div>
 </div>
