@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
   def add_to_cart
     if @order.already_has_product?(@product)
-      flash[:error] = "This item is already in your cart!" # TODO: perhaps change this to incrementing the count in the cart?
+      flash[:errors] = "This item is already in your cart!" # TODO: perhaps change this to incrementing the count in the cart?
     else
       OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
     end
