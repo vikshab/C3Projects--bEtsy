@@ -1,7 +1,7 @@
 <h1><center>Confirmation for your purchase, <%= @buyer.name %></h1>
 
 <% if session[:order_id].nil? == false %>
-    <% @order = Order.find(session[:order_id]) %>
+    <% @order %>
     <% items = @order.order_items %>
     <% array_sum = [] %>
 
