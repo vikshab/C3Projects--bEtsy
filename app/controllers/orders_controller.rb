@@ -21,8 +21,8 @@ class OrdersController < ApplicationController
     if @order.checkout(checkout_params)
       redirect_to receipt_path
     else
-      flash[:errors] = @order.errors
-      redirect_to checkout_path # TODO: might want to change this so that inputted data remains?
+      flash.now[:errors] = @order.errors
+      render :checkout
     end
   end
 

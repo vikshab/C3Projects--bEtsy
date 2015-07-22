@@ -209,10 +209,10 @@ RSpec.describe OrdersController, type: :controller do
         expect(test_order.status).to eq("pending")
       end
 
-      it "redirects to checkout_path" do
+      it "renders the checkout view" do
         patch :update, invalid_checkout_buyer_params
 
-        expect(response).to redirect_to(checkout_path)
+        expect(response).to render_template("checkout")
       end
 
       it "does not update the order.buyer_card_short" do
