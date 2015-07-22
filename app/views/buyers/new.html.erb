@@ -1,0 +1,45 @@
+<div class="row no-jumbo form-header">
+  <div class = "col-md-6 col-md-offset-3">
+      <h1>Pay with a Credit Card</h1>
+      <% if flash.now[:error] %>
+        <div>
+            <%= flash.now[:error] %>
+        </div>
+      <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class = "col-md-6 col-md-offset-3">
+    <%= form_for :buyer, url: checkout_path do |f| %>
+    <!-- in form_for :buyer, telling us below are in the params[:session] hash -->
+    <!-- url for the POST url after they click submit -->
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "form-control", value: session[:user_id] ? @user.email : "" %>
+      
+      <%= f.label :address %>
+      <%= f.text_field :address, class: "form-control" %>
+
+      <%= f.label :city %>
+      <%= f.text_field :city, class: "form-control" %>
+      <br>
+      <%= f.label :state %>
+      <%= f.select :state, us_states, include_blank: "--Select a State--", class: "form-control" %>
+      <br><br>
+      <%= f.label :zip, "Zip Code" %>
+      <%= f.text_field :zip, class: "form-control" %>
+
+      <%= f.label :last4cc, "Last 4 Digits of your Credit Card Number" %>
+      <%= f.number_field :last4cc, class: "form-control" %>
+
+      <%= f.label :expcc, "Credit Card Expiration Date" %>
+      <%= f.text_field :expcc, class: "form-control", placeholder: "MM/YY" %>
+
+      <%= f.hidden_field :order_id, value: session[:order_id] %>
+      <br>
+      <%= f.submit "Purchase", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

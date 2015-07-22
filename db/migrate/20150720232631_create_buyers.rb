@@ -8,7 +8,7 @@ class CreateBuyers < ActiveRecord::Migration
       t.string :state
       t.integer :zip
       t.integer :last4cc
-      t.string :expirationcc
+      t.string :expcc
       t.references :order, index: true, foreign_key: true
 
       t.timestamps null: false

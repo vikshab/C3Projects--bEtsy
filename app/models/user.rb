@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
   validate :email_must_contain_at
   has_secure_password
   
-
-
   def email_must_contain_at
     return if self.email == nil # guard clause, inline conditional
     unless self.email.chars.include?("@")
