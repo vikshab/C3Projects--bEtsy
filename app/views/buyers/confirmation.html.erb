@@ -1,0 +1,27 @@
+<h1><center>Confirmation for your purchase, <%= @buyer.name %></h1>
+
+<% if session[:order_id].nil? == false %>
+    <% @order = Order.find(session[:order_id]) %>
+    <% items = @order.order_items %>
+    <% array = [] %>
+    <% array_sum = [] %>
+
+    <% items.each do |item| %>
+      <% array.push(item.quantity.to_i) %>
+      <% array_sum.push(item.total_price.to_f) %>
+    <% end %>
+
+    <% quantity = 0 %>
+    <% sum = 0 %>
+    <h2><center>Order details:</h2>
+    <h3><center>Total $<%= array_sum.inject{ |sum,element| sum + element} %></h3>
+<% end %>
+
+  <% @order_items.each do |order_item| %>
+    <p>Product: <%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></p>
+    <p>Quantity: <%= order_item.quantity %></p>
+    <p>Subtotal: $<%= order_item.unit_price * order_item.quantity %></p>
+  <% end %>
+
+  <p>Order status: <%= @order.status %></p>
+  <p>Order placed: <%= @order.updated_at %></p>
