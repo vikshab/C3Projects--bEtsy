@@ -36,6 +36,10 @@ class OrdersController < ApplicationController
     @order_items = current_order.order_items
   end
 
+  def shipped
+    
+  end
+
   private
 
     def order_params

@@ -118,13 +118,13 @@ As a signed-in user, I **can**:
     - Total number of orders by status
     - Filter orders displayed by status
     - Link to each individual order
-    - A list of orders including at least one of my products:
+    - √ A list of orders including at least one of my products:
         - Each order item sold by me with a quantity and line-item subtotal
         - A link to the item description page
         - DateTime the order was placed
         - Link to transition the order item to marked as shipped
         - The current status of the order ("pending", "paid", "complete", "cancelled")
-- View an individual order to see the user's: **Elia & Anita
+- View an individual order to see the user's: **Elia & Anita**
     - Name
     - Email address
     - Mailing address

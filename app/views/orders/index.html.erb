@@ -22,7 +22,9 @@
         <td><%= item.quantity %></td>
         <td><%= item.total_price %></td>
         <td><%= item.updated_at.strftime("%m/%d/%Y") %></td>
-        <td>TBD</td>
+        <% if item.order.status == 'paid' %>
+          <td><TBD</td>
+        <% end %>
         <td><%= item.order.status %></td>
       </tr>
     <% end %>

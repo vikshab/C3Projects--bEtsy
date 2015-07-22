@@ -40,4 +40,7 @@ Rails.application.routes.draw do
   get  '/checkout' => 'buyers#new'
   post '/checkout' => 'buyers#create'
 
+  # shipped
+  patch '/shipped/:order_id' => 'order#shipped'
+
 end

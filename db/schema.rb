@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150722212142) do
     t.datetime "updated_at",                           null: false
     t.decimal  "unit_price",  precision: 12, scale: 2
     t.decimal  "total_price", precision: 12, scale: 2
+    t.string   "status"
   end
 
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id"
