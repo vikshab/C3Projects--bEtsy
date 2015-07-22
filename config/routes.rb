@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"
 
+  get '/sellers/:id/dashboard', to: 'sellers#dashboard', as: "dashboard"
+
   resources :categories, except: :destroy
   resources :sellers, only: [:index, :show, :new, :create] do
     resources :products, only: [:new, :create]

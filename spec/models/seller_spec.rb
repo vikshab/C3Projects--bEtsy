@@ -38,7 +38,7 @@ RSpec.describe Seller, type: :model do
     end
 
     it "and those orders are unique" do
-      expect(@seller.orders.count.to_not eq(8)
+      expect(@seller.orders.count).to_not eq(8)
     end
   end
 

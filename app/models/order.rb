@@ -1,35 +1,39 @@
 class Order < ActiveRecord::Base
+  attr_accessor :confirmed_payment
+
+  after_initialize do |order|
+    order.confirmed_payment = false
+  end
+
   # DB relationships
   has_many :order_items, dependent: :destroy
   # should destroy all of the associated OrderItems if an Order is destroyed.
-  # we can use this as part of the cleaning task we set up to kill any pending
-  # orders inactive for whatever time we set.
-  # (20-30 minutes? a day? anything inactive for over 2hrs, but only run task once a day?)
+  # TODO: but do we want to destroy Orders?
   has_many :products, through: :order_items
 
 
   # validations helper regex
   # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  VALID_BUYER_CARD_SHORT_REGEX = /\A\d{4}\z/
 
   # data validations
   validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
     message: "%{value} is not a valid status" }
 
-  validates_presence_of :buyer_email, unless: :pending?
-  validates_format_of :buyer_email, with: VALID_EMAIL_REGEX, unless: :pending?
+  with_options unless: :pending? do
+    validates_presence_of :buyer_email
+    validates_format_of :buyer_email, with: VALID_EMAIL_REGEX
 
-  validates_presence_of :buyer_name, unless: :pending?
-  validates_presence_of :buyer_address, unless: :pending?
-  # TODO: validate address or name somehow?
+    validates_presence_of :buyer_name
+    validates_presence_of :buyer_address
 
-  validates_presence_of :buyer_card_short, unless: :pending?
-  validates_numericality_of :buyer_card_short, only_integer: true, greater_than: 999, less_than: 10_000, unless: :pending?
-  # FIXME: these will not handle for cards that end in: 0812, 0002, 0404, etc.
+    validates_presence_of :buyer_card_short
+    validates_format_of :buyer_card_short, with: VALID_BUYER_CARD_SHORT_REGEX
 
-  validates_presence_of :buyer_card_expiration, unless: :pending?
-  # TODO: validate card expiration is after today / Date.now
-
+    validates_presence_of :buyer_card_expiration
+    validate :buyer_card_unexpired
+  end
 
   def order_price(seller_id=nil)
     # TODO: come back and talk about the method names
@@ -41,6 +45,20 @@ class Order < ActiveRecord::Base
 
   def already_has_product?(product)
     products.include? product
+  end
+
+  def buyer_card_unexpired
+    # guard clause that works with the setup on lines 2 - 6
+    return if confirmed_payment
+    # if order is not pending and payment has not yet been confirmed,
+    # then confirm the payment -- which in this case means check the
+    # expiration date is on or after today.
+
+    if buyer_card_expiration && (buyer_card_expiration >= Date.today)
+      @confirmed_payment = true
+    else
+      errors[:buyer_card_expiration] << "Card expiration date is not valid."
+    end
   end
 
   def pending?
