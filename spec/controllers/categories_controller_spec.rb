@@ -48,7 +48,8 @@ RSpec.describe CategoriesController, type: :controller do
         create_11_categories
 
         get :index
-        expect(assigns(:categories)).to eq(Category.all)
+        expected_array = Category.all.sort_by { |category| category.name }
+        expect(assigns(:categories)).to eq expected_array
         expect(assigns(:categories).count).to eq(11)
       end
     end
