@@ -111,20 +111,26 @@ RSpec.describe Product, type: :model do
       product9 = Product.create(name: 'i', price: 1, seller_id: 1, stock: 1)
       product10 = Product.create(name: 'j', price: 1, seller_id: 1, stock: 1)
       product11 = Product.create(name: 'k', price: 1, seller_id: 1, stock: 1)
-      review = Review.create(rating: 1, product_id: 1)
-      review = Review.create(rating: 2, product_id: 2)
-      review = Review.create(rating: 3, product_id: 3)
+      product12 = Product.create(name: 'l', price: 1, seller_id: 1, stock: 1)
+      product13 = Product.create(name: 'm', price: 1, seller_id: 1, stock: 1)
+
+      review = Review.create(rating: 5, product_id: 1)
+      review = Review.create(rating: 5, product_id: 2)
+      review = Review.create(rating: 5, product_id: 3)
       review = Review.create(rating: 4, product_id: 4)
-      review = Review.create(rating: 5, product_id: 5)
+      review = Review.create(rating: 4, product_id: 5)
       review = Review.create(rating: 4, product_id: 6)
       review = Review.create(rating: 3, product_id: 7)
-      review = Review.create(rating: 2, product_id: 8)
-      review = Review.create(rating: 1, product_id: 9)
+      review = Review.create(rating: 3, product_id: 8)
+      review = Review.create(rating: 3, product_id: 9)
       review = Review.create(rating: 2, product_id: 10)
-      review = Review.create(rating: 3, product_id: 11)
+      review = Review.create(rating: 2, product_id: 11)
+      review = Review.create(rating: 1, product_id: 12)
+      review = Review.create(rating: 1, product_id: 13)
 
-      expected_array = [product5, product4, product6, product11, product7, product3,
-                        product10, product8, product2, product9]
+
+      expected_array = [product1, product2, product3, product4, product5, product6,
+                        product7, product8, product9, product10, product11, product12]
       expect(Product.top_products).to eq expected_array
     end
   end
