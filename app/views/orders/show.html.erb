@@ -1,12 +1,8 @@
-<h1><center>SHOPPING CART</h1>
+<h1>SHOPPING CART</h1>
 
-<div class="navbar navbar-defaut" role="navigation">
-  <div class="navbar-header">
-    <ul class="nav navbar-nav">
-      <li><%= link_to("CONTINUE SHOPPING", products_path, class: "btn btn-primary") %></li>
-      <li><%= link_to("CHECK OUT NOW")%></li>
-    </ul>
-  </div>
+<div class="container-fluid">
+  <%= link_to "continue shopping", products_path %>
+  <%= link_to "checkout", checkout_path, class: "btn btn-default" %>
 </div>
 
 <div class="shopping-cart">
