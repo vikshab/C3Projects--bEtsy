@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to product_path(@product)
     else
+      flash.now[:errors] = @product.errors
       render :new
     end
   end
@@ -32,6 +33,7 @@ class ProductsController < ApplicationController
     if @product.update(create_params)
       redirect_to product_path(@product)
     else
+      flash.now[:errors] = @product.errors
       render :edit
     end
   end

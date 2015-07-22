@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
   def add_to_cart
     if @order.already_has_product?(@product)
-      flash[:errors] = "This item is already in your cart!" # TODO: perhaps change this to incrementing the count in the cart?
+      flash[:errors] = ERRORS[already_in_cart] # TODO: perhaps change this to incrementing the count in the cart?
     else
       OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
     end
@@ -17,22 +17,21 @@ class OrdersController < ApplicationController
   def checkout; end
 
   def update
-    # add buyer info to order & change status
-    # handling for error messages / bad input if/else type thing
-    @order.update(checkout_params)
-
-    redirect_to receipt_path
+    if @order.update(checkout_params)
+      redirect_to receipt_path
+    else
+      flash.now[:errors] = @order.errors
+      render :checkout
+    end
   end
 
   def receipt
     if @order.status == "paid"
       render :receipt
 
-      # will this work? no?
-      reset_session # it does!
+      reset_session # FIXME: this will interfere with login
     else
-      # redirect to somewhere more logical
-      redirect_to root_path
+      redirect_to root_path # TODO: redirect to somewhere more logical
     end
   end
 
