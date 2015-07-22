@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   has_many :order_items
   before_create :set_order_status
   before_save :update_subtotal
+  has_one :buyer
 
   # VALIDATIONS ----------------------------------------------------------
   # validates :buyer_name, presence: true
@@ -42,5 +43,5 @@ private
     #     errors.add(:buyer_email, "Invalid email. Please enter a correct email address.")
     #   end
     # end
-    
+
 end
