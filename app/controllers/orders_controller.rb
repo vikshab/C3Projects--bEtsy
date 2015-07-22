@@ -25,7 +25,11 @@ class OrdersController < ApplicationController
 
   def index
     #don't know if we need this one, might for the merchants order page
-    @all_orders = Order.all
+    # merchant = User.find(params[:user_id])
+    # my_products = Product.where("user_id = ?", params[:user_id])
+
+    @all_items = OrderItem.all
+    # @my_items = all_items.product_id.where("user_id = ?", params[:user_id])
   end
 
   def show
