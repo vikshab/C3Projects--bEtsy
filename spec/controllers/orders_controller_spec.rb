@@ -221,6 +221,13 @@ RSpec.describe OrdersController, type: :controller do
         test_order.reload
         expect(test_order.buyer_card_short).to eq(old_card_short)
       end
+
+      it "assigns flash[:errors]" do
+        old_card_short = test_order.buyer_card_short
+        patch :update, invalid_checkout_buyer_params
+
+        expect(flash[:errors]).to include(:buyer_card_short)
+      end
     end
   end
 
