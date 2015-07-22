@@ -13,7 +13,7 @@
         <div class="ratings">
           <p class="pull-right"><%= product.reviews.count %> Reviews</p>
           <% if product.reviews.count == 0 %>
-            <p>No ratings yet</p>
+            <p>No ratings</p>
           <% else %>
             <p><%= render_stars(avg_rating(product.id)) %></p>
           <% end %>
