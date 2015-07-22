@@ -1,5 +1,4 @@
-<div class="row">
-  <div class = "col-xs-5" >
+  <div class = "col-md-9" >
     <%= form_for [@product, @product.reviews.build], class: "form-group" do |f| %>
       <h3>Rating:</h3>
       <% (1..5).each do |num| %>
@@ -13,4 +12,3 @@
       <%= f.submit "Submit", class: "btn btn-default" %>
     <% end %>
   </div>
-</div>
