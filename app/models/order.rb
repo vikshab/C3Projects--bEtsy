@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   # ASSOCIATIONS --------------------------------------------------------
   has_many :order_items
+  has_one :buyer
   before_create :set_order_status
   before_save :update_subtotal
 
