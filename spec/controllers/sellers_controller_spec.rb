@@ -55,6 +55,11 @@ RSpec.describe SellersController, type: :controller do
         post :create, @new_params
         expect(response).to render_template("new")
       end
+
+      it "assigns flash[:errors]" do
+        post :create, @new_params
+        expect(flash[:errors]).to include(:username)
+      end
     end
   end
 
@@ -85,6 +90,11 @@ RSpec.describe SellersController, type: :controller do
       it "does not render the dashboard view" do
         get :dashboard, id: @seller
         expect(response).to redirect_to(login_path)
+      end
+
+      it "assigns flash[:errors]" do
+        get :dashboard, id: @seller
+        expect(flash[:errors]).to include("Please log in to see this page.")
       end
     end
   end
