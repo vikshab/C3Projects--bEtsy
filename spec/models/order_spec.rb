@@ -203,7 +203,7 @@ RSpec.describe Order, type: :model do
       end
     end
 
-    context "order_price" do
+    context "total_order_price" do
       before :each do
         @seller = Seller.new(username: "a", email: "bob@bob.bob")
         @seller.password = @seller.password_confirmation = "password"
@@ -216,33 +216,33 @@ RSpec.describe Order, type: :model do
       end
 
       it "has a price based on its order items" do
-        expect(@order.order_price).to eq(@item.item_price)
-        expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
+        expect(@order.total_order_price).to eq(@item.item_price)
+        expect(@order.total_order_price).to eq(@item.quantity_ordered * @product.price)
 
 
         item2 = OrderItem.create(product_id: @product2.id, order_id: @order.id, quantity_ordered: 2)
         @order.reload
-        expect(@order.order_price).to eq(@item.item_price + item2.item_price)
-        expect(@order.order_price).to eq((@item.quantity_ordered * @product.price) + (item2.quantity_ordered * @product2.price))
+        expect(@order.total_order_price).to eq(@item.item_price + item2.item_price)
+        expect(@order.total_order_price).to eq((@item.quantity_ordered * @product.price) + (item2.quantity_ordered * @product2.price))
       end
 
       it "and only its order items" do
-        expect(@order.order_price).to eq(@item.item_price)
-        expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
+        expect(@order.total_order_price).to eq(@item.item_price)
+        expect(@order.total_order_price).to eq(@item.quantity_ordered * @product.price)
 
         order2 = Order.create
         item2 = OrderItem.create(product_id: @product2.id, order_id: 2, quantity_ordered: 25)
         @order.reload
-        expect(@order.order_price).to eq(@item.item_price)
-        expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
+        expect(@order.total_order_price).to eq(@item.item_price)
+        expect(@order.total_order_price).to eq(@item.quantity_ordered * @product.price)
       end
 
       it "can have a price based on a single seller's items" do
-        expect(@order.order_price(@seller.id)).to eq(@item.item_price)
+        expect(@order.total_order_price(@seller.id)).to eq(@item.item_price)
 
         item2 = OrderItem.create(product_id: @product2.id, order_id: 1, quantity_ordered: 25)
 
-        expect(@order.order_price(@seller.id)).to eq(@item.item_price)
+        expect(@order.total_order_price(@seller.id)).to eq(@item.item_price)
       end
     end
   end
