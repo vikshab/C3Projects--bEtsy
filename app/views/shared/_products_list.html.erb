@@ -1,9 +1,19 @@
+<div class="row">
 <% products.each do |product| %>
-  <div>
-    <ul>
-      <li><%= link_to "#{product.name}", product_path(product) %></li>
-      <li><%= image_tag "#{product.photo_url}" %></li>
-      <li><%= display_dollars(product.price) %></li>
-    </ul>
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <div class="product-name">
+        <h2><%= product.name %></h2>
+      </div>
+      <%= link_to image_tag("#{product.photo_url}", size: "100"), product_path(product) %>
+      <div class="caption">
+        <h3><%= display_dollars(product.price) %></h3>
+        <% product_short_description = product.description[0..100] + '...' %>
+        <p><%= product_short_description %></p>
+        <%= link_to "More about this product", product_path(product), class: "btn btn-default" %>
+        <%= link_to "Add to Cart", add_item_path(product), method: :post, class: "btn btn-default" %>
+      </div>
+    </div>
   </div>
 <% end %>
+</div>

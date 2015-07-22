@@ -4,7 +4,7 @@
 <h4>Sold by: <%= @product.seller.username %> </h4>
 <h4><%= display_dollars(@product.price) %></h4>
 
-<%= image_tag "#{@product.photo_url}" %>
+<%= image_tag "#{@product.photo_url}", size: "200" %>
 
 <p><%= @product.description %></p>
 
