@@ -5,6 +5,8 @@ RSpec.describe OrdersController, type: :controller do
   let(:test_seller) { Seller.create( { username: "I am a seller name", email: "email@example.com", password: "IAmAPassword", password_confirmation: "IAmAPassword" } ) }
   let(:test_product) { Product.create(name: "I am a product", price: 1000, seller_id: test_seller.id, stock: 10) }
 
+  let(:future_date) { "01/01/2020" }
+
   describe "GET #cart" do
     before :each do
       session[:order_id] = test_order.id
@@ -142,7 +144,7 @@ RSpec.describe OrdersController, type: :controller do
       session[:order_id] = test_order.id
     end
 
-    let(:checkout_buyer_params) { { order: { buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: "7/15" } } }
+    let(:checkout_buyer_params) { { order: { buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: future_date } } }
     let(:invalid_checkout_buyer_params) { { order: { buyer_card_short: "words" } } }
 
     it "assigns @order" do
@@ -223,7 +225,7 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe "GET receipt" do
-    let(:checked_out_order) { Order.create( status: "paid", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: "7/15" ) }
+    let(:checked_out_order) { Order.create( status: "paid", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: future_date ) }
 
     before :each do
       session[:order_id] = checked_out_order.id
@@ -258,9 +260,9 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     context "when an order is not paid" do
-      let(:test_order_pending) { Order.create( status: "pending", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: "7/15" ) }
-      let(:test_order_complete) { Order.create( status: "complete", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: "7/15" ) }
-      let(:test_order_canceled) { Order.create( status: "canceled", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: "7/15" ) }
+      let(:test_order_pending) { Order.create( status: "pending", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: future_date ) }
+      let(:test_order_complete) { Order.create( status: "complete", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: future_date ) }
+      let(:test_order_canceled) { Order.create( status: "canceled", buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: future_date ) }
 
 
       it "redirects to root when 'pending'" do

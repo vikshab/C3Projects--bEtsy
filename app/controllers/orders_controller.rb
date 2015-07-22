@@ -39,11 +39,7 @@ class OrdersController < ApplicationController
 
   private
     def checkout_params
-      order_info = params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
-      order_info[:status] = "paid"
-      order_into[:buyer_card_expiration] = Date.parse(order_into[:buyer_card_expiration])
-
-      return order_info
+      params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
     end
 
     def set_order
