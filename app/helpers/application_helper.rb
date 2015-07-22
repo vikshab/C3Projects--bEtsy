@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def avg_rating(product_id)
     ratings = Review.where(product_id: product_id).pluck(:rating)
-    # ratings = product.reviews.pluck(:rating)
+    # protects for divide by 0
     ratings.size == 0 ? 0 : ratings.sum / ratings.size
   end
 
@@ -32,5 +32,4 @@ module ApplicationHelper
    current_user != nil
   end
 
-  # @categories = Category.all
 end
