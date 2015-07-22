@@ -1,6 +1,9 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:add_to_cart, :cart, :checkout, :update, :receipt]
   before_action :set_product, only: [:add_to_cart]
+  before_action :set_seller, only [:index]
+  before_action :require_seller_login, only: [:index]
+
 
   def add_to_cart
     if @order.already_has_product?(@product)
@@ -36,6 +39,10 @@ class OrdersController < ApplicationController
     end
   end
 
+  def index
+    @orders = @seller.orders
+  end
+
   private
     def checkout_params
       order_info = params.permit(order: [:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration])[:order]
@@ -55,5 +62,13 @@ class OrdersController < ApplicationController
 
     def set_product
       @product = Product.find(params[:id])
+    end
+
+    def set_seller
+      @seller = Seller.find(params[:id])
+
+      if (params[:seller_id] && (params[:seller_id] != @seller.id)) || params[:id] != @seller.id
+        redirect_to seller_path(@seller)
+      end
     end
 end
