@@ -16,10 +16,9 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(user_params[:product])
+    @product = Product.new(product_params[:product])
     @user_id = session[:user_id]
     if @product.save
-      raise
       redirect_to product_path(@product)
     else
       render 'new'
@@ -30,7 +29,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product.update(user_params[:product])
+    @product.update(product_params[:product])
 
     if @product.save
       redirect_to user_path(@product.user_id)
@@ -55,7 +54,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
-  def user_params
-    params.permit(product: [:name, :price, :desc, :stock, :photo_url, :user_id, :retired, :category_ids => []])
+  def product_params
+    params.require(:product).permit(:name, :price, :desc, :stock, :photo_url, :user_id, :retired, :category_ids => [], :category_attributes => [:id, :name])
   end
 end
