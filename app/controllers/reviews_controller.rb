@@ -1,4 +1,4 @@
-class ReviewsController < ApplicationController
+class ReviewsController < ApplicationController  
   # Add a review
   def new
     @review = Review.new
@@ -12,12 +12,12 @@ class ReviewsController < ApplicationController
    end
 
   # Delete a review
-  def destroy
-    @review = Review.find(params[:id])
-    @review.destroy
+  # def destroy
+  #   @review = Review.find(params[:id])
+  #   @review.destroy
   
-    redirect_to product_path(params[:product_id])
-  end
+  #   redirect_to product_path(params[:product_id])
+  # end
 
   def avg_rating(product_id)
     ratings = Review.where(product_id: product_id).pluck(:rating)

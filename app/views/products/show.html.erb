@@ -28,7 +28,8 @@
       <h3><%= @product.reviews.count %> Reviews</h3>
       <%= render @product.reviews %>
 
-      <% if !session[:user_id] %>
+      <!-- Merchants can only review other people's products -->
+      <% unless session[:user_id] == @product.user_id %>
         <h3>Add a review:</h3>
         <%= render "reviews/form" %>
       <% end %>

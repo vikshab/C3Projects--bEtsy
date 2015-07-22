@@ -9,10 +9,15 @@
           <h5 class="pull-right"> <%= number_to_currency(product.price) %></h5>
           <h4><%= product.name %></h4>
           <p><%= link_to("See more about the product", product_path(product.id)) %></p>
-        </div>
-        <div class="ratings">
-          <p class="pull-right"><%= product.reviews.count %> Reviews</p>
-          <p><%= render_stars(avg_rating(product.id)) %></p>
+        
+          <div class="ratings">
+            <p class="pull-right"><%= product.reviews.count %> Reviews</p>
+            <% if product.reviews.count == 0 %>
+              <p>No ratings</p>
+            <% else %>
+              <p><%= render_stars(avg_rating(product.id)) %></p>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

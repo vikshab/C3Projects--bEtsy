@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   ## check to see if using all after more of the orders things are fleshed out
   resources :orders
 
+  get "/cart" => "orders#show", as: "cart"
+
   # RoR paths
   resources :order_items, only: [:create, :update, :destroy]
 
@@ -34,5 +36,8 @@ Rails.application.routes.draw do
   post   "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  # checkout
+  get  '/checkout' => 'buyers#new'
+  post '/checkout' => 'buyers#create'
 
 end
