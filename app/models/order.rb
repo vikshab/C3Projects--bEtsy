@@ -31,10 +31,11 @@ class Order < ActiveRecord::Base
   # TODO: validate card expiration is after today / Date.now
 
 
-  def order_price
+  def order_price(seller_id=nil)
     # TODO: come back and talk about the method names
     # but fwiw Order.price makes sense to me. more detailed explanation in Orderitem model. -J
-    array_of_totals = order_items.map { |item| item.item_price }
+    items = seller_id ? order_items.select{ |item| item.seller.id == seller_id } : order_items
+    array_of_totals = items.map { |item| item.item_price }
     total = array_of_totals.reduce(0) { |sum, current_total| sum += current_total }
   end
 

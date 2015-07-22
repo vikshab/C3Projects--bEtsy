@@ -106,8 +106,12 @@ RSpec.describe Order, type: :model do
 
     context "order_price" do
       before :each do
+        @seller = Seller.new(username: "a", email: "bob@bob.bob")
+        @seller.password = @seller.password_confirmation = "password"
+        @seller.save
+
         @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
-        @product2 = Product.create(name: "dsafkhlaer", price: 125, seller_id: 1, stock: 25)
+        @product2 = Product.create(name: "dsafkhlaer", price: 125, seller_id: 2, stock: 25)
         @order = Order.create
         @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 2)
       end
@@ -127,10 +131,19 @@ RSpec.describe Order, type: :model do
         expect(@order.order_price).to eq(@item.item_price)
         expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
 
-        item2 = OrderItem.create(product_id: @product2, order_id: 2, quantity_ordered: 25)
+        order2 = Order.create
+        item2 = OrderItem.create(product_id: @product2.id, order_id: 2, quantity_ordered: 25)
         @order.reload
         expect(@order.order_price).to eq(@item.item_price)
         expect(@order.order_price).to eq(@item.quantity_ordered * @product.price)
+      end
+
+      it "can have a price based on a single seller's items" do
+        expect(@order.order_price(@seller.id)).to eq(@item.item_price)
+
+        item2 = OrderItem.create(product_id: @product2.id, order_id: 1, quantity_ordered: 25)
+
+        expect(@order.order_price(@seller.id)).to eq(@item.item_price)
       end
     end
   end

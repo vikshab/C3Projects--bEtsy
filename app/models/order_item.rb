@@ -5,6 +5,7 @@ class OrderItem < ActiveRecord::Base
   # DB relationships
   belongs_to :order
   belongs_to :product
+  has_one :seller, through: :product
 
 
   # data validations
