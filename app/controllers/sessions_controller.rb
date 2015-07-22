@@ -7,17 +7,17 @@ class SessionsController < ApplicationController
   def create
     if @seller && @seller.authenticate(params[:session][:password])
       session[:seller_id] = @seller.id
-      flash[:messages] = "You have logged in!"
+      flash[:messages] = MESSAGES[:successful_login]
       redirect_to root_path # TODO: change this to seller_path(@seller)
     else
-      flash.now[:errors] = "Try Again!" # NOTE: in specs, can test this with: `@sellers.errors.messages`
+      flash.now[:errors] = ERRORS[login_error] # NOTE: in specs, can test this with: `@sellers.errors.messages`
       render :new
     end
   end
 
   def destroy
     session[:seller_id] = nil
-    flash[:messages] = "You have logged out!"
+    flash[:messages] = MESSAGES[:successful_logout]
     redirect_to root_path
   end
 

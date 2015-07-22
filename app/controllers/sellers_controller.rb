@@ -16,6 +16,7 @@ class SellersController < ApplicationController
     if @seller.save
       redirect_to login_path
     else
+      flash.now[:errors] = @seller.errors
       render :new
     end
   end
