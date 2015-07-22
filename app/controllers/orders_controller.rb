@@ -74,13 +74,4 @@ class OrdersController < ApplicationController
     def set_product
       @product = Product.find(params[:id])
     end
-
-    def set_seller
-      @seller = Seller.find(session[:seller_id])
-
-      unless params[:seller_id] == @seller.id
-        flash[:errors] = "seller id not found: #{ @seller.id }"
-        # redirect_to seller_path(@seller)
-      end
-    end
 end

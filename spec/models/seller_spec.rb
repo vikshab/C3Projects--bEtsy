@@ -15,8 +15,8 @@ RSpec.describe Seller, type: :model do
       @order1 = Order.create
       @order2 = Order.create
 
-      @oi1 = OrderItem.create(order_id: @order1.id, product_id: 1, quantity_ordered: 1)
-      @oi2 = OrderItem.create(order_id: @order2.id, product_id: 1, quantity_ordered: 1)
+      OrderItem.create(order_id: @order1.id, product_id: 1, quantity_ordered: 1)
+      OrderItem.create(order_id: @order2.id, product_id: 1, quantity_ordered: 1)
       OrderItem.create(order_id: @order1.id, product_id: 2, quantity_ordered: 1)
       OrderItem.create(order_id: @order2.id, product_id: 2, quantity_ordered: 1)
       OrderItem.create(order_id: @order1.id, product_id: 3, quantity_ordered: 1)

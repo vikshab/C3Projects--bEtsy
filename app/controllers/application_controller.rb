@@ -17,4 +17,11 @@ class ApplicationController < ActionController::Base
   def require_seller_login
     redirect_to login_path, flash: { errors: ERRORS[:not_logged_in] } unless session[:seller_id]
   end
+
+  def set_seller # OPTIMIZE: should this be combined with require_seller_login?
+    @seller = Seller.find(session[:seller_id])
+
+    # send seller to its own dashboard if it tries to access another seller's stuff
+    redirect_to dashboard_path(@seller) unless params[:seller_id].to_i == @seller.id
+  end
 end
