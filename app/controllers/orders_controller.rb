@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :find_order, only: [:update, :destroy]
+  before_action :empty_cart?, only: [:show]
 
   def new
     @order = Order.new
@@ -48,5 +49,12 @@ class OrdersController < ApplicationController
 
     def find_order
       @order = Order.find(id: order_params[:id])
+    end
+
+    def empty_cart?
+      @order = Order.find(session[:order_id])
+      if @order.order_items.count == 0
+        render :empty
+      end
     end
 end
