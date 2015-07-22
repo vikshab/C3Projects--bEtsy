@@ -21,10 +21,22 @@
           </div>
         </div>
         <h4 class="text-right">Total Price: <span style="color: green"><%= number_to_currency order_item.total_price %></span></h4>
+      <% end %>
         <% if flash[:error] %>
               <%= flash[:error] %>
         <% end %>
-      <% end %>
     </div>
   </div>
 </div>
+
+<!-- To much logic to the view page need to be somewhere else -->
+<% @order = Order.find(session[:order_id]) %>
+<% items = @order.order_items %>
+<% array = [] %>
+<% items.each do |item| %>
+  <% item.quantity.to_i %>
+  <% array.push(item.quantity.to_i) %>
+<% end %>
+
+<% quantity = 0 %>
+<h3>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your shopping bag</h3>
