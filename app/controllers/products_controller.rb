@@ -12,13 +12,13 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
-    user = User.find(params[:user_id])
-    @user_id = user.id
+    # user = User.find(params[:user_id])
+    @user_id = User.find(params[:user_id])
   end
 
   def create
     @product = Product.new(user_params[:product])
-    @user_id = @product.user_id
+    @user_id = session[:user_id]
     if @product.save
       redirect_to product_path(@product)
     else
