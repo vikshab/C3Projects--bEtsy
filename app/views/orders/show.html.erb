@@ -1,8 +1,16 @@
+<!-- # FIXME: these buttons don't do anything see bug https://trello.com/c/iPWevY4r -->
 <%= button_to "Ship this order", root_path, method: :get, class: "btn btn-info" %>
 <%= button_to "Cancel this order", root_path, method: :get, class: "btn btn-warning" %>
 
+<h2>Customer Info</h2>
+<p>Name: <%= @order.buyer_name %></p>
+<p>Address: <%= @order.buyer_address %></p>
+<p>Credit Card: xxxx <%= @order.buyer_card_short %></p>
+<p>Credit Cart Expiration: <%= @order.buyer_card_expiration %></p>
+
 <table class="table table-striped table-condensed">
   <tr>
+    <th>Customer</th>
     <th>Quantity</th>
     <th>Product</th>
     <th>Price</th>

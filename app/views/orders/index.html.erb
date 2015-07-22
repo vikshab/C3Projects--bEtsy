@@ -7,6 +7,7 @@
       <th>Invoice</th>
       <th>Invoice Total</th>
       <th>Status</th>
+      <th>Customer</th>
     </tr>
     <% @orders.each do |order| %>
       <tr>
@@ -14,6 +15,7 @@
         <td><%= link_to "View Invoice for Order ##{ order.id }", seller_order_path(@seller, order) %></td>
         <td><%= display_dollars(order.order_price(@seller.id)) %></td>
         <td><%= order.status %></td>
+        <td><%= order.buyer_name %> <small><%= order.buyer_email %></small></td>
       </tr>
     <% end %>
   </table>
