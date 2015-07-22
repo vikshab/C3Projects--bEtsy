@@ -4,14 +4,16 @@
   <table class="table table-striped table-condensed">
     <tr>
       <th>Order #</th>
-      <th>Status</th>
+      <th>Invoice</th>
       <th>Invoice Total</th>
+      <th>Status</th>
     </tr>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= @order.id %></td>
-        <td><%= link_to @order.status, seller_order_path %></td>
-        <td><%= @order.order_price %></td>
+        <td><%= order.id %></td>
+        <td><%= link_to "View Invoice for Order ##{ order.id }", root_path %></td>
+        <td><%= display_dollars(order.order_price) %></td>
+        <td><%= order.status %></td>
       </tr>
     <% end %>
   </table>
