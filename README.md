@@ -90,7 +90,7 @@ As a guest to the website (not signed in) I **can**:
 
 As a guest I **cannot**:
 
-- √ Add products to the cart that are out of stock.
+-  Add products to the cart that are out of stock.
 - √ View any link or page to manage any products
 - √ View any of the account pages
 
@@ -99,6 +99,7 @@ As a guest I **cannot**:
 As a signed-in user, I **can**:
 
 - √ Do everything a guest user can do except for sign up and sign in.
+- Review other merchant's products
 - √ Sign out
 - Create new categories (categories are shared between all merchants)
 - √ Create a new product providing:
@@ -134,7 +135,7 @@ As a signed-in user, I **cannot**:
 
 - √ Review my own products
 - View order items from a shared order that belong to another merchant
-- View another users private data (i.e. order fulfillment or product management)
+- √ View another users private data (i.e. order fulfillment or product management)
 
 ### Model Validations
 
