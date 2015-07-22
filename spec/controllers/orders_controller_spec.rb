@@ -243,11 +243,18 @@ RSpec.describe OrdersController, type: :controller do
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
+    context "when an order is paid" do
+      it "renders the receipt template" do
+        get :receipt
 
-    it "renders the receipt template" do
-      get :receipt
+        expect(response).to render_template("receipt")
+      end
 
-      expect(response).to render_template("receipt")
+      it "resets session[:order_id]" do
+        get :receipt
+
+        expect(session[:order_id]).to eq(nil)
+      end
     end
 
     context "when an order is not paid" do
