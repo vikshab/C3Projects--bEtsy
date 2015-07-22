@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, except: [:index, :new, :create]
+  before_action :set_product, only: [:edit, :update]
   before_action :set_seller, only: [:new, :create]
   before_action :require_seller_login, only: [:new, :update, :edit, :create]
 
@@ -38,17 +38,16 @@ class ProductsController < ApplicationController
     end
   end
 
+  def seller; end
+
+
+
   private
+    def set_product
+      @product = Product.find(params[:id])
+    end
 
-  def set_product
-    @product = Product.find(params[:id])
-  end
-
-  def set_seller
-    @seller = Seller.find(params[:seller_id])
-  end
-
-  def create_params
-    params.require(:product).permit(:name, :price, :stock, :description, :photo_url)
-  end
+    def create_params
+      params.require(:product).permit(:name, :price, :stock, :description, :photo_url)
+    end
 end

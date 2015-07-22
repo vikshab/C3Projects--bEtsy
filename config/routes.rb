@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
   resources :categories, except: :destroy
   resources :sellers, only: [:index, :show, :new, :create] do
-    resources :products, only: [:index, :new, :create]
+    get "products", to: "products#seller"
+    resources :products, only: [:new, :create]
     resources :orders, only: [:index, :show]
   end
   resources :products, except: [:new, :create, :destroy]
