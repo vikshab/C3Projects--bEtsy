@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :require_login, except: [:index, :show, :merchant_products]
-  before_action :find_product, only: [:show, :edit, :update, :destroy, :retire]
+  before_action :require_login, only: [:new, :create, :edit, :update, :destroy, :retire]
+  before_action :find_product,  only: [:show, :edit, :update, :destroy, :retire]
 
   def index
     @products = Product.active_product
@@ -11,15 +11,15 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
     user = User.find(params[:user_id])
-    @user_id = user.id
+    @product = Product.new(user_id: user.id)
   end
 
   def create
     @product = Product.new(user_params[:product])
-    @user_id = @product.user_id
+    @user_id = session[:user_id]
     if @product.save
+      raise
       redirect_to product_path(@product)
     else
       render 'new'
