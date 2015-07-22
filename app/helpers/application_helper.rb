@@ -11,8 +11,6 @@ module ApplicationHelper
   end
 
   def product_short_description(product)
-    product_short_description = product.description[0..150] + '...'
-
-    return product_short_description
+    product.description[0..150] + '...'
   end
 end
