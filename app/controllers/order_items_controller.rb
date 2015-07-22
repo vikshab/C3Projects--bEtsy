@@ -18,7 +18,7 @@ class OrderItemsController < ApplicationController
       @order_items = @order.order_items
       redirect_to order_path(@order)
     else
-      flash[:error] = "Unfortunatelly we don't have #{order_item_params[:quantity].to_i} #{@order_item.product.name}, only #{@order_item.product.stock.to_i} available"
+      flash[:error] = "Unfortunately we don't have #{order_item_params[:quantity].to_i} #{@order_item.product.name}, only #{@order_item.product.stock.to_i} available"
       redirect_to cart_path
     end
   end
