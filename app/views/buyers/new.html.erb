@@ -10,36 +10,54 @@
 </div>
 <div class="row">
   <div class = "col-md-6 col-md-offset-3">
+    <div class="form-group">
     <%= form_for :buyer, url: checkout_path do |f| %>
     <!-- in form_for :buyer, telling us below are in the params[:session] hash -->
     <!-- url for the POST url after they click submit -->
+    <div class="form-group">
       <%= f.label :name %>
       <%= f.text_field :name, class: "form-control" %>
+    </div>
 
+    <div class="form-group">
       <%= f.label :email %>
       <%= f.email_field :email, class: "form-control", value: session[:user_id] ? @user.email : "" %>
+    </div>
       
+    <div class="form-group">
       <%= f.label :address %>
       <%= f.text_field :address, class: "form-control" %>
+    </div>
 
+    <div class="form-group">
       <%= f.label :city %>
       <%= f.text_field :city, class: "form-control" %>
-      <br>
+    </div>
+
+    <div class="form-group">
       <%= f.label :state %>
       <%= f.select :state, us_states, include_blank: "--Select a State--", class: "form-control" %>
-      <br><br>
+    </div>
+
+    <div class="form-group">
       <%= f.label :zip, "Zip Code" %>
       <%= f.text_field :zip, class: "form-control" %>
+    </div>
 
+    <div class="form-group">
       <%= f.label :last4cc, "Last 4 Digits of your Credit Card Number" %>
       <%= f.number_field :last4cc, class: "form-control" %>
+    </div>
 
+    <div class="form-group">
       <%= f.label :expcc, "Credit Card Expiration Date" %>
       <%= f.text_field :expcc, class: "form-control", placeholder: "MM/YY" %>
+    </div>
 
       <%= f.hidden_field :order_id, value: session[:order_id] %>
-      <br>
+
       <%= f.submit "Purchase", class: "btn btn-primary" %>
     <% end %>
+    </div>
   </div>
 </div>
