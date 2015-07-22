@@ -16,8 +16,8 @@ class SellersController < ApplicationController
   def create
     @seller = Seller.new(create_params)
     if @seller.save
+      flash[:messages] = MESSAGES[:successful_signup]
       session[:seller_id] = @seller.id
-      flash[:messages] = MESSAGES[:successful_login]
       redirect_to dashboard_path(@seller)
     else
       flash.now[:errors] = @seller.errors
