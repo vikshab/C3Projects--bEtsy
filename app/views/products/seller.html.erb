@@ -13,8 +13,12 @@
         <h3><%= display_dollars(product.price) %></h3>
         <p><%= product_short_description(product) %></p>
         <p>Stock: <%= product.stock %></p>
+        <p>Categories: <% product.categories.each do |category| %>
+          <%= category.name %>, <!-- # FIXME: This leaves a hanging comma on the last category -->
+          <% end %></p>
         <%= link_to "Details", product_path(product), class: "btn btn-default" %>
         <%= link_to "Edit this Product", edit_product_path(product.id), class: "btn btn-info" %>
+        <%= link_to "Edit Categories", class: "btn btn-info" %>
       </div>
     </div>
   </div>
