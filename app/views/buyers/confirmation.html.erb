@@ -15,7 +15,7 @@
           <% end %>
 
           <% sum = 0 %>
-          <h2>Details</h2>
+          <h3>Details</h3>
       <% end %>
 
       <table class="table table-hover table-bordered">
@@ -30,10 +30,14 @@
             <td><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
             <td><%= order_item.quantity %></td>
             <td class="text-right">$<%= order_item.unit_price * order_item.quantity %></td>
-          <% end %>
         </tr>
+          <% end %>
         <tr>
+          <tr>
+            <td colspan="3">
 
+            </td>
+          </tr>
         <td colspan="3" class="text-right"> $<%= array_sum.inject{ |sum,element| sum + element} %></td>
       </tr>
         <td colspan="3" class="text-right"> <%= @order.status.capitalize %></td>
