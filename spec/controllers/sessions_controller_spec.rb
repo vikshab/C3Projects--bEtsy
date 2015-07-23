@@ -11,7 +11,6 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe "POST #create" do
-
     it "without login, session[:seller_id] is nil" do
       Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
 
@@ -37,12 +36,12 @@ RSpec.describe SessionsController, type: :controller do
         expect(session[:seller_id]).to eq @seller.id
       end
 
-      it "updates the flash[:messages] to include successful login" do
+      it "updates the flash[:messages] to include :successful_login" do
         expect(flash[:messages]).to include { :successful_login }
       end
 
       it "redirects to the seller's dashboard" do
-        expect(response).to redirect_to(dashboard_path(@seller.id))
+        expect(response).to redirect_to dashboard_path(@seller.id)
         expect(response).to have_http_status(302)
       end
     end
@@ -52,6 +51,10 @@ RSpec.describe SessionsController, type: :controller do
 
       before :each do
         post :create, seller_login_params
+      end
+
+      it "@seller is nil" do
+        expect(assigns(:seller)).to be nil
       end
 
       it "does not set session[:seller_id]" do
@@ -65,6 +68,32 @@ RSpec.describe SessionsController, type: :controller do
       it "renders the :new view" do
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    let(:seller_login_params) { { session: { username: "user1", password: "password1" } } }
+
+    before :each do
+      @seller = Seller.new(username: "user1", email: "email@email.com")
+      @seller.password, @seller.password_confirmation = "password1"
+      @seller.save
+
+      post :create, seller_login_params
+      delete :destroy
+    end
+
+    it "resets session[:seller_id] to nil" do
+      expect(session[:seller_id]).to be nil
+    end
+
+    it "updates flash[:messages] to include :successful_logout" do
+      expect(flash[:messages]).to include { :successful_logout }
+      expect(flash[:messages]).to_not include { :successful_login }
+    end
+
+    it "redirects to root_path" do
+      expect(response).to redirect_to root_path
     end
   end
 end
