@@ -12,14 +12,19 @@
 
     <%= form_for @order_item do |f| %>
      <div class="input-group">
-       <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
+       <% if @product.stock != 0 %>
+          <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
+       <% else %>
+          <%= f.number_field :quantity, placeholder: "Sorry, you cannot add this product, it is out of stock", class: "form-control" %>
+       <% end %>
+
          <div class="input-group-btn">
            <%= f.hidden_field :product_id, value: @product.id %>
            <%= f.hidden_field :order_id %>
            <% if @product.stock != 0 %>
               <%= f.submit "Add to Cart", class: "btn btn-primary" %>
             <% else %>
-            <%= f.submit "Add to Cart", class: "btn btn-primary disabled" %>
+              <%= f.submit "Add to Cart", class: "btn btn-primary disabled" %>
            <% end %>
          </div>
         </div>
