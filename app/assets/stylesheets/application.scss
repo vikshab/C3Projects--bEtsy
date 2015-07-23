@@ -21,6 +21,12 @@ $jumbo_shadow: #858585; /* darker grey */
 $border: #B4B4B4; /* dark grey */
 $money: #4F9728; /* color of money: green */
 
+/* ------- */
+a:hover {
+  color: $jumbo_shadow;
+}
+
+
 /* Navbar ------------------------------------------------------------------ */
 
  .navbar-brand {
