@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @merchant = User.find(params[:user_id])
+    merchant = User.find(params[:user_id])
 
     @all_items = merchant.order_items
 
