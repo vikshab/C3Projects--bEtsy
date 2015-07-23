@@ -55,10 +55,10 @@ RSpec.describe ProductsController, type: :controller do
         expect(Product.find(1).name).to eq 'b'
       end
 
-      it "redirects to product show view" do
+      it "redirects to sellers products view" do
         put :update, @new_params
         @product.reload
-        expect(response).to redirect_to(product_path(@product))
+        expect(response).to redirect_to(seller_products_path(@product.seller_id))
       end
     end
 
@@ -80,6 +80,11 @@ RSpec.describe ProductsController, type: :controller do
         put :update, @new_params
         @product.reload
         expect(response).to render_template("edit", session[:seller_id])
+      end
+
+      it "assigns flash[:errors]" do
+        put :update, @new_params
+        expect(flash[:errors]).to include(:name)
       end
     end
   end
@@ -128,7 +133,7 @@ RSpec.describe ProductsController, type: :controller do
         session[:seller_id] = @seller.id
       end
 
-      it "does not persist invalid records" do 
+      it "does not persist invalid records" do
         post :create, @new_params
         expect(Product.count).to eq 0
       end
@@ -137,6 +142,23 @@ RSpec.describe ProductsController, type: :controller do
         post :create, @new_params
         expect(response).to render_template("new", session[:seller_id])
       end
+
+      it "assigns flash[:errors]" do
+        post :create, @new_params
+        expect(flash[:errors]).to include(:name)
+      end
+    end
+  end
+
+  describe "GET #seller" do
+    before :each do
+      @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
+      session[:seller_id] = @seller.id
+    end
+
+    it "renders the sellers products view" do
+      get :seller, seller_id: @seller
+      expect(response).to render_template("seller", session[:seller_id])
     end
   end
 end

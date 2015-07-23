@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe OrderItemsController, type: :controller do
-
   describe "updating quantities of items in the cart" do
     before :each do
       @max_quantity = 10
@@ -52,7 +51,13 @@ RSpec.describe OrderItemsController, type: :controller do
         expect(assigns(:item).quantity_ordered).to eq(@max_quantity - already_tied_quantity)
       end
 
-      pending "assigns flash[:errors]"
+      it "assigns flash[:errors]" do
+        (@max_quantity + 1).times do
+          patch :more, id: 1
+        end
+
+        expect(flash[:errors]).to include(:quantity_ordered)
+      end
     end
 
     context "#less: decreasing quantity of cart item" do
@@ -83,7 +88,13 @@ RSpec.describe OrderItemsController, type: :controller do
         expect(assigns(:item).quantity_ordered).to eq(1)
       end
 
-      pending "assigns flash[:errors]"
+      it "assigns flash[:errors]" do
+        (@initial_quantity + 1).times do
+          patch :less, id: 1
+        end
+
+        expect(flash[:errors]).to include(:quantity_ordered)
+      end
 
       it "even if some of the stock is tied up in other pending orders" do
         already_tied_quantity = 5
@@ -110,7 +121,6 @@ RSpec.describe OrderItemsController, type: :controller do
         expect(response).to redirect_to(cart_path)
         expect(response).to have_http_status(302)
       end
-
     end
   end
 end

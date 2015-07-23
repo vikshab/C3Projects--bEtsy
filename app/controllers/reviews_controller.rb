@@ -15,12 +15,12 @@ before_action :set_product, only: [:create, :new]
   end
 
   private
+  
+    def set_product
+      @product = Product.find(params[:id])
+    end
 
-  def set_product
-    @product = Product.find(params[:id])
-  end
-
-  def create_params
-    params[:review].permit(:rating, :description, :product_id)
-  end
+    def create_params
+      params[:review].permit(:rating, :description, :product_id)
+    end
 end
