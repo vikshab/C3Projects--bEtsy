@@ -54,7 +54,7 @@ class Order < ActiveRecord::Base
     if buyer_card_expiration && (buyer_card_expiration >= Date.today)
       @confirmed_payment = true
     else
-      errors[:buyer_card_expiration] << "Card expiration date is not valid."
+      errors[:buyer_card_expiration] << "date is not valid."
     end
   end
 
