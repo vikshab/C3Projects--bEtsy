@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :find_order, only: [:update, :destroy]
-  before_action :empty_cart?, only: [:cart]
+  before_action :empty_cart?, only: [:show]
 
   def new
     @order = Order.new
@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
 
   def update
     @order.update(order_params)
-    render :cart
+    render :show
   end
 
   def destroy
@@ -31,18 +31,16 @@ class OrdersController < ApplicationController
     @all_items = @merchant.order_items
   end
 
-  def cart
-    # calls the items from the Order associated with a session
+  def show
     @order_items = current_order.order_items
   end
 
-  def show
-    @buyer =  Buyer.find(params[:id])
-  end
-
-
   def shipped
 
+  end
+
+  def buyer
+    @buyer =  Buyer.find(params[:id])
   end
 
   private
