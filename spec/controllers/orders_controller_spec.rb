@@ -55,6 +55,29 @@ RSpec.describe OrdersController, type: :controller do
 
       expect(assigns(:order)).to eq(test_order)
     end
+
+    context "adjusting order item quantities" do
+      before :each do
+        @order = Order.create
+        @product = Product.create(name: "34234ujoiujhe", stock: 1, price: 1, seller_id: 1)
+        @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
+        session[:order_id] = @order.id
+      end
+
+      it "adjusts order item quantities as needed to match available stock" do
+        get :checkout
+        @item.reload
+
+        expect(@item.quantity_ordered).to eq(1)
+      end
+
+      it "flashes an error message so the user will understand altered values" do
+        get :checkout
+        @item.reload
+
+        expect(flash[:errors].keys).to include(:product_stock)
+      end
+    end
   end
 
   describe "POST #add_to_cart" do
