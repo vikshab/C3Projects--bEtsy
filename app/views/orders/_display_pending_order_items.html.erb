@@ -1,13 +1,15 @@
 <table class="table table-striped table-condensed table-hover">
   <tr>
+    <th>Product</th>
     <th>Quantity</th>
-    <th>Item Name</th>
-    <th>Seller</th>
-    <th>Cost</th>
+    <th>Price</th>
+    <th>Product Total</th>
     <th>Remove</th>
+    <th>Seller</th>
   </tr>
   <% @order.order_items.each do |item| %>
     <tr>
+      <td><%= link_to item.product.name, product_path(item.product) %></td>
       <td>
         <% if item.quantity_ordered > 1 %>
           <%= link_to "-", less_item_path(item), method: :patch %>
@@ -17,13 +19,13 @@
           <%= link_to "+", more_item_path(item), method: :patch %>
         <% end %>
       </td>
-      <td><%= link_to item.product.name, product_path(item.product) %></td>
-      <td><%= link_to item.product.seller.username, seller_path(item.product.seller) %></td>
+      <td><%= display_dollars(item.product.price) %></td>
       <td><%= display_dollars(item.total_item_price) %></td>
       <td>
         <div class="garbage-icon">
           <%= link_to kill_item_path(item), method: :delete, data: { confirm: item.remove_prompt_text } do %>
             <span class="glyphicon glyphicon-trash"></span>
+      <td><%= link_to item.product.seller.username, seller_path(item.product.seller) %></td>
           <% end %>
         </div>
       </td>
@@ -31,6 +33,6 @@
   <% end %>
   <tr>
     <th colspan="3">Total:</th>
-    <th colspan="2"><%= display_dollars(@order.total_order_price) %></th>
+    <th colspan="3"><%= display_dollars(@order.total_order_price) %></th>
   </tr>
 </table>
