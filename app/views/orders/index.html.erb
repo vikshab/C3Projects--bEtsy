@@ -17,7 +17,13 @@
 
     <% @all_items.each do |item| %>
       <tr>
-        <td><%= item.order.buyer.name %></td>
+        <td>
+          <% if item.order.buyer %>
+            <%= item.order.buyer.name %>
+          <% else %>
+            In cart
+          <% end %>
+        </td>
         <td><%= link_to item.product.name, product_path(item.product.id) %></td>
         <td><%= item.quantity %></td>
         <td><%= item.total_price %></td>
