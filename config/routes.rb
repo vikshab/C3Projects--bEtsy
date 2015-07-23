@@ -48,6 +48,6 @@ Rails.application.routes.draw do
   get '/confirmation/:order_id' =>'buyers#confirmation', as: 'buyer_confirmation'
 
   # shipped
-  patch '/shipped/:order_id' => 'order#shipped'
+  patch '/shipped/:id' => 'order_items#shipped', as: 'shipped'
 
 end
