@@ -41,7 +41,7 @@ RSpec.describe OrderItemsController, type: :controller do
           patch :more, id: test_order_item.id
         end
 
-        expect(flash[:errors]).to include(:quantity_ordered)
+        expect(flash[:errors]).to include(:product_stock)
       end
     end
 

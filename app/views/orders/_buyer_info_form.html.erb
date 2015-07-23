@@ -2,25 +2,25 @@
 
 <%= form_for @order, url: checkout_path, html: { role: "form", method: :patch } do |f| %>
   <div class="form-group">
-    <%= f.label :buyer_name %>
-    <%= f.text_field :buyer_name, class: "form-control" %>
+    <%= f.label :buyer_name, "Name" %>
+    <%= f.text_field :buyer_name, { class: "form-control", required: true } %>
   </div>
   <div class="form-group">
-    <%= f.label :buyer_email %>
-    <%= f.text_field :buyer_email, class: "form-control" %>
+    <%= f.label :buyer_email, "Email Address" %>
+    <%= f.email_field :buyer_email, { class: "form-control", required: true } %>
   </div>
   <div class="form-group">
-    <%= f.label :buyer_address %>
-    <%= f.text_field :buyer_address, class: "form-control" %>
+    <%= f.label :buyer_address, "Billing and Mailing Address" %>
+    <%= f.text_field :buyer_address, { class: "form-control", required: true } %>
   </div>
   <div class="form-group">
-    <%= f.label :buyer_card_short %>
-    <%= f.text_field :buyer_card_short, class: "form-control" %>
+    <%= f.label :buyer_card_short, "Credit Card Number" %>
+    <%= f.text_field :buyer_card_short, { class: "form-control", required: true } %>
   </div>
   <div class="form-group">
-    <%= f.label :buyer_card_expiration %>
-    <%= f.text_field :buyer_card_expiration, class: "form-control" %>
+    <%= f.label :buyer_card_expiration, "Credit Card Expiration Date" %>
+    <%= f.date_field :buyer_card_expiration, { class: "form-control", required: true } %>
   </div>
 
-  <%= f.submit "Submit Order", class: "btn btn-primary" %>
+  <%= f.submit "Submit Order", class: "btn btn-danger" %>
 <% end %>
