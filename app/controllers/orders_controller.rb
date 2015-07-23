@@ -25,11 +25,10 @@ class OrdersController < ApplicationController
   end
 
   def index
-    #don't know if we need this one, might for the merchants order page
-    merchant = User.find(params[:user_id])
-    # my_products = Product.where("user_id = ?", params[:user_id])
+    @merchant = User.find(params[:user_id])
+
     @all_items = merchant.order_items
-    # @my_items = all_items.product_id.where("user_id = ?", params[:user_id])
+
     @pend = @all_items.where(status: "pending")
     @paid = @all_items.where(status: "paid")
     @ship = @all_items.where(status: "shipped")
@@ -40,13 +39,13 @@ class OrdersController < ApplicationController
   end
 
   def show
-    raise
-    # calls the items from the Order associated with a session
     @order_items = current_order.order_items
   end
 
-  def shipped
+  def shipped; end
 
+  def buyer
+    @buyer =  Buyer.find(params[:id])
   end
 
   private

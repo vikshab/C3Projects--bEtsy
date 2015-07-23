@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :products, except: [:new, :destroy] do
     resources :reviews
   end
-  
+
   # add a category
   resources :categories, only: [:new, :create]
 
@@ -23,8 +23,10 @@ Rails.application.routes.draw do
   # users/merchants path makes the url path display as merchants instead of users
   resources :users, path: "merchants", only: [:new, :create, :show] do
     resources :products, only: [:new]
-    resources :orders, only: [:index, :show]
+    resources :orders, only: [:index]
   end
+
+  get '/merchants/:user_id/orders/:id' => 'orders#buyer', as: 'user_order'
 
   ## check to see if using all after more of the orders things are fleshed out
   resources :orders

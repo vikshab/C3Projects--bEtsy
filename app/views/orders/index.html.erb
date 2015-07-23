@@ -22,7 +22,7 @@
       <tr>
         <td>
           <% if item.order.buyer %>
-            <%= item.order.buyer.name %>
+            <%= link_to item.order.buyer.name, user_order_path(@merchant, item.order.buyer.id) %>
           <% else %>
             In cart
           <% end %>
