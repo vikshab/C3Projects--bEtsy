@@ -154,19 +154,22 @@ RSpec.describe Order, type: :model do
         end
       end
 
-      it "buyer_card_short must be 4 digits" do
-        valid_cards = ["1234", "8000", 5_000, 8_210, "0001", "0000", "0999"]
+      describe "buyer_card_short must be >=4 digits" do
+        @valid_cards = ["1234", "8000", 5_000, 8_210, -54321, 5.4321, "0001", "0000", "0999", "87654321"]
+        @invalid_cards = [1, 24, 5.123, 5.12, -500, "abcd", "1,000"]
 
-        valid_cards.each do |card|
-          order = Order.create(status: "paid", buyer_card_short: card)
-          expect(order.errors.keys).to_not include(:buyer_card_short)
+        @valid_cards.each do |card|
+          it "#{ card } is valid" do
+            order = Order.create(status: "paid", buyer_card_short: card)
+            expect(order.errors.keys).to_not include(:buyer_card_short)
+          end
         end
 
-        invalid_cards = [1, 24, 5.123, 5.12, -500, -1234, "abcd", "1,000"]
-
-        invalid_cards.each do |card|
-          order = Order.create(status: "paid", buyer_card_short: card)
-          expect(order.errors.keys).to include(:buyer_card_short)
+        @invalid_cards.each do |card|
+          it "#{ card } is invalid" do
+            order = Order.create(status: "paid", buyer_card_short: card)
+            expect(order.errors.keys).to include(:buyer_card_short)
+          end
         end
       end
 
