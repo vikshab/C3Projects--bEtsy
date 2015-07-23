@@ -19,28 +19,30 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     context "valid seller" do
+      let(:seller_login_params) { { session: { username: "user1", password: "password1" } } }
+
       before :each do
         @seller = Seller.new(username: "user1", email: "email@email.com")
         @seller.password, @seller.password_confirmation = "password1"
         @seller.save
 
-        @seller_login_params = { session: { username: "user1", password: "password1" } }
+        post :create, seller_login_params
       end
 
       it "sets session[:seller_id] to the seller's id" do
-        post :create, @seller_login_params
-
-        expect(assigns(session[:seller_id])).to eq @seller.id
+        expect(session[:seller_id]).to eq @seller.id
       end
 
       it "updates the flash[:messages] to include successful login" do
-
+        expect(flash[:messages]).to include { :successful_login }
       end
 
       it "redirects to the seller's dashboard" do
-
+        expect(response).to redirect_to(dashboard_path(@seller.id))
+        expect(response).to have_http_status(302)
       end
     end
+
     context "invalid seller" do
       it "does not set session[:seller_id]" do
 
