@@ -47,5 +47,12 @@ RSpec.describe Product, type: :model do
       expect(product).to_not be_valid
       expect(product.errors.keys).to include(:stock)
     end
+
+    it "retire_toggle the products" do
+      product = Product.create(name: "product", price: 3, user_id: 1, stock: 1)
+      product = product.retire_toggle!
+
+      expect(product).to eq(true)
+    end
   end
 end
