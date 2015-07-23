@@ -32,6 +32,7 @@ class BuyersController < ApplicationController
     end
 
     @order.update(status: "paid")
+    session[:order_id] = nil
   end
 
   private
