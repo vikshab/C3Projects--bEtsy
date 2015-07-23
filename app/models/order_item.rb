@@ -20,6 +20,10 @@ class OrderItem < ActiveRecord::Base
     unit_price * quantity
   end
 
+  def complete_ship
+  self.status = "complete"
+  end
+
   private
 
   def set_status

@@ -31,6 +31,13 @@ class OrderItemsController < ApplicationController
     redirect_to cart_path
   end
 
+  def shipped
+    @item = OrderItem.find(params[:id])
+    @item.complete_ship
+    @item.save
+    redirect_to user_orders_path(@item.product.user_id)
+  end
+
 private
 
     def order_item_params

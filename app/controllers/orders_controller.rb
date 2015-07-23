@@ -31,11 +31,11 @@ class OrdersController < ApplicationController
 
     @pend = @all_items.where(status: "pending")
     @paid = @all_items.where(status: "paid")
-    @ship = @all_items.where(status: "shipped")
+    @ship = @all_items.where(status: "complete")
 
     @pend_total = @all_items.where(status: "pending").pluck(:total_price)
     @paid_total = @all_items.where(status: "paid").pluck(:total_price)
-    @ship_total = @all_items.where(status: "shipped").pluck(:total_price)
+    @ship_total = @all_items.where(status: "complete").pluck(:total_price)
   end
 
   def show
@@ -43,8 +43,6 @@ class OrdersController < ApplicationController
     @order = Order.find(session[:order_id])
     @total = @order.subtotal
   end
-
-  def shipped; end
 
   def buyer
     @buyer =  Buyer.find(params[:id])
