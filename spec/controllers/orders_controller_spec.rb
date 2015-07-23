@@ -166,11 +166,13 @@ RSpec.describe OrdersController, type: :controller do
       session[:order_id] = test_order.id
     end
 
-    let(:checkout_buyer_params) { { order: {
-      buyer_name: "My name", buyer_email: "my_email@example.com",
-      buyer_address: "123 Example St, Cityville, State 12345",
-      buyer_card_short: "1234", buyer_card_expiration: future_date }
-      } }
+    let(:checkout_buyer_params) { {
+      order: {
+        buyer_name: "My name", buyer_email: "my_email@example.com",
+        buyer_address: "123 Example St, Cityville, State 12345",
+        buyer_card_short: "1234", buyer_card_expiration: future_date
+      }
+    } }
     let(:invalid_checkout_buyer_params) { { order: { buyer_card_short: "words" } } }
 
     it "assigns @order" do

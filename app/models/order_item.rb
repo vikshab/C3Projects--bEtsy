@@ -36,7 +36,7 @@ class OrderItem < ActiveRecord::Base
     max_quantity = product.stock
     return if quantity_ordered <= max_quantity
     update_column(:quantity_ordered, max_quantity)
-    errors[:product_stock] << "Quantity ordered was adjusted because not enough of this product was stuck."
+    errors[:product_stock] << "Quantity ordered was adjusted because not enough of this product was stock."
   end
 
   def remove_product_stock!

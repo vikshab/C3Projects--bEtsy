@@ -58,8 +58,10 @@ LONG
       short_version += " Phasellus id ex massa.\nNam ornare sagittis efficitur."
       short_version += " Aenean leo lectus, bibendum quis eleifen..."
 
-      product = Product.create(name: "The Adventures of Run-on Sentence Man",
-        price: 1, seller_id: 1, stock: 1, description: long_version)
+      product = Product.create(
+        name: "The Adventures of Run-on Sentence Man", price: 1, seller_id: 1,
+        stock: 1, description: long_version
+      )
 
       expect(product_short_description(product)).to eq(short_version)
     end

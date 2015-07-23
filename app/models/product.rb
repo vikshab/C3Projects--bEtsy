@@ -66,14 +66,4 @@ class Product < ActiveRecord::Base
   def stock?
     stock > 0
   end
-  
-
-  private
-    # def quantity_tied_up_in_pending_transactions
-    #   items_also_pending = order_items.select { |item| item.order.status == "pending" }
-    #   quantity_pending_array = items_also_pending.map { |item| item.quantity_ordered }
-    #   quantity_pending = quantity_pending_array.reduce(0) { |sum, current_quantity| sum += current_quantity }
-    #
-    #   return quantity_pending
-    # end
 end
