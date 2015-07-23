@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :find_order, only: [:update, :destroy]
-  before_action :empty_cart?, only: [:show]
+  before_action :empty_cart?, only: [:cart]
 
   def new
     @order = Order.new
@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
 
   def update
     @order.update(order_params)
-    render :show
+    render :cart
   end
 
   def destroy
@@ -26,16 +26,20 @@ class OrdersController < ApplicationController
 
   def index
     #don't know if we need this one, might for the merchants order page
-    merchant = User.find(params[:user_id])
+    @merchant = User.find(params[:user_id])
     # my_products = Product.where("user_id = ?", params[:user_id])
-    @all_items = merchant.order_items
-    # @my_items = all_items.product_id.where("user_id = ?", params[:user_id])
+    @all_items = @merchant.order_items
   end
 
-  def show
+  def cart
     # calls the items from the Order associated with a session
     @order_items = current_order.order_items
   end
+
+  def show
+    @buyer =  Buyer.find(params[:id])
+  end
+
 
   def shipped
 
