@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722212142) do
+ActiveRecord::Schema.define(version: 20150723204312) do
 
   create_table "buyers", force: :cascade do |t|
     t.string   "name"
@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(version: 20150722212142) do
     t.string   "city"
     t.string   "state"
     t.integer  "zip"
-    t.integer  "credit_card"
+    t.integer  "credit_card", limit: 8
     t.integer  "cvv"
     t.string   "exp"
     t.integer  "order_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   add_index "buyers", ["order_id"], name: "index_buyers_on_order_id"
