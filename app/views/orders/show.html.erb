@@ -1,29 +1,29 @@
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
 
-  <h1 class="form-header text-center">SHOPPING CART</h1>
+  <h2><center>Shopping Cart</center></h2>
   <!-- To much logic to the view page need to be somewhere else -->
   <% if session[:order_id].nil? == false %>
-    <% @order = Order.find(session[:order_id]) %>
     <% items = @order.order_items %>
     <% array = [] %>
     <% array_sum = [] %>
-
     <% items.each do |item| %>
       <% array.push(item.quantity.to_i) %>
       <% array_sum.push(item.total_price.to_f) %>
     <% end %>
-
     <% quantity = 0 %>
     <% sum = 0 %>
     <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your cart</h3>
-    <h3><center>Subtotal $<%= array_sum.inject{ |sum,element| sum + element} %></h3>
+    <h3><center>Subtotal $<%= @total %></h3>
  <% end %>
+</div>
 
-  <div class="shopping-cart">
+  <div class="shopping-cart col-md-10 col-md-offset-1">
     <%= render "shopping_cart" %>
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-sm-4 col-sm-offset-9">
+      <div class="col-md-4 col-md-offset-7">
         <%= link_to "continue shopping", products_path, class: "btn btn-default" %>
         <%= link_to "checkout", checkout_path, class: "btn btn-success" %>
     </div>

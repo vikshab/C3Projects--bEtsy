@@ -40,6 +40,8 @@ class OrdersController < ApplicationController
 
   def show
     @order_items = current_order.order_items
+    @order = Order.find(session[:order_id])
+    @total = @order.subtotal
   end
 
   def shipped; end
