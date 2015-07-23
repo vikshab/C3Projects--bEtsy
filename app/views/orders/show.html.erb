@@ -1,4 +1,5 @@
-<h1><center>SHOPPING CART</h1>
+<div class="well">
+  <h1><center>SHOPPING CART</h1>
   <!-- To much logic to the view page need to be somewhere else -->
   <% if session[:order_id].nil? == false %>
     <% @order = Order.find(session[:order_id]) %>
@@ -18,11 +19,23 @@
     <h3><center>Subtotal $<%= array_sum.inject{ |sum,element| sum + element} %></h3>
  <% end %>
 
-<div class="container-fluid">
-  <%= link_to "continue shopping", products_path %>
-  <%= link_to "checkout", checkout_path, class: "btn btn-default" %>
-</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
 
-<div class="shopping-cart">
-  <%= render "shopping_cart" %>
+      <%= link_to "continue shopping", products_path, class: "btn btn-default" %>
+      <%= link_to "checkout", checkout_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="shopping-cart">
+    <%= render "shopping_cart" %>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-9">
+        <%= link_to "checkout", checkout_path, class: "btn btn-primary" %>
+    </div>
+  </div>
 </div>
