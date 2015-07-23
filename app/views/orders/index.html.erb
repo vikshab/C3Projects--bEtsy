@@ -7,13 +7,15 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
   <table class="table table-hover table-bordered">
-    <th class="active">Purchased By</th>
-    <th class="active">Product</th>
-    <th class="active">Quantity</th>
-    <th class="active">Subtotal</th>
-    <th class="active">Purchase Date</th>
-    <th class="active">Shipped?</th>
-    <th class="active">Order Status</th>
+    <tr class="active">
+      <th>Purchased By</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Purchase Date</th>
+      <th>Shipped?</th>
+      <th>Order Status</th>
+    </tr>
 
     <% @all_items.each do |item| %>
       <tr>
@@ -41,9 +43,32 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
   <table class="table table-hover table-bordered">
-    <th class="active">Purchased By</th>
-    <th class="active">Product</th>
-    <th class="active">Quantity</th>
+    <tr class="active">
+      <th>Product</th>
+      <th>Order Status</th>
+      <th>Total Revenue</th>
+      <th>Number of Orders</th>
+    </tr>
+
+    <% @all_items.each do |item| %>
+      <tr>
+        <td><%= link_to item.product.name, product_path(item.product.id) %></td>
+        <% if item.order.status == 'paid' %>
+          <td class="paid"><%= item.order.status %></td>
+        <% elsif item.order.status == 'pending' %>
+          <td class="pending"><%= item.order.status %></td>
+        <% elsif item.order.status == 'cancelled' %>
+          <td class="cancelled"><%= item.order.status %></td>
+        <% else %>
+          <%= item.order.status %>
+        <% end %>
+        <td><% item.total_price %></td>
+        <td><%  %></td>
+      </tr>
+    <% end %>
+  </table>
+  </div>
+</div>
 <!-- Total Revenue **Anita**
     - Total Revenue by status **Anita**
     - Total number of orders by status **Anita**
