@@ -20,6 +20,9 @@ $jumbo_color: #FF5454; /* red orange */
 $jumbo_shadow: #858585; /* darker grey */
 $border: #B4B4B4; /* dark grey */
 $money: #4F9728; /* color of money: green */
+$error: #F72B1D; /* red for warining */
+$border-top: #E7E7E7;
+$background: #F8F8F8;
 
 /* Navbar ------------------------------------------------------------------ */
 
@@ -64,8 +67,8 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 50px;
-  border-top: 1px solid #E7E7E7;
-  background-color: #F8F8F8;
+  border-top: 1px solid $border-top;
+  background-color: $background;
 }
 
 .container .text-muted {
@@ -73,7 +76,10 @@ body {
   margin: 16px 0;
   text-align: center;
 }
-
+/* ---------------------------------------------------------------------------*/
+.error {
+  color: $error;
+}
 /* Review ------------------------------------------------------------------- */
 
 .review_time {

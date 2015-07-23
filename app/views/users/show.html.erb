@@ -4,7 +4,7 @@
   <p class="text-center">
     <%= link_to "Order Fulfillment Page", user_orders_path(@user), class: "btn btn-primary" %>
     <%= link_to "Add a Product", new_user_product_path(@user), class: "btn btn-default" %>
-    <%= link_to "Add a Category", new_category_path, class: "btn btn-info" %>
+    <%= link_to "Add a Category", new_category_path, class: "btn btn-default" %>
   </p>
 
   <table class="table table-striped table-bordered">
@@ -16,8 +16,8 @@
 
     <% @products.each do |product| %>
       <tr>
-        <td>
-          <%= image_tag(product.photo_url, class: "dash-photo") %>
+        <td><a href="<%= product_path(product.id)%>">
+          <%= image_tag(product.photo_url, class: "dash-photo") %></a>
           <%= link_to product.name.titlecase, product_path(product) %>
         </td>
         <td class="text-center">

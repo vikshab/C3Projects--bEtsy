@@ -1,3 +1,5 @@
+<div class="col-md-8 col-md-offset-10">
+
 <% if !@order_item.nil? && @order_item.errors.any? %>
   <div class="alert alert-danger">
     <ul>
@@ -7,6 +9,7 @@
     </ul>
   </div>
 <% end %>
+</div>
 <% if @order_items.size == 0 %>
     <h4 class="text-center">
       Your cart is empty.<br>
@@ -16,7 +19,7 @@
 <% else %>
       <!-- For errors when the user adds more quantity than available  -->
       <% if flash[:error] %>
-          <h4><strong><%= flash[:error] %></strong></h4>
+          <h4 class="col-md-8 col-md-offset-2 error"><strong><%= flash[:error] %></strong></h4>
       <% end %>
 
       <% @order_items.each do |order_item| %>
