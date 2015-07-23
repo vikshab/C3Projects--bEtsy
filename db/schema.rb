@@ -48,10 +48,10 @@ ActiveRecord::Schema.define(version: 20150722212142) do
     t.integer  "quantity"
     t.integer  "order_id"
     t.integer  "product_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.decimal  "unit_price",  precision: 12, scale: 2
-    t.decimal  "total_price", precision: 12, scale: 2
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.float    "unit_price"
+    t.float    "total_price"
     t.string   "status"
   end
 
@@ -60,21 +60,21 @@ ActiveRecord::Schema.define(version: 20150722212142) do
 
   create_table "orders", force: :cascade do |t|
     t.string   "status"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.decimal  "subtotal",   precision: 12, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "subtotal"
   end
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "price",      precision: 12, scale: 2
+    t.float    "price"
     t.text     "desc"
     t.integer  "stock"
     t.string   "photo_url"
     t.integer  "user_id"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.boolean  "retired",                             default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "retired",    default: false
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"

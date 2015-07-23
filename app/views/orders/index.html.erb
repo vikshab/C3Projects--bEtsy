@@ -1,25 +1,28 @@
-<div class="row no-jumbo form-header">
+<div class="row form-header">
   <div class="col-md-8 col-md-offset-2">
     <h1> Order Fulfillment </h1>
+    <h3>Total Revenue: <%= number_to_currency(@pend_total.sum + @ship_total.sum + @paid_total.sum) %></h3><br>
     </div>
   </div>
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
   <table class="table table-hover table-bordered">
-    <th class="active">Purchased By</th>
-    <th class="active">Product</th>
-    <th class="active">Quantity</th>
-    <th class="active">Subtotal</th>
-    <th class="active">Purchase Date</th>
-    <th class="active">Shipped?</th>
-    <th class="active">Order Status</th>
+    <tr class="active">
+      <th>Purchased By</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Purchase Date</th>
+      <th>Shipped?</th>
+      <th>Order Status</th>
+    </tr>
 
     <% @all_items.each do |item| %>
       <tr>
         <td>
           <% if item.order.buyer %>
-            <%= item.order.buyer.name %>
+            <%= link_to item.order.buyer.name, user_order_path(@merchant, item.order.buyer.id) %>
           <% else %>
             In cart
           <% end %>
@@ -28,12 +31,51 @@
         <td><%= item.quantity %></td>
         <td><%= item.total_price %></td>
         <td><%= item.updated_at.strftime("%m/%d/%Y") %></td>
+        <td>SHIP BUTTON</td>
         <% if item.order.status == 'paid' %>
-          <td><TBD</td>
+          <td class="paid"><%= item.order.status %></td>
+        <% elsif item.order.status == 'pending' %>
+          <td class="pending"><%= item.order.status %></td>
+        <% elsif item.order.status == 'cancelled' %>
+          <td class="cancelled"><%= item.order.status %></td>
+        <% else item.order.status == nil %>
+          In cart
         <% end %>
-        <td><%= item.order.status %></td>
       </tr>
     <% end %>
   </table>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+  <table class="table table-hover table-bordered">
+    <tr class="active">
+      <th>Order Status</th>
+      <th>Total Revenue</th>
+      <th>Number of Orders</th>
+    </tr>
+    <tr>
+      <td class="paid">paid</td>    
+      <td><%= @paid_total.sum %></td>
+      <td><%= @paid.count %></td>
+    </tr>
+    <tr>
+      <td class="pending">pending</td>
+      <td><%= @pend_total.sum %></td>
+      <td><%= @pend.count %></td>
+    </tr>
+    <tr>
+      <td>shipped</td>
+      <td><%= @ship_total.sum %></td>
+      <td><%= @ship.count %></td>
+    </tr>
+  </table>
+  </div>
+</div>
+<!-- Total Revenue **Anita**
+    - Total Revenue by status **Anita**
+    - Total number of orders by status **Anita**
+    - Filter orders displayed by status **Anita**
+    - Link to each individual order **Anita** -->
+

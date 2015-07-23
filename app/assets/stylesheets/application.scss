@@ -130,9 +130,23 @@ body {
   border: 1px solid $border;
 }
 
-/* Product Page --------------------------------------------------------------*/
+/* Product Page -------------------------------------------------------------- */
 
 .price {
   color: $money;
   margin-top: 30px;
+}
+
+/* Order Fulfillment --------------------------------------------------------- */
+
+.paid {
+  color: $money;
+}
+
+.pending {
+  color: #F0CC00;
+}
+
+.cancelled {
+  color: #F00;
 }
