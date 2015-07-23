@@ -31,7 +31,7 @@
 
  <!-- Button links -->
  <!-- Logic for Seller. if seller: Show edit, hide review -->
- <div class="product-buttons">   
+ <div class="product-buttons">
   <%= link_to "Add to Cart", add_item_path(@product), method: :post, class: "btn btn-primary" %>
   <% if session[:seller_id] == @product.seller_id %>
     <%= link_to "Edit this Product", edit_product_path(@product), class: "btn btn-info" %>
@@ -43,4 +43,10 @@
 <!-- Reviews -->
 <% if @product.reviews.count >= 1 %>
   <%= render "show_reviews", reviews: @reviews %>
+<% end %>
+
+<!-- Categories -->
+<h4>Categories</h4>
+<% @product_categories.each do |category| %>
+  <%= link_to category.name, category_path(category), class: "btn btn-default col-md-4 category-buttons" %>
 <% end %>
