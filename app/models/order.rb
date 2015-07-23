@@ -37,8 +37,7 @@ class Order < ActiveRecord::Base
 
   def total_order_price(seller_id=nil)
     items = seller_id ? order_items.select{ |item| item.seller.id == seller_id } : order_items
-    array_of_totals = items.map { |item| item.total_item_price }
-    total = array_of_totals.sum
+    total = items.map { |item| item.total_item_price }.sum
   end
 
   def already_has_product?(product)
