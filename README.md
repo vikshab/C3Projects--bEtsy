@@ -58,34 +58,34 @@ As a guest to the website (not signed in) I **can**:
 - √ Browse products by merchant (users)
 - √ View any individual product with additional details
 - √ Leave a review for a product providing:
-    - A Text review
-    - A rating out of 5
+    - √ A Text review
+    - √ A rating out of 5
 - √ Add in-stock products to my cart
 - √ Remove products from my cart
 - √ Change the quantity of an existing product in my cart
-- Purchase the items in my cart, providing: **Anita**
-    - √ Email Address
-    - Mailing Address
-    - Name on credit card
-    - Credit card number
-    - Credit cart expiration
+- Purchase the items in my cart, providing: **Anita**?? fix doesn't want to save buyer
+    -  Email Address
+    -  Mailing Address
+    -  Name on credit card
+    -  Credit card number
+    -  Credit cart expiration
     - Credit Card CVV (security code)
-    - Billing zip code
+    -  Billing zip code
 - √ Purchasing an order makes the following changes:
     - √ Reduces the number of inventory for each product
     - √ Changes the order state from "pending" to "paid"
     - √ Clears the current cart
-- √ After purchasing an order, I can view a confirmation screen including: **Brittany**
-    - Each item in the order with a quantity and line-item subtotal
-    - A link to the item description page
-    - Order total price
-    - DateTime the order was placed
-    - The current status of the order
+- √ After purchasing an order, I can view a confirmation screen including: **Brittany && Victoria**
+    - √ Each item in the order with a quantity and line-item subtotal
+    - √ A link to the item description page
+    - √ Order total price
+    - √ DateTime the order was placed
+    - √ The current status of the order
 - √ Sign up to be a merchant, providing:
-    - Email Address
-    - Username
-    - Password (plain text passwords cannot be stored in the database)
-    - Password confirmation
+    - √ Email Address
+    - √ Username
+    - √ Password (plain text passwords cannot be stored in the database)
+    - √ Password confirmation
 - √ Sign in to my merchant account
 
 As a guest I **cannot**:
@@ -103,16 +103,16 @@ As a signed-in user, I **can**:
 - √ Sign out
 - Create new categories (categories are shared between all merchants) **Elia**
 - √ Create a new product providing:
-    - name
-    - description
-    - price
-    - photo URL
-    - stock
+    - √ name
+    - √ description
+    - √ price
+    - √ photo URL
+    - √ stock
 - √ Assign my products to any number of categories
 - √ Retire a product from being sold, which hides it from browsing
 - √ View an account page to edit/update my existing products
-- View an account page showing my order fulfillment
-- On the order fulfillment page: 
+- √ View an account page showing my order fulfillment
+- On the order fulfillment page:
     - Total Revenue **Anita**
     - Total Revenue by status **Anita**
     - Total number of orders by status **Anita**
