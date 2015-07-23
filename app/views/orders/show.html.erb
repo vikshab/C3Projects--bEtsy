@@ -8,7 +8,7 @@
 
     <% items.each do |item| %>
       <% array.push(item.quantity.to_i) %>
-      <% array_sum.push(item.total_price.to_i) %>
+      <% array_sum.push(item.total_price.to_f) %>
     <% end %>
 
     <% quantity = 0 %>
