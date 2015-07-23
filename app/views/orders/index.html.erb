@@ -1,23 +1,23 @@
 <div class="row no-jumbo form-header">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <h1> Order Fulfillment </h1>
     </div>
   </div>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
   <table class="table table-hover table-bordered">
-    <th>Purchased By</th>
-    <th>Product</th>
-    <th>Quantity</th>
-    <th>Subtotal</th>
-    <th>Purchase Date</th>
-    <th>Shipped?</th>
-    <th>Order Status</th>
+    <th class="active">Purchased By</th>
+    <th class="active">Product</th>
+    <th class="active">Quantity</th>
+    <th class="active">Subtotal</th>
+    <th class="active">Purchase Date</th>
+    <th class="active">Shipped?</th>
+    <th class="active">Order Status</th>
 
     <% @all_items.each do |item| %>
       <tr>
-        <td>Smalls</td>
+        <td><%= item.order.buyer.name %></td>
         <td><%= link_to item.product.name, product_path(item.product.id) %></td>
         <td><%= item.quantity %></td>
         <td><%= item.total_price %></td>
