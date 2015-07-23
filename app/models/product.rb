@@ -66,6 +66,7 @@ class Product < ActiveRecord::Base
   def stock?
     stock > 0
   end
+  
 
   private
     # def quantity_tied_up_in_pending_transactions

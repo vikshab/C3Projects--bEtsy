@@ -286,5 +286,24 @@ RSpec.describe OrderItem, type: :model do
         expect(item.product_has_stock?).to eq(false)
       end
     end
+
+    context "#quantity_too_high?" do
+        # quantity_ordered >= product.stock
+      it "returns true if quantity_ordered is greater than or equal to product stock" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 0)
+        order = Order.create
+        item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 10)
+
+        expect(item.quantity_too_high?).to be(true)
+      end
+
+      it "returns false if quantity_ordered is less than product stock" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 12)
+        order = Order.create
+        item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 10)
+
+        expect(item.quantity_too_high?).to be(false)
+      end
+    end
   end
 end

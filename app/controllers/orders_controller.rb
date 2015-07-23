@@ -8,7 +8,10 @@ class OrdersController < ApplicationController
 
   def cart; end
 
-  def checkout; end
+  def checkout
+    @order.prepare_checkout!
+    flash[:errors] = @order.errors if @order.errors
+  end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
     order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)

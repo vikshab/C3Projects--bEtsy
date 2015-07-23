@@ -15,6 +15,6 @@ module ApplicationHelper
   end
 
   def product_short_description(product)
-    product.description[0..150] + '...'
+    product.description[0..150] + '...' if product.description
   end
 end
