@@ -7,7 +7,7 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.create(order_item_params)
     session[:order_id] = @order.id
 
-    redirect_to product_path(@order_item.product_id)
+    redirect_to cart_path
   end
 
   def update
