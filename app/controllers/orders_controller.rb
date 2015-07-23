@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
   end
 
   def shipped
-    
+
   end
 
   private
@@ -52,9 +52,13 @@ class OrdersController < ApplicationController
     end
 
     def empty_cart?
-      @order = Order.find(session[:order_id])
-      if @order.order_items.count == 0
-        render :empty
+      if session[:order_id].nil?
+          render :empty
+      elsif session[:order_id].nil? == false
+        @order = Order.find(session[:order_id])
+        if @order.order_items.count == 0
+          render :empty
+        end
       end
     end
 end
