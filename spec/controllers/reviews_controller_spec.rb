@@ -66,6 +66,11 @@ RSpec.describe ReviewsController, type: :controller do
         post :create, id: @product, review: review_params[:review]
         expect(response).to render_template("new")
       end
+
+      it "assigns flash[:errors]" do
+        post :create, id: @product, review: review_params[:review]
+        expect(flash[:errors]).to include(:rating)
+      end
     end
   end
 end
