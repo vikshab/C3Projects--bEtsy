@@ -229,13 +229,5 @@ RSpec.describe OrderItem, type: :model do
         expect(item.item_price).to eq(@product.price * quantity)
       end
     end
-
-    context "remove_prompt_text" do
-      it "outputs a string related to removing items from the cart" do
-        item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
-        remove_string =  "Are you sure you want to remove this item (astronaut) from your cart?"
-        expect(item.remove_prompt_text).to eq(remove_string)
-      end
-    end
   end
 end
