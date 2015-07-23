@@ -2,26 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
 
-  describe "model validations " do
-    fields = [:buyer_name, :buyer_zip, :buyer_city, :buyer_email, :buyer_state, :buyer_expcc, :buyer_last4cc, :buyer_address]
+  describe "set_order_status and update_subtotal actions before create and save respectavely" do
+    order = Order.new
+    subtotal = order.order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum
+    order.save
 
-    fields.each do |field|
-      it "requires a #{field}, all the time" do
-        order = Order.new
-
-        expect(order).to_not be_valid
-        expect(order.errors.keys).to include(field) #testing that it's failing b/c title is required
-      end
-    end
-
-    it "email needs an @ sign, all the time" do
-      order = Order.new(buyer_email: "bloey")
-
-      expect(order).to_not be_valid
-      expect(order.errors.keys).to include(:buyer_email) #testing that it's failing b/c title is required
+    it "sets the order status to pending by default" do
+      expect(order.status).to eq("pending")
+      expect(order.subtotal).to eq(subtotal)
     end
   end
-
-
-
-end # describe Order
+end
