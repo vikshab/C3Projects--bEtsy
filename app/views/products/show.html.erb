@@ -7,8 +7,8 @@
     <h2><%= @product.name %></h2>
     <h3>Description
     <p><small><%= @product.desc %></small></p></h3>
-    <p class="text-muted">Categorized as</p>
-    <p class="text-muted"><%= @product.categories.map {|category| category.name}.join(" ")%></p>
+    <p class="text-muted">Categories:  
+    <%= @product.categories.map {|category| category.name}.join(", ")%></p>
 
     <h4 class="price">$<%= @product.price %></h4>
 
