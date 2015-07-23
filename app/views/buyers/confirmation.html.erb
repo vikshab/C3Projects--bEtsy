@@ -16,7 +16,8 @@
             <td class="text-right">$<%= order_item.total_price %></td>
         </tr>
           <% end %>
-        <tr><tr><td colspan="3"></td></tr><td colspan="3" class="text-right"> $ <%= @total %> </td></tr>
+          <tr><td colspan="3"></td></tr>
+          <tr><td colspan="3" class="text-right"> $ <%= @total %> </td></tr>
         <td colspan="3" class="text-right"> <%= @order.status.capitalize %></td>
       </table>
 
