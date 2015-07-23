@@ -33,13 +33,16 @@ $money: #4F9728; /* color of money: green */
  }
 
  .cart {
-  font-size: 1.4em;
+  font-size: 1.5em;
+ }
+
+ .navbar-link .cart {
+  padding: 15px 0px 0px 0px;
  }
 
  .cart-number {
-   padding: 15px 0px 0px 0px;
-   margin-right: 30px;
-   margin-left: -30px;
+   margin-right: 5px;
+   margin-left: 10px;
  }
 
 /* Sticky footer ----------------------------------------------------------- */
@@ -116,6 +119,15 @@ body {
 
 .dash-photo {
   max-width: 65px;
+  border: 1px solid $border;
+}
+
+.cart-image {
+  max-width: 200px;
+}
+
+.img-rounded {
+  border: 1px solid $border;
 }
 
 /* Product Page --------------------------------------------------------------*/
