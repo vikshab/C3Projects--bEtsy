@@ -4,8 +4,12 @@ module ApplicationHelper
   end
 
   def cart_display_text
-    order_count = OrderItem.where(order_id: session[:order_id]).count
-    display_text = "Cart (#{ order_count })"
+    display_text = "Cart"
+
+    if session[:order_id] && Order.find_by(id: session[:order_id])
+      no_items = Order.find(session[:order_id]).order_items.count
+      display_text += " (#{ no_items })" if no_items > 0
+    end
 
     return display_text
   end

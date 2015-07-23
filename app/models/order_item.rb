@@ -14,12 +14,6 @@ class OrderItem < ActiveRecord::Base
   validate :order_item_is_unique? # OPTIMIZE: I think this makes the above before_create obsolete?!
 
 
-  # TODO this should probably be in helpers/order_items_helpers
-  # OPTIMIZE if this is only going to be used in the cart, maybe just use it inline inside the view
-  def remove_prompt_text
-    "Are you sure you want to remove this item (#{ product.name }) from your cart?"
-  end
-
   def more!
     reload # removing this line == DANGER WILL ROBINSON
     # if the OrderItem isn't reloaded, ln30 will resolve based on a cached operation
