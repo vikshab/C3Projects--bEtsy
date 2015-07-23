@@ -74,7 +74,7 @@ products = [
 ]
 
 products.each do |product|
-  Product.create(product)
+  product = Product.create(product)
 end
 
 categories = [

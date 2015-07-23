@@ -31,10 +31,11 @@
 
  <!-- Button links -->
  <!-- Logic for Seller. if seller: Show edit, hide review -->
- <div class="product-buttons">   
+ <div class="product-buttons">
   <%= link_to "Add to Cart", add_item_path(@product), method: :post, class: "btn btn-primary" %>
   <% if session[:seller_id] == @product.seller_id %>
     <%= link_to "Edit this Product", edit_product_path(@product), class: "btn btn-info" %>
+    <%= link_to retire_product_text, retire_product_path(@product), class: "btn btn-warning" %>
   <% else %>
     <%= link_to "Add Review", new_review_path, class: "btn btn-default" %>
   <% end %>
