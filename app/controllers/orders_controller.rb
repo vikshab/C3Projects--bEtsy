@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
   before_action :set_seller, only: [:index, :show]
   before_action :require_seller_login, only: [:index, :show]
 
-
   def cart; end
 
   def checkout; end
@@ -26,6 +25,7 @@ class OrdersController < ApplicationController
       redirect_to receipt_path
     else
       flash.now[:errors] = @order.errors
+      @order.attributes = checkout_params
       render :checkout
     end
   end
