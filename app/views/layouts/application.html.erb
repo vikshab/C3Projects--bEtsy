@@ -43,15 +43,16 @@
 
   <main class="container-fluid">
     <div class="col-lg-12">
-      <% if flash[:error] %> <!-- # TODO: come back to this (plural vs not) -->
-        <h4 class="alert alert-warning"><%= flash[:error] %></h4>
-      <% end %>
 
       <% if flash[:messages] %>
-        <h4 class="alert alert-success"><%= flash[:messages] %></h4>
+        <% flash[:messages].each do |key, value| %>
+          <h4 class="alert alert-success"><%= key.to_s.titlecase %>: <%= value %></h4>
+        <% end %>
       <% end %>
       <% if flash[:errors] %>
-        <h4 class="alert alert-warning"><%= flash[:errors] %></h4>
+        <% flash[:errors].each do |key, value| %>
+          <h4 class="alert alert-warning"><%= key.to_s.titlecase %>: <%= value %></h4>
+        <% end %>
       <% end %>
 
       <%= yield %>
