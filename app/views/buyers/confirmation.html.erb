@@ -1,25 +1,50 @@
-<h1><center>Thank you for your purchase!</h1>
-  <h1><center>Order Confirmation:</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-7 col-xs-offset-2">
 
-<% if session[:order_id].nil? == false %>
-    <% @order %>
-    <% items = @order.order_items %>
-    <% array_sum = [] %>
+        <h2><center>Order Confirmation</center></h2>
+          <h3><center>Your Order Was Placed on <%= @order.updated_at.strftime("%m/%d/%Y")%></center></h3>
 
-    <% items.each do |item| %>
-      <% array_sum.push(item.total_price.to_f) %>
-    <% end %>
+      <% if session[:order_id].nil? == false %>
+          <% @order %>
+          <% items = @order.order_items %>
+          <% array_sum = [] %>
 
-    <% sum = 0 %>
-    <h2><center>Order details:</h2>
-    <h3><center>Total $<%= array_sum.inject{ |sum,element| sum + element} %></h3>
-<% end %>
+          <% items.each do |item| %>
+            <% array_sum.push(item.total_price.to_f) %>
+          <% end %>
 
-  <% @order_items.each do |order_item| %>
-    <p>Product: <%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></p>
-    <p>Quantity: <%= order_item.quantity %></p>
-    <p>Subtotal: $<%= order_item.unit_price * order_item.quantity %></p>
-  <% end %>
+          <% sum = 0 %>
+          <h3>Details</h3>
+      <% end %>
 
-  <p>Order status: <%= @order.status %></p>
-  <p>Order placed: <%= @order.updated_at %></p>
+      <table class="table table-hover table-bordered">
+
+        <tr>
+          <th class="active">Product</th>
+          <th class="active">Quantity</th>
+          <th class="active text-right">Total</th>
+        </tr>
+        <tr>
+          <% @order_items.each do |order_item| %>
+            <td><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
+            <td><%= order_item.quantity %></td>
+            <td class="text-right">$<%= order_item.unit_price * order_item.quantity %></td>
+        </tr>
+          <% end %>
+        <tr>
+          <tr>
+            <td colspan="3">
+
+            </td>
+          </tr>
+        <td colspan="3" class="text-right"> $<%= array_sum.inject{ |sum,element| sum + element} %></td>
+      </tr>
+        <td colspan="3" class="text-right"> <%= @order.status.capitalize %></td>
+      </table>
+
+      <h2><center>As always, thank you for your purchase!</h2>
+      </div>
+    </div>
+
+  </div>
