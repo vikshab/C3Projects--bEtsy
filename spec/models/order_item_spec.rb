@@ -220,13 +220,13 @@ RSpec.describe OrderItem, type: :model do
     context "price" do
       it "has a price through its association to product" do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
-        expect(item.item_price).to eq(@product.price)
+        expect(item.total_item_price).to eq(@product.price)
       end
 
       it "has a price that adjusts based on quantity_ordered" do
         quantity = 2
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: quantity)
-        expect(item.item_price).to eq(@product.price * quantity)
+        expect(item.total_item_price).to eq(@product.price * quantity)
       end
     end
 

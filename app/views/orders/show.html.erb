@@ -17,7 +17,7 @@
     <tr>
       <td><%= item.quantity_ordered %></td>
       <td><%= item.product.name %></td>
-      <td><%= display_dollars(item.item_price) %></td>
+      <td><%= display_dollars(item.total_item_price) %></td>
       <td><%= @order.status %></td>
       <td>
         <!-- # FIXME: these buttons don't do anything see bug https://trello.com/c/iPWevY4r -->
@@ -28,6 +28,6 @@
   <% end %>
   <tr>
     <th colspan="3">Order Total</th>
-    <th colspan="2"><%= display_dollars(@order.order_price(@seller.id)) %></th>
+    <th colspan="2"><%= display_dollars(@order.total_order_price(@seller.id)) %></th>
   </tr>
 </table>

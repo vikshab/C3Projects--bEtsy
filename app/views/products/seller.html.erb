@@ -1,1 +1,22 @@
-I don't know there should probably be some content here.
+<h1>Products</h1>
+<h2><%= @seller.username %></h2>
+
+<div class="row">
+<% @seller.products.each do |product| %>
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <div class="product-name">
+        <h2><%= product.name %></h2>
+      </div>
+      <%= link_to image_tag("#{product.photo_url}", class: "img-responsive", size: "100"), product_path(product) %>
+      <div class="caption">
+        <h3><%= display_dollars(product.price) %></h3>
+        <p><%= product_short_description(product) %></p>
+        <p>Stock: <%= product.stock %></p>
+        <%= link_to "Details", product_path(product), class: "btn btn-default" %>
+        <%= link_to "Edit this Product", edit_product_path(product.id), class: "btn btn-info" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
