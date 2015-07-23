@@ -94,7 +94,8 @@ RSpec.describe SellersController, type: :controller do
 
       it "assigns flash[:errors]" do
         get :dashboard, id: @seller
-        expect(flash[:errors]).to include(not_logged_in: "Please log in to see this page.")
+
+        expect(flash[:errors].keys).to include(:not_logged_in)
       end
     end
   end

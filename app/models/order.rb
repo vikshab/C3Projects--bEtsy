@@ -32,8 +32,26 @@ class Order < ActiveRecord::Base
     validate :buyer_card_unexpired
   end
 
-  def shorten_credit_card
-    self.buyer_card_short = self.buyer_card_short[-4..-1] if self.buyer_card_short
+
+  def prepare_checkout!
+    items_adjusted = false
+    order_items.each do |item|
+      item.adjust_if_product_stock_changed!
+      items_adjusted = true unless item.errors.empty?
+    end
+
+    if items_adjusted # OPTIMIZE: this error message in prepare_checkout!
+      errors[:product_stock] = "Quantity ordered was adjusted because not enough of this product was stuck."
+    end
+  end
+
+  def checkout!(checkout_params)
+    checkout_params[:status] = "paid"
+    if update(checkout_params)
+      order_items.each do |item|
+        item.remove_product_stock!
+      end
+    end
   end
 
   def total_order_price(seller_id=nil)
@@ -45,24 +63,24 @@ class Order < ActiveRecord::Base
     products.include? product
   end
 
-  def buyer_card_unexpired
-    return if confirmed_payment # guard clause that works with the setup on lines 2 - 6
-
-    # if order is not pending and payment has not yet been confirmed,
-    # then confirm the card has not expired.
-    if buyer_card_expiration && (buyer_card_expiration >= Date.today)
-      @confirmed_payment = true
-    else
-      errors[:buyer_card_expiration] << "date is not valid."
-    end
-  end
-
   def pending?
     status == "pending"
   end
 
-  def checkout(checkout_params)
-    checkout_params[:status] = "paid"
-    self.update(checkout_params)
-  end
+  private
+    def shorten_credit_card
+      self.buyer_card_short = self.buyer_card_short[-4..-1] if self.buyer_card_short
+    end
+
+    def buyer_card_unexpired
+      return if confirmed_payment # guard clause that works with the setup on lines 2 - 6
+
+      # if order is not pending and payment has not yet been confirmed,
+      # then confirm the card has not expired.
+      if buyer_card_expiration && (buyer_card_expiration >= Date.today)
+        @confirmed_payment = true
+      else
+        errors[:buyer_card_expiration] << "date is not valid."
+      end
+    end
 end

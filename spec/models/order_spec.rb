@@ -193,7 +193,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe "methods" do
-    context "pending" do
+    context "#pending?" do
       it "can test whether an order is pending" do
         passing_test = "pending"
         failing_tests = ["paid", "complete", "canceled"]
@@ -206,7 +206,7 @@ RSpec.describe Order, type: :model do
       end
     end
 
-    context "total_order_price" do
+    context "#total_order_price" do
       before :each do
         @seller = Seller.new(username: "a", email: "bob@bob.bob")
         @seller.password = @seller.password_confirmation = "password"
@@ -248,6 +248,69 @@ RSpec.describe Order, type: :model do
         item2 = OrderItem.create(product_id: @product2.id, order_id: 1, quantity_ordered: 25)
 
         expect(@order.total_order_price(@seller.id)).to eq(@item.total_item_price)
+      end
+    end
+
+    context "#prepare_checkout!" do
+      before :each do
+        @order = Order.create
+        @product1 = Product.create(name: "sheer insanity", stock: 5, price: 1, seller_id: 1)
+        @product2 = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
+      end
+
+      it "calls #adjust_if_product_stock_changed & reduces the quantity ordered as necessary" do
+        @item1 = OrderItem.create(order_id: @order.id, product_id: @product1.id, quantity_ordered: 10)
+        @item2 = OrderItem.create(order_id: @order.id, product_id: @product2.id, quantity_ordered: 10)
+        @order.prepare_checkout!
+        @item1.reload
+
+        expect(@item1.quantity_ordered).to eq(5)
+        expect(@item2.quantity_ordered).to eq(10)
+      end
+
+      it "adds an error message if that is the case" do
+        @item1 = OrderItem.create(order_id: @order.id, product_id: @product1.id, quantity_ordered: 10)
+
+        @order.prepare_checkout!
+        expect(@order.errors.keys).to include(:product_stock)
+      end
+
+      it "and doesn't it if is not" do
+        @item2 = OrderItem.create(order_id: @order.id, product_id: @product2.id, quantity_ordered: 10)
+        @order.prepare_checkout!
+
+        expect(@order.errors.keys).not_to include(:product_stock)
+      end
+    end
+
+    context "#checkout!(checkout_params)" do
+      it "reduces product stock upon successful update" do
+        order = Order.create
+        product = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
+        OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 5)
+
+        checkout_params = { buyer_name: "cthulhu", buyer_email: "cthulhu@rlyeh.net",
+          buyer_address: "1234 fake st", buyer_card_short: "4567",
+          buyer_card_expiration: Date.parse("June 5 2086") }
+
+        order.checkout!(checkout_params)
+        product.reload
+        
+        expect(product.stock).to eq(5)
+      end
+
+      it "and doesn't upon unsuccessful update" do
+        order = Order.create
+        product = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
+        OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 5)
+
+        checkout_params = { buyer_name: "cthulhu", buyer_email: "cthulhu@rlyeh.net",
+          buyer_address: "1234 fake st", buyer_card_short: "CTHULHU WAS HERE",
+          buyer_card_expiration: Date.parse("June 5 2086") }
+
+        order.checkout!(checkout_params)
+
+        expect(product.stock).to eq(10)
       end
     end
   end

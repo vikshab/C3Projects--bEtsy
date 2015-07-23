@@ -55,6 +55,29 @@ RSpec.describe OrdersController, type: :controller do
 
       expect(assigns(:order)).to eq(test_order)
     end
+
+    context "adjusting order item quantities" do
+      before :each do
+        @order = Order.create
+        @product = Product.create(name: "34234ujoiujhe", stock: 1, price: 1, seller_id: 1)
+        @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
+        session[:order_id] = @order.id
+      end
+
+      it "adjusts order item quantities as needed to match available stock" do
+        get :checkout
+        @item.reload
+
+        expect(@item.quantity_ordered).to eq(1)
+      end
+
+      it "flashes an error message so the user will understand altered values" do
+        get :checkout
+        @item.reload
+
+        expect(flash[:errors].keys).to include(:product_stock)
+      end
+    end
   end
 
   describe "POST #add_to_cart" do
@@ -143,7 +166,13 @@ RSpec.describe OrdersController, type: :controller do
       session[:order_id] = test_order.id
     end
 
-    let(:checkout_buyer_params) { { order: { buyer_name: "My name", buyer_email: "my_email@example.com", buyer_address: "123 Example St, Cityville, State 12345", buyer_card_short: "1234", buyer_card_expiration: future_date } } }
+    let(:checkout_buyer_params) { {
+      order: {
+        buyer_name: "My name", buyer_email: "my_email@example.com",
+        buyer_address: "123 Example St, Cityville, State 12345",
+        buyer_card_short: "1234", buyer_card_expiration: future_date
+      }
+    } }
     let(:invalid_checkout_buyer_params) { { order: { buyer_card_short: "words" } } }
 
     it "assigns @order" do
@@ -204,6 +233,7 @@ RSpec.describe OrdersController, type: :controller do
     context "when input is invalid" do
       it "resets order.status to pending" do
         patch :update, invalid_checkout_buyer_params
+
         test_order.reload
         expect(test_order.status).to eq("pending")
       end
@@ -217,6 +247,7 @@ RSpec.describe OrdersController, type: :controller do
       it "does not update the order.buyer_card_short" do
         old_card_short = test_order.buyer_card_short
         patch :update, invalid_checkout_buyer_params
+
         test_order.reload
         expect(test_order.buyer_card_short).to eq(old_card_short)
       end
@@ -225,7 +256,7 @@ RSpec.describe OrdersController, type: :controller do
         old_card_short = test_order.buyer_card_short
         patch :update, invalid_checkout_buyer_params
 
-        expect(flash[:errors]).to include(:buyer_card_short)
+        expect(flash[:errors].keys).to include(:buyer_card_short)
       end
     end
   end
