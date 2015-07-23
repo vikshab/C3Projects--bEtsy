@@ -41,18 +41,7 @@ class OrderItem < ActiveRecord::Base
     end
   end
 
-  # TODO group: note that we need to talk about this more
-
-  # fyi, leaving these comments here in case future me is not articulate.
-  # I'm always more interested in doing what other people understand better!
-  # we should do what's best for our group understanding. n_n --Jeri
-
-  # THE QUESTION AT HAND: why does price alone make the most sense to me?
-  # because of how you call it inline: OrderItem.price.
-  # to me, *OrderItem.price* says: what's the price of this item?
-  # it does not say to me: what's the price of the things that make up this item.
-  # if my item is a six-pack of beer, I expect to see the price for the whole six-pack.
-  def item_price # v. price / cost / item_cost / total_item_price / total_item_cost / etc
+  def total_item_price
     quantity_ordered * product.price
   end
 
