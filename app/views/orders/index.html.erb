@@ -13,7 +13,7 @@
       <tr>
         <td><%= order.id %></td>
         <td><%= link_to "View Invoice for Order ##{ order.id }", seller_order_path(@seller, order) %></td>
-        <td><%= display_dollars(order.order_price(@seller.id)) %></td>
+        <td><%= display_dollars(order.total_order_price(@seller.id)) %></td>
         <td><%= order.status %></td>
         <td><%= order.buyer_name %> <small><%= order.buyer_email %></small></td>
       </tr>
