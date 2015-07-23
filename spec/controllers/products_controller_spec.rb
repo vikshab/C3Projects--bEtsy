@@ -5,11 +5,6 @@ RSpec.describe ProductsController, type: :controller do
   # INDEX ACTION__________________________________________________________________
 
   describe "GET #index" do
-    it "responds successfully with an HTTP 200 status code" do
-      get :index
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
-    end
 
     it "renders the index template" do
       get :index
@@ -43,12 +38,6 @@ RSpec.describe ProductsController, type: :controller do
     before :each do
       @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
       session[:user_id] = @user.id
-    end
-
-    it "responds successfully with an HTTP 200 status code" do
-      get :new, user_id: @user
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
     end
 
     it "renders the new view" do
