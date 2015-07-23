@@ -32,8 +32,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     it "assigns @seller to the seller in the session" do
-      controller.send(set_seller)
-
+      subject.set_seller
       expect(assigns(:seller)).to eq @seller1
     end
 
