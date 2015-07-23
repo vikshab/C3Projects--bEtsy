@@ -30,10 +30,16 @@
         <td><%= item.quantity %></td>
         <td><%= item.total_price %></td>
         <td><%= item.updated_at.strftime("%m/%d/%Y") %></td>
+        <td>SHIP BUTTON</td>
         <% if item.order.status == 'paid' %>
-          <td><TBD</td>
+          <td class="paid"><%= item.order.status %></td>
+        <% elsif item.order.status == 'pending' %>
+          <td class="pending"><%= item.order.status %></td>
+        <% elsif item.order.status == 'cancelled' %>
+          <td class="cancelled"><%= item.order.status %></td>
+        <% else item.order.status == nil %>
+          In cart
         <% end %>
-        <td><%= item.order.status %></td>
       </tr>
     <% end %>
   </table>
@@ -44,28 +50,25 @@
   <div class="col-md-8 col-md-offset-2">
   <table class="table table-hover table-bordered">
     <tr class="active">
-      <th>Product</th>
       <th>Order Status</th>
       <th>Total Revenue</th>
       <th>Number of Orders</th>
     </tr>
-
-    <% @all_items.each do |item| %>
-      <tr>
-        <td><%= link_to item.product.name, product_path(item.product.id) %></td>
-        <% if item.order.status == 'paid' %>
-          <td class="paid"><%= item.order.status %></td>
-        <% elsif item.order.status == 'pending' %>
-          <td class="pending"><%= item.order.status %></td>
-        <% elsif item.order.status == 'cancelled' %>
-          <td class="cancelled"><%= item.order.status %></td>
-        <% else %>
-          <%= item.order.status %>
-        <% end %>
-        <td><% item.total_price %></td>
-        <td><%  %></td>
-      </tr>
-    <% end %>
+    <tr>
+      <td class="paid">paid</td>    
+      <td><%= @paid_total.sum %></td>
+      <td><%= @paid.count %></td>
+    </tr>
+    <tr>
+      <td class="pending">pending</td>
+      <td><%= @pend_total.sum %></td>
+      <td><%= @pend.count %></td>
+    </tr>
+    <tr>
+      <td>shipped</td>
+      <td><%= @ship_total.sum %></td>
+      <td><%= @ship.count %></td>
+    </tr>
   </table>
   </div>
 </div>

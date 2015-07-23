@@ -30,9 +30,17 @@ class OrdersController < ApplicationController
     # my_products = Product.where("user_id = ?", params[:user_id])
     @all_items = merchant.order_items
     # @my_items = all_items.product_id.where("user_id = ?", params[:user_id])
+    @pend = @all_items.where(status: "pending")
+    @paid = @all_items.where(status: "paid")
+    @ship = @all_items.where(status: "shipped")
+
+    @pend_total = @all_items.where(status: "pending").pluck(:total_price)
+    @paid_total = @all_items.where(status: "paid").pluck(:total_price)
+    @ship_total = @all_items.where(status: "shipped").pluck(:total_price)
   end
 
   def show
+    raise
     # calls the items from the Order associated with a session
     @order_items = current_order.order_items
   end
