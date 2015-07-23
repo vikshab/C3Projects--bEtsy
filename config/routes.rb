@@ -7,11 +7,12 @@ Rails.application.routes.draw do
 
   get '/sellers/:id/dashboard', to: 'sellers#dashboard', as: "dashboard"
 
-  resources :categories, except: :destroy
+  resources :categories, only: [:index, :show]
   resources :sellers, only: [:index, :show, :new, :create] do
     get "products", to: "products#seller"
     resources :products, only: [:new, :create]
     resources :orders, only: [:index, :show]
+    resources :categories, only: [:new, :create]
   end
   resources :products, except: [:new, :create, :destroy]
 
