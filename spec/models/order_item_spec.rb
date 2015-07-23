@@ -75,9 +75,10 @@ RSpec.describe OrderItem, type: :model do
         valid_item = OrderItem.create(product_id: product.id, order_id: order1.id, quantity_ordered: current_stock)
         expect(valid_item.errors.keys).to_not include(:quantity_ordered)
 
+        product.remove_stock(current_stock)
+
         invalid_item = OrderItem.create(product_id: product.id, order_id: order2.id, quantity_ordered: 1)
-        expect(invalid_item.errors.keys).to include(:quantity_ordered)
-        expect(invalid_item.errors[:quantity_ordered]).to include("Product must have available stock.")
+        expect(invalid_item.id).to be(nil)
       end
 
       it "is not valid if product is already part of order" do
@@ -187,7 +188,7 @@ RSpec.describe OrderItem, type: :model do
       @product = Product.create(name: "astronaut", price: 4_000, seller_id: 1, stock: 5)
     end
 
-    context "more!" do
+    context "#more!" do
       it "increments the quantity_ordered" do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
         item.more!
@@ -198,12 +199,12 @@ RSpec.describe OrderItem, type: :model do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
         item.more!
         expect(item.quantity_ordered).to eq(5)
-        expect(item.errors.keys).to include(:quantity_ordered)
+        expect(item.errors.keys).to include(:product_stock)
       end
     end
 
-    context "less!" do
-      it "increments the quantity_ordered" do
+    context "#less!" do
+      it "decrements the quantity_ordered" do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
         item.less!
         expect(item.quantity_ordered).to eq(4)
@@ -217,7 +218,7 @@ RSpec.describe OrderItem, type: :model do
       end
     end
 
-    context "price" do
+    context "#total_item_price" do
       it "has a price through its association to product" do
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
         expect(item.total_item_price).to eq(@product.price)
@@ -227,6 +228,59 @@ RSpec.describe OrderItem, type: :model do
         quantity = 2
         item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: quantity)
         expect(item.total_item_price).to eq(@product.price * quantity)
+      end
+    end
+
+    context "#adjust_if_product_stock_changed!" do
+        # checkout_params = { buyer_name: "cthulhu", buyer_card_short: "4567",
+          # buyer_email: "cthulhu.fhtagn@r'lyeh.wgah.nagl", buyer_address: "r'lyeh",
+          # buyer_card_expiration: Date.parse("June 5 2086")}
+      it "reduces the quantity ordered if product has less stock" do
+        product = Product.create(name: 'asdafun94ymc34', price: 1, seller_id: 1, stock: 1)
+        order = Order.create
+        item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 10)
+        item.adjust_if_product_stock_changed!
+
+        expect(item.quantity_ordered).to eq(1)
+        expect(item.errors.keys).to include(:product_stock)
+      end
+
+      it "doesn't reduce the quantity if product has enough stock" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 100)
+        order = Order.create
+        item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 10)
+        item.adjust_if_product_stock_changed!
+
+        expect(item.quantity_ordered).to eq(10)
+        expect(item.errors.keys).not_to include(:product_stock)
+      end
+    end
+
+    context "#remove_product_stock!" do
+      it "reduces the product's stock by the item's quantity_ordered" do
+
+      end
+    end
+
+    context "#order_item_is_unique?" do
+      pending "order_item_is_unique? needs specs"
+    end
+
+    context "#product_has_stock?" do
+      it "returns true if product.stock is a positive number" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 100)
+        order = Order.create
+        item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 1)
+
+        expect(item.product_has_stock?).to eq(true)
+      end
+
+      it "returns false if product.stock is not a positive number" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 0)
+        order = Order.create
+        item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 1)
+        
+        expect(item.product_has_stock?).to eq(false)
       end
     end
   end

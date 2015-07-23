@@ -15,15 +15,10 @@ class OrderItem < ActiveRecord::Base
 
 
   def more!
-    reload # removing this line == DANGER WILL ROBINSON
-    # if the OrderItem isn't reloaded, ln30 will resolve based on a cached operation
-    # in other words, if line 30 has recently been evaluated for this OrderItem,
-    # then __it will not be evaluated__ and the cached value (true) will be used
-    # instead. by reloading, we force a new SQL query to be run to check anew
-    # whether product_has_stock?
-
-    if product_has_stock?
+    if product_has_stock? && product.stock > quantity_ordered
       increment!(:quantity_ordered, 1)
+    else
+      errors.add(:product_stock, "Product must have available stock.")
     end
   end
 
@@ -43,19 +38,15 @@ class OrderItem < ActiveRecord::Base
     max_quantity = product.stock
     return if quantity_ordered <= max_quantity
     update_column(:quantity_ordered, max_quantity)
+    errors[:product_stock] << "Quantity ordered was adjusted because not enough of this product was stuck."
+  end
+
+  def product_has_stock?
+    product.stock?
   end
 
   def remove_product_stock!(how_much)
     product.remove_stock(how_much)
-  end
-
-  def product_has_stock? # OPTIMIZE is this the best way to do this?
-    if product.stock?
-      return true
-    else
-      errors.add(:quantity_ordered, "Product must have available stock.")
-      return false
-    end
   end
 
   def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
