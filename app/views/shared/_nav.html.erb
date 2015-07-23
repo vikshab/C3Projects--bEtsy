@@ -27,7 +27,7 @@
           </ul>
         </li>
       </ul>
-      
+
       <ul class="nav navbar-nav navbar-right">
         <% if session[:user_id].nil?  %>
           <li><%= button_to "Login", login_path, method: :get, class: "btn btn-default navbar-btn" %></li>
@@ -37,7 +37,8 @@
           <li><%= link_to "Store Dashboard", user_path(session[:user_id]), class: "navbar-link" %></li>
         <% end %>
         <li class="navbar-link"><%= link_to "", cart_path, class: "glyphicon glyphicon-shopping-cart cart aria-hidden='true'" %></li>
-        <li class="navbar-text"><%= "#{current_order.order_items.size}" %></li>
+        <li class="navbar-text cart-number"><%= "#{current_order.order_items.size}" %></li>
+      </ul>
       </div>
     </div>
   </div>
