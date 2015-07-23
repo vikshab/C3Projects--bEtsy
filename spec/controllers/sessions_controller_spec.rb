@@ -74,9 +74,8 @@ RSpec.describe SessionsController, type: :controller do
     let(:seller_login_params) { { session: { username: "user1", password: "password1" } } }
 
     before :each do
-      @seller = Seller.new(username: "user1", email: "email@email.com")
-      @seller.password, @seller.password_confirmation = "password1"
-      @seller.save
+      @seller = Seller.create(username: "user1", email: "email@email.com",
+                              password: "password1", password_confirmation: "password1")
 
       post :create, seller_login_params
       delete :destroy
