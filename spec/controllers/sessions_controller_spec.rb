@@ -29,6 +29,10 @@ RSpec.describe SessionsController, type: :controller do
         post :create, seller_login_params
       end
 
+      it "sets the seller" do
+        expect(assigns(:seller)).to eq @seller
+      end
+
       it "sets session[:seller_id] to the seller's id" do
         expect(session[:seller_id]).to eq @seller.id
       end
@@ -44,16 +48,22 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     context "invalid seller" do
-      it "does not set session[:seller_id]" do
+      let(:seller_login_params) { { session: { username: "user43", password: "password43" } } }
 
+      before :each do
+        post :create, seller_login_params
+      end
+
+      it "does not set session[:seller_id]" do
+        expect(session[:seller_id]).to be nil
       end
 
       it "updates flash[:errors] to include a login error" do
-
+        expect(flash[:errors]).to include { :login_error }
       end
 
       it "renders the :new view" do
-
+        expect(response).to render_template :new
       end
     end
   end
