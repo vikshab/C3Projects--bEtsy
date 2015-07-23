@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   before_action :require_seller_login, only: [:new, :update, :edit, :create]
 
   def index
-    @products = Product.all
+    @products = Product.has_stock # TODO: add spec to test has_stock here
   end
 
   def show
@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(create_params)
-      redirect_to seller_products_path(@product.seller_id) 
+      redirect_to seller_products_path(@product.seller_id)
     else
       flash.now[:errors] = @product.errors
       render :edit

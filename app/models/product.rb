@@ -17,8 +17,8 @@ class Product < ActiveRecord::Base
 
   # non-mutative class method
 
-  def self.top_products
-    sorted_products = self.all.sort_by { |product| product.average_rating }.reverse!
+  def self.top_products # TODO: add spec to test has_stock here
+    sorted_products = self.has_stock.sort_by { |product| product.average_rating }.reverse!
     top_products = sorted_products.first(12)
   end
 
