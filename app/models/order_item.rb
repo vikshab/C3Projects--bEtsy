@@ -39,8 +39,8 @@ class OrderItem < ActiveRecord::Base
     errors[:product_stock] << "Quantity ordered was adjusted because not enough of this product was stuck."
   end
 
-  def remove_product_stock!(how_much)
-    product.remove_stock!(how_much)
+  def remove_product_stock!
+    product.remove_stock!(quantity_ordered)
   end
 
 

@@ -258,7 +258,7 @@ RSpec.describe OrderItem, type: :model do
         product = Product.create(name: 'a34m89yv39am765rfvg', price: 1, seller_id: 1, stock: 100)
         order = Order.create
         item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 10)
-        item.remove_product_stock!(10)
+        item.remove_product_stock!
 
         product.reload
         expect(product.stock).to eq(90)
