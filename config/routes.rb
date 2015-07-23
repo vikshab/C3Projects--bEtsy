@@ -11,10 +11,13 @@ Rails.application.routes.draw do
   resources :products, except: [:new, :destroy] do
     resources :reviews
   end
+  
+  # add a category
+  resources :categories, only: [:new, :create]
 
   # custom product paths - by merchant, category, and to retire a product
   patch 'products/retire/:id' => 'products#retire', as: "retire"
-  get "/categories/:category_name" => "categories#show", as: "category"
+  get "/categories/products/:category_name" => "categories#show", as: "category"
   get "/merchant/:id/products", to: "products#merchant_products", as: "merchant_products"
 
   # users/merchants path makes the url path display as merchants instead of users

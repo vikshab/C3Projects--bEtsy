@@ -4,6 +4,19 @@ class CategoriesController < ApplicationController
     @products = @category.products.active_product
   end
 
+  def new
+    @category = Category.new
+  end
+
+  def create
+    @category = Category.new(category_params)
+    if @category.save
+      redirect_to :back
+    else
+      render 'new'
+    end
+  end
+
   private
 
   def category_params
