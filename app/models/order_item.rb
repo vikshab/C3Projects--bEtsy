@@ -39,8 +39,18 @@ class OrderItem < ActiveRecord::Base
     quantity_ordered * product.price
   end
 
-  def product_has_stock? # OPTIMIZE is this the right way to do this?
-    if product.has_available_stock?
+  def adjust_if_product_stock_changed!
+    max_quantity = product.stock
+    return if quantity_ordered <= max_quantity
+    update_column(:quantity_ordered, max_quantity)
+  end
+
+  def remove_product_stock!(how_much)
+    product.remove_stock(how_much)
+  end
+
+  def product_has_stock? # OPTIMIZE is this the best way to do this?
+    if product.stock?
       return true
     else
       errors.add(:quantity_ordered, "Product must have available stock.")
@@ -49,6 +59,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
+    #FIXME: this method should only fire when a record is being CREATED
     if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
       errors.add(:product_not_unique, "That product is already in your cart.")
     end
