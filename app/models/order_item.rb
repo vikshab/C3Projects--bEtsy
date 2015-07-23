@@ -14,6 +14,8 @@ class OrderItem < ActiveRecord::Base
   validate :order_item_is_unique? # OPTIMIZE: I think this makes the above before_create obsolete?!
 
 
+  # mutative methods
+
   def more!
     if product_has_stock? && product.stock > quantity_ordered
       increment!(:quantity_ordered, 1)
@@ -38,8 +40,10 @@ class OrderItem < ActiveRecord::Base
   end
 
   def remove_product_stock!(how_much)
-    product.remove_stock(how_much)
+    product.remove_stock!(how_much)
   end
+
+  # non-mutative
 
   def total_item_price
     quantity_ordered * product.price
@@ -49,10 +53,13 @@ class OrderItem < ActiveRecord::Base
     product.stock?
   end
 
-  def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
-    #FIXME: this method should only fire when a record is being CREATED
-    if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
-      errors.add(:product_not_unique, "That product is already in your cart.")
+  private
+
+    # validation helper method
+    def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
+      #FIXME: this method should only fire when a record is being CREATED
+      if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
+        errors.add(:product_not_unique, "That product is already in your cart.")
+      end
     end
-  end
 end

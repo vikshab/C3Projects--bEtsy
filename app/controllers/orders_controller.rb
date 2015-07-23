@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    if @order.checkout(checkout_params)
+    if @order.checkout!(checkout_params)
       redirect_to receipt_path
     else
       flash.now[:errors] = @order.errors

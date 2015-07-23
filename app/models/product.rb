@@ -14,10 +14,40 @@ class Product < ActiveRecord::Base
   # scope :active, -> { where("retired: false") }
   scope :has_stock, -> { where("stock > 0") }
 
+
+  # non-mutative class method
+
   def self.top_products
     sorted_products = self.all.sort_by { |product| product.average_rating }.reverse!
     top_products = sorted_products.first(12)
   end
+
+
+  # mutative methods
+
+  def add_stock!(how_much)
+    if how_much > 0
+      current_stock = stock
+      new_stock = current_stock + how_much
+      update(stock: new_stock)
+    else
+      errors[:add_stock] << "You can't add negative or zero stock."
+    end
+  end
+
+  def remove_stock!(how_much)
+    current_stock = stock
+    new_stock = current_stock - how_much
+
+    if (how_much > 0) && (new_stock >= 0)
+      update(stock: new_stock)
+    else
+      errors[:remove_stock] << "You can't remove more stock than is present."
+    end
+  end
+
+
+  # non-mutative methods
 
   def average_rating
     total_num_reviews = self.reviews.count
@@ -35,27 +65,6 @@ class Product < ActiveRecord::Base
 
   def stock?
     stock > 0
-  end
-
-  def add_stock(how_much)
-    if how_much > 0
-      current_stock = stock
-      new_stock = current_stock + how_much
-      update(stock: new_stock)
-    else
-      errors[:add_stock] << "You can't add negative or zero stock."
-    end
-  end
-
-  def remove_stock(how_much)
-    current_stock = stock
-    new_stock = current_stock - how_much
-
-    if (how_much > 0) && (new_stock >= 0)
-      update(stock: new_stock)
-    else
-      errors[:remove_stock] << "You can't remove more stock than is present."
-    end
   end
 
   private

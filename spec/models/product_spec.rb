@@ -119,45 +119,45 @@ RSpec.describe Product, type: :model do
   end
 
   describe "adding & removing product stock" do
-    context "#add_stock" do
+    context "#add_stock!" do
       before :each do
         @product = Product.create(stock: 1, price: 1, seller_id: 1, name: "z4$")
       end
 
       it "does not update when fed negative or zero amounts" do
-        @product.add_stock(-30)
+        @product.add_stock!(-30)
         expect(@product.errors.keys).to include(:add_stock)
         expect(@product.stock).to eq(1)
 
-        @product.add_stock(0)
+        @product.add_stock!(0)
         expect(@product.errors.keys).to include(:add_stock)
         expect(@product.stock).to eq(1)
       end
 
       it "updates the product's stock" do
-        @product.add_stock(30)
+        @product.add_stock!(30)
         expect(@product.errors.keys).not_to include(:add_stock)
         expect(@product.stock).to eq(31)
       end
     end
 
-    context "#remove_stock" do
+    context "#remove_stock!" do
       before :each do
         @product = Product.create(stock: 30, price: 1, seller_id: 1, name: "z4$4")
       end
 
       it "does not update when fed negative or zero amounts" do
-        @product.remove_stock(-30)
+        @product.remove_stock!(-30)
         expect(@product.errors.keys).to include(:remove_stock)
         expect(@product.stock).to eq(30)
 
-        @product.remove_stock(0)
+        @product.remove_stock!(0)
         expect(@product.errors.keys).to include(:remove_stock)
         expect(@product.stock).to eq(30)
       end
 
       it "updates the product's stock" do
-        @product.remove_stock(30)
+        @product.remove_stock!(30)
         expect(@product.errors.keys).not_to include(:remove_stock)
         expect(@product.stock).to eq(0)
       end

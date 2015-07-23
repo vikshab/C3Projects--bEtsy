@@ -35,6 +35,25 @@ class Order < ActiveRecord::Base
     validate :buyer_card_unexpired
   end
 
+  # mutative methods
+
+  def prepare_checkout!
+    order_items.each do |item|
+      item.adjust_if_product_stock_changed!
+    end
+  end
+
+  def checkout!(checkout_params)
+    checkout_params[:status] = "paid"
+    if update(checkout_params)
+      order_items.each do |item|
+        item.remove_product_stock!
+      end
+    end
+  end
+
+  # non-mutative
+
   def total_order_price(seller_id=nil)
     items = seller_id ? order_items.select{ |item| item.seller.id == seller_id } : order_items
     total = items.map { |item| item.total_item_price }.sum
@@ -44,35 +63,23 @@ class Order < ActiveRecord::Base
     products.include? product
   end
 
-  def buyer_card_unexpired
-    # guard clause that works with the setup on lines 2 - 6
-    return if confirmed_payment
-    # if order is not pending and payment has not yet been confirmed,
-    # then confirm the payment -- which in this case means check the
-    # expiration date is on or after today.
-
-    if buyer_card_expiration && (buyer_card_expiration >= Date.today)
-      @confirmed_payment = true
-    else
-      errors[:buyer_card_expiration] << "date is not valid."
-    end
-  end
-
   def pending?
     status == "pending"
   end
 
-  # def prepare_checkout
-  #   order_items.each do |item|
-  #     item.adjust_if_product_stock_changed!
-  #   end
-  # end
+  private
+    # validation helper method
+    def buyer_card_unexpired
+      # guard clause that works with the setup on lines 2 - 6
+      return if confirmed_payment
+      # if order is not pending and payment has not yet been confirmed,
+      # then confirm the payment -- which in this case means check the
+      # expiration date is on or after today.
 
-  def checkout(checkout_params)
-    checkout_params[:status] = "paid"
-    update(checkout_params)
-    order_items.each do |item|
-      item.remove_product_stock!
+      if buyer_card_expiration && (buyer_card_expiration >= Date.today)
+        @confirmed_payment = true
+      else
+        errors[:buyer_card_expiration] << "date is not valid."
+      end
     end
-  end
 end

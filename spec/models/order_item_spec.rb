@@ -75,7 +75,7 @@ RSpec.describe OrderItem, type: :model do
         valid_item = OrderItem.create(product_id: product.id, order_id: order1.id, quantity_ordered: current_stock)
         expect(valid_item.errors.keys).to_not include(:quantity_ordered)
 
-        product.remove_stock(current_stock)
+        product.remove_stock!(current_stock)
 
         invalid_item = OrderItem.create(product_id: product.id, order_id: order2.id, quantity_ordered: 1)
         expect(invalid_item.id).to be(nil)
@@ -232,9 +232,6 @@ RSpec.describe OrderItem, type: :model do
     end
 
     context "#adjust_if_product_stock_changed!" do
-        # checkout_params = { buyer_name: "cthulhu", buyer_card_short: "4567",
-          # buyer_email: "cthulhu.fhtagn@r'lyeh.wgah.nagl", buyer_address: "r'lyeh",
-          # buyer_card_expiration: Date.parse("June 5 2086")}
       it "reduces the quantity ordered if product has less stock" do
         product = Product.create(name: 'asdafun94ymc34', price: 1, seller_id: 1, stock: 1)
         order = Order.create
@@ -258,7 +255,13 @@ RSpec.describe OrderItem, type: :model do
 
     context "#remove_product_stock!" do
       it "reduces the product's stock by the item's quantity_ordered" do
+        product = Product.create(name: 'a34m89yv39am765rfvg', price: 1, seller_id: 1, stock: 100)
+        order = Order.create
+        item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 10)
+        item.remove_product_stock!(10)
 
+        product.reload
+        expect(product.stock).to eq(90)
       end
     end
 
@@ -279,7 +282,7 @@ RSpec.describe OrderItem, type: :model do
         product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 0)
         order = Order.create
         item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 1)
-        
+
         expect(item.product_has_stock?).to eq(false)
       end
     end
