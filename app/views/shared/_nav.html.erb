@@ -2,7 +2,7 @@
   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 
     <div class="navbar-header">
-      <%= link_to("Bitsy", root_path, class: "navbar-brand") %> </a>
+      <%= link_to "Bitsy", root_path, class: "navbar-brand" %> </a>
     </div>
 
     <div class="collapse navbar-collapse">
@@ -15,13 +15,13 @@
 
             <li class="dropdown-header">Categories</li>
             <% @categories.each do |category|  %>
-              <li><%= link_to "#{category.name.capitalize}", "#{category_path(category.name)}" %></li>
+              <li><%= link_to category.name.titlecase, "#{category_path(category.name)}" %></li>
             <% end %>
             <li role="separator" class="divider"></li>
 
             <li class="dropdown-header">Merchants</li>
             <% @merchants.each do |merchant| %>
-            <li><%= link_to "#{merchant.name.capitalize}", "#{merchant_products_path(merchant.id)}" %></li>
+            <li><%= link_to merchant.name.titlecase, "#{merchant_products_path(merchant.id)}" %></li>
             <% end %>
             <li role="separator" class="divider"></li>
           </ul>
@@ -36,8 +36,8 @@
           <li><%= button_to "Logout", logout_path, method: :delete, class: "btn btn-default navbar-btn" %></li>
           <li><%= link_to "Store Dashboard", user_path(session[:user_id]), class: "navbar-link" %></li>
         <% end %>
-        <li class="navbar-link"><%= link_to "", cart_path, class: "glyphicon glyphicon-shopping-cart cart aria-hidden='true'" %></li>
-        <li class="navbar-text cart-number"><%= "#{current_order.order_items.size}" %></li>
+        <li class="navbar-text cart-number"><%= current_order.order_items.size %></li>
+        <li class="navbar-link"><%= link_to "", cart_path, class: "glyphicon glyphicon-shopping-cart cart" %></li>
       </ul>
       </div>
     </div>

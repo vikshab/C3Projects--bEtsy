@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-4 col-xs-offset-2">
       <h4><%= product.name %></h4>
-      <p><%= image_tag("#{product.photo_url}", class: "img-thumbnail")%></p>
+      <p><%= link_to image_tag(product.photo_url, class: "img-thumbnail cart-image"), product_path(product.id) %></p>
     </div>
 
     <div class="col-xs-4">

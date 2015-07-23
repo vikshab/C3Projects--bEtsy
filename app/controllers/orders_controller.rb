@@ -25,9 +25,9 @@ class OrdersController < ApplicationController
   end
 
   def index
-    merchant = User.find(params[:user_id])
+    @merchant = User.find(params[:user_id])
 
-    @all_items = merchant.order_items
+    @all_items = @merchant.order_items
 
     @pend = @all_items.where(status: "pending")
     @paid = @all_items.where(status: "paid")
