@@ -2,5 +2,13 @@
   <div class="col-md-12">
     <h2>Edit Product</h2>
     <%= render "form" %>
+
+    <h3>Assign Categories</h3>
+    <%= form_for @product, url: product_add_categories_path(@product.id), html: { class: "form" } do |f| %>
+      <% @categories.each do |category| %>
+        <label><input type="checkbox" name="category_id[]" value=<%= category.id %> ><%= category.name %></label>
+      <% end %>
+      <%= f.submit "Assign Categories", class: "btn btn-default"%>
+    <% end %>
   </div>
 </div>

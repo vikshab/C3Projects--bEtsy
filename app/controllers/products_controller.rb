@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update]
   before_action :set_seller, only: [:new, :create, :seller]
-  before_action :require_seller_login, only: [:new, :update, :edit, :create]
+  before_action :require_seller_login, only: [:new, :update, :edit, :create, :add_categories]
 
   def index
     @products = Product.all
@@ -28,7 +28,9 @@ class ProductsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @categories = Category.all
+  end
 
   def update
     if @product.update(create_params)
@@ -41,6 +43,14 @@ class ProductsController < ApplicationController
 
   def seller; end
 
+  def add_categories
+    @product = Product.find(params[:product_id])
+    params[:category_id].each do |category_id|
+      category = Category.find(category_id)
+      @product.categories << category
+    end
+    redirect_to seller_products_path(@product.seller_id)
+  end
 
 
   private

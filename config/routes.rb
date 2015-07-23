@@ -14,7 +14,10 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show]
     resources :categories, only: [:new, :create]
   end
-  resources :products, except: [:new, :create, :destroy]
+  resources :products, except: [:new, :create, :destroy] do
+    patch '/add_categories', to: 'products#add_categories', as: "add_categories"
+  end
+
 
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
   post '/products/:id/reviews/new', to: 'reviews#create'
