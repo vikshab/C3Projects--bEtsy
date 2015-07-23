@@ -4,20 +4,34 @@ RSpec.describe UsersController, type: :controller do
 
   describe "a user can see their user page" do
     before :each do
-      @user = User.create(name: "Name1", email: "name@email.com", password: "foobar", password_confirmation: "foobar")
+      @user = User.create(name: "Name1", email: "name@email.com", password_digest: "foobar")
+      session[:user_id] = @user.id
+    end
+
+    it "responds successfully with an HTTP 200 status code" do
+      get :show, id: @user.id
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
     end
 
     it "renders the #show view" do
-      @user.session.create
-      get :show, id: @user
+      get :show, id: @user.id
       expect(response).to render_template("show")
     end
 
+    it "responds successfully with an HTTP 200 status code" do
+      get :new, user_id: @user
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
     it "renders the #new view" do
-      get :new, id: @user
+      get :new, user_id: @user
       expect(response).to render_template("new")
     end
   end
+
   #
   #   it "increases the rank when you upvote" do
   #     patch :upvote, id: @album

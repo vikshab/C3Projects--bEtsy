@@ -17,6 +17,8 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
+  # SHOW ACTION__________________________________________________________________
+
   describe "GET #show" do
     before :each do
       @product = Product.create(name: 'product', price: 10, user_id: 1, stock: 1)
@@ -35,6 +37,25 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
+  # NEW ACTION__________________________________________________________________
+
+  describe "GET #new" do
+    before :each do
+      @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
+      session[:user_id] = @user.id
+    end
+
+    it "responds successfully with an HTTP 200 status code" do
+      get :new, user_id: @user
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
+    it "renders the new view" do
+      get :new, user_id: @user
+      expect(response).to render_template("new")
+    end
+  end
 
 
 
