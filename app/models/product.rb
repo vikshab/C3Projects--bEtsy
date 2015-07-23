@@ -9,10 +9,11 @@ class Product < ActiveRecord::Base
   validates :price, presence: true, numericality: { greater_than: 0 }
   validates :seller_id, presence: true, numericality: { only_integer: true }
   validates :stock, presence: true, numericality: { only_integer: true }
+  validates :retired, presence: true, :inclusion => {:in => [true, false]} # TODO :retired validation spec
 
   # Scopes ---------------------------------------------------------------------
-  # scope :active, -> { where("retired: false") }
-  scope :has_stock, -> { where("stock > 0") }
+  scope :active, -> { where("retired: false") } # TODO :active spec
+  scope :has_stock, -> { where("stock > 0") } # TODO chaining :active w/ :has_stock implementation & spec
 
 
   # non-mutative class method
@@ -24,6 +25,10 @@ class Product < ActiveRecord::Base
 
 
   # mutative methods
+
+  def retire! # TODO #retire! spec
+    update(retired: retired ? false : true)
+  end
 
   def add_stock!(how_much)
     if how_much > 0
