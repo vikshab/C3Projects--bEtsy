@@ -62,11 +62,11 @@ class Order < ActiveRecord::Base
     status == "pending"
   end
 
-  def prepare_checkout
-    order_items.each do |item|
-      item.adjust_if_product_stock_changed!
-    end
-  end
+  # def prepare_checkout
+  #   order_items.each do |item|
+  #     item.adjust_if_product_stock_changed!
+  #   end
+  # end
 
   def checkout(checkout_params)
     checkout_params[:status] = "paid"

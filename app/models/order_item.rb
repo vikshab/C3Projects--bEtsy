@@ -30,10 +30,6 @@ class OrderItem < ActiveRecord::Base
     end
   end
 
-  def total_item_price
-    quantity_ordered * product.price
-  end
-
   def adjust_if_product_stock_changed!
     max_quantity = product.stock
     return if quantity_ordered <= max_quantity
@@ -41,12 +37,16 @@ class OrderItem < ActiveRecord::Base
     errors[:product_stock] << "Quantity ordered was adjusted because not enough of this product was stuck."
   end
 
-  def product_has_stock?
-    product.stock?
-  end
-
   def remove_product_stock!(how_much)
     product.remove_stock(how_much)
+  end
+
+  def total_item_price
+    quantity_ordered * product.price
+  end
+
+  def product_has_stock?
+    product.stock?
   end
 
   def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
