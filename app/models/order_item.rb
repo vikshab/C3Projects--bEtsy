@@ -54,7 +54,7 @@ class OrderItem < ActiveRecord::Base
     product.stock?
   end
 
-  def quantity_too_high? # TODO spec
+  def quantity_too_high?
     quantity_ordered >= product.stock
   end
 
