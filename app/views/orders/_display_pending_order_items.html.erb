@@ -15,7 +15,7 @@
           <%= link_to "-", less_item_path(item), method: :patch %>
         <% end %>
         <%= item.quantity_ordered %>
-        <% if item.product.has_available_stock? %>
+        <% unless item.quantity_too_high? %>
           <%= link_to "+", more_item_path(item), method: :patch %>
         <% end %>
       </td>

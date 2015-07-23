@@ -5,10 +5,12 @@ class OrdersController < ApplicationController
   before_action :set_seller, only: [:index, :show]
   before_action :require_seller_login, only: [:index, :show]
 
-
   def cart; end
 
-  def checkout; end
+  def checkout
+    @order.prepare_checkout!
+    flash[:errors] = @order.errors if @order.errors
+  end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
     order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
@@ -22,10 +24,11 @@ class OrdersController < ApplicationController
   end
 
   def update
-    if @order.checkout(checkout_params)
+    if @order.checkout!(checkout_params)
       redirect_to receipt_path
     else
       flash.now[:errors] = @order.errors
+      @order.attributes = checkout_params
       render :checkout
     end
   end
