@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
   def show
     @reviews = @product.reviews
     @average_rating = @product.average_rating
+    @product_categories = @product.categories
   end
 
   def new
@@ -31,7 +32,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(create_params)
-      redirect_to seller_products_path(@product.seller_id) 
+      redirect_to seller_products_path(@product.seller_id)
     else
       flash.now[:errors] = @product.errors
       render :edit
