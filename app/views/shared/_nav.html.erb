@@ -2,7 +2,7 @@
   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 
     <div class="navbar-header">
-      <%= link_to("Bitsy", root_path, class: "navbar-brand") %> </a>
+      <%= link_to "Bitsy", root_path, class: "navbar-brand" %> </a>
     </div>
 
     <div class="collapse navbar-collapse">
@@ -15,13 +15,13 @@
 
             <li class="dropdown-header">Categories</li>
             <% @categories.each do |category|  %>
-              <li><%= link_to "#{category.name.capitalize}", "#{category_path(category.name)}" %></li>
+              <li><%= link_to category.name.titlecase, "#{category_path(category.name)}" %></li>
             <% end %>
             <li role="separator" class="divider"></li>
 
             <li class="dropdown-header">Merchants</li>
             <% @merchants.each do |merchant| %>
-            <li><%= link_to "#{merchant.name.capitalize}", "#{merchant_products_path(merchant.id)}" %></li>
+            <li><%= link_to merchant.name.titlecase, "#{merchant_products_path(merchant.id)}" %></li>
             <% end %>
             <li role="separator" class="divider"></li>
           </ul>
