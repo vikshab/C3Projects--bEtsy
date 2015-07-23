@@ -69,7 +69,7 @@ As a guest to the website (not signed in) I **can**:
     -  Name on credit card
     -  Credit card number
     -  Credit cart expiration
-    - Credit Card CVV (security code)
+    -  Credit Card CVV (security code)
     -  Billing zip code
 - √ Purchasing an order makes the following changes:
     - √ Reduces the number of inventory for each product
