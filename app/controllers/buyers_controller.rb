@@ -20,19 +20,7 @@ class BuyersController < ApplicationController
 
   def confirmation
     @order = Order.find(session[:order_id])
-    @order_items = OrderItem.where("order_id = ?", params[:order_id])
-    @total = @order.subtotal
-    @order_items.each do |item|
-      bought = item.quantity #how many were bought
-      product = item.product
-      inventory = item.product.stock #inventory
-      inventory = inventory - bought
-      product.update(stock: inventory)
-      item.update(status: 'paid')
-    end
-
-    @order.update(status: "paid")
-    session[:order_id] = nil
+    transaction
   end
 
   private
