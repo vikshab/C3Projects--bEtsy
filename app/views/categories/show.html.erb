@@ -1,3 +1,5 @@
-<h1>All <%= @category.name.titlecase %> Products</h1>
+<div class="page-header">
+  <h1>All <%= @category.name.titlecase %> Products</h1>
+</div>
 
 <%= render 'shared/products_list', { products: @products } %>
