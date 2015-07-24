@@ -1,3 +1,5 @@
-<h1> <%= @seller.username %> Information</h1>
+<div class="page-header">
+  <h1> <%= @seller.username %>'s Products</h1>
+</div>
 
 <%= render 'shared/products_list', { products: @products } %>

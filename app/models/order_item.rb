@@ -1,20 +1,16 @@
 class OrderItem < ActiveRecord::Base
-  before_save :product_has_stock?
-
-  # DB relationships
   belongs_to :order
   belongs_to :product
   has_one :seller, through: :product
 
+  before_save :product_has_stock?
 
-  # data validations
   validates :product_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
     message: "%{value} is not a valid status" }
   validate :order_item_is_unique?, on: [:create]
-
 
   def more!
     if product_has_stock? && product.stock > quantity_ordered
@@ -66,8 +62,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   private
-
-    # validation helper method
     def order_item_is_unique?
       if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
         errors.add(:product_not_unique, "That product is already in your cart.")
