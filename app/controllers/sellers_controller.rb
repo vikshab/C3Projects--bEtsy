@@ -7,6 +7,7 @@ class SellersController < ApplicationController
 
   def show
     @seller = Seller.find(params[:id])
+    @products = @seller.products.has_stock
   end
 
   def new
