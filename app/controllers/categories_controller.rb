@@ -18,7 +18,6 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(create_params)
     if @category.save
-      flash[:messages] = MESSAGES[:successful_create_category]
       session[:seller_id] = @seller.id
       redirect_to seller_products_path(@seller)
     else
