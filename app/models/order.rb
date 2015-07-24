@@ -34,13 +34,13 @@ class Order < ActiveRecord::Base
 
 
   def prepare_checkout!
-    items_adjusted = false
-    order_items.each do |item|
-      item.adjust_if_product_stock_changed!
-      items_adjusted = true unless item.errors.empty?
+    quantity_ordered_adjusted = false
+    order_items.each do |order_item|
+      order_item.adjust_if_product_stock_changed!
+      quantity_ordered_adjusted = true unless order_item.errors.empty?
     end
 
-    if items_adjusted # OPTIMIZE: this error message in prepare_checkout!
+    if quantity_ordered_adjusted # OPTIMIZE: this error message in prepare_checkout!
       errors[:product_stock] = "Quantity ordered was adjusted because not enough of this product was stuck."
     end
   end
@@ -48,9 +48,13 @@ class Order < ActiveRecord::Base
   def checkout!(checkout_params)
     checkout_params[:status] = "paid"
     if update(checkout_params)
-      order_items.each do |item|
-        item.remove_product_stock!
+      order_items.each do |order_item|
+        order_item.remove_product_stock!
+        order_item.status = "paid" # TODO: add testing for this
       end
+      return true
+    else
+      return false
     end
   end
 
