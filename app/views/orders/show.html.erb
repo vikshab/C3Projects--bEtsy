@@ -6,13 +6,10 @@
   <% if session[:order_id].nil? == false %>
     <% items = @order.order_items %>
     <% array = [] %>
-    <% array_sum = [] %>
     <% items.each do |item| %>
       <% array.push(item.quantity.to_i) %>
-      <% array_sum.push(item.total_price.to_f) %>
     <% end %>
     <% quantity = 0 %>
-    <% sum = 0 %>
     <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your cart</h3>
     <h3><center>Subtotal <%= number_to_currency(@total) %></h3>
  <% end %>
