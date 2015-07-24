@@ -38,4 +38,6 @@ Rails.application.routes.draw do
 
   # removing an item from the cart
   delete "/cart/item/:id", to: "order_items#destroy", as: "kill_item"
+
+  resources :order_items, only: [:update]
 end
