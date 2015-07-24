@@ -7,16 +7,19 @@ Rails.application.routes.draw do
 
   get '/sellers/:id/dashboard', to: 'sellers#dashboard', as: "dashboard"
 
-  resources :categories, except: :destroy
-  resources :products, except: [:new, :create, :destroy]
+  resources :categories, only: [:index, :show, :new, :create]
 
   patch "/products/:id/retire", to: "products#retire", as: "retire_product"
-  patch "/products/:id/add_stock", to: "products#add_stock", as: "add_product_stock" # FIXME: sellers can't add product stock yet
+  patch "/products/:id/add_stock", to: "products#add_stock", as: "add_product_stock"
 
   resources :sellers, only: [:index, :show, :new, :create] do
     get "products", to: "products#seller", as: "products"
     resources :products, only: [:new, :create]
     resources :orders, only: [:index, :show]
+
+  end
+  resources :products, except: [:new, :create, :destroy] do
+    patch '/add_categories', to: 'products#add_categories', as: "add_categories"
   end
 
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
