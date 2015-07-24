@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1>Inventory</h1>
+</div>
+
+<table class="table table-striped table-condensed table-hover">
+  <tr>
+    <th>Product</th>
+    <th>Average Rating</th>
+    <th>Categories</th>
+    <th>Unit Sale Price</th>
+    <th>Quantity Sold</th>
+    <th>Current Inventory</th>
+    <th>Options</th>
+  </tr>
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name %> <small><%= product.retired ? "RETIRED" : "" %></small></td>
+      <td><%= product.average_rating %></td>
+      <td><%= display_categories(product) %></td>
+      <td><%= display_dollars(product.price) %></td>
+      <td><%= quantity_sold(product) %></td>
+      <td><%= product.stock %></td>
+      <td>
+        <%= link_to "Edit", edit_product_path(product), class: "btn btn-info" %>
+        <%= link_to retire_text_short(product), retire_product_path(product), method: :patch, class: "btn btn-warning" %>
+      </td>
+    </tr>
+  <% end %>
+</table>

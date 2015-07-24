@@ -11,10 +11,10 @@ Rails.application.routes.draw do
   resources :products, except: [:new, :create, :destroy]
 
   patch "/products/:id/retire", to: "products#retire", as: "retire_product"
-  patch "/products/:id/add_stock", to: "products#add_stock", as: "add_product_stock" # FIXME: sellers can't add product stock yet
 
   resources :sellers, only: [:index, :show, :new, :create] do
     get "products", to: "products#seller", as: "products"
+    get "inventory", to: "products#inventory", as: "inventory"
     resources :products, only: [:new, :create]
     resources :orders, only: [:index, :show]
   end

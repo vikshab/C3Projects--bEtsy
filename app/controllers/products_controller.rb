@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :retire]
-  before_action :set_seller, only: [:new, :create, :seller]
-  before_action :require_seller_login, only: [:new, :update, :edit, :create, :retire]
+  before_action :set_seller, only: [:new, :create, :seller, :inventory]
+  before_action :require_seller_login, only: [:new, :update, :edit, :create, :retire, :inventory]
 
   def index
     @products = Product.has_stock
@@ -19,6 +19,10 @@ class ProductsController < ApplicationController
   def edit; end
 
   def seller; end
+
+  def inventory
+    @products = @seller.products
+  end
 
   def create
     @product = Product.new(create_params)
