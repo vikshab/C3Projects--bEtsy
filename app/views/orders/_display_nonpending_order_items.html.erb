@@ -8,7 +8,7 @@
   </tr>
   <% @order.order_items.each do |item| %>
     <tr>
-      <td><%= item.product.name %></td>
+      <td><%= link_to "#{item.product.name}", product_path(item.product.id)  %></td>
       <td><%= item.quantity_ordered %></td>
       <td><%= display_dollars(item.product.price) %></td>
       <td><%= display_dollars(item.total_item_price) %></td>
