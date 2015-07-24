@@ -14,9 +14,9 @@ RSpec.describe SessionsController, type: :controller do
     # end
 
     it "redirect_to user_path" do
-      @user = User.find_by(email: "e@mail.com")
+      @user = User.find_by(email: "b@mail.com")
       post :create, session: { :email => 'b@mail.com', :password => '1234' }
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(user_path(@user.id))
     end
   end
 
