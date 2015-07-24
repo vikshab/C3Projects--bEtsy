@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
   def checkout
     @order.prepare_checkout!
-    flash[:errors] = @order.errors if @order.errors
+    flash[:errors] = @order.errors unless @order.errors.empty?
   end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @items = @order.order_items.select { |item| item.seller.id == @seller.id }
+    @order_items = @order.order_items.select { |item| item.seller.id == @seller.id }
   end
 
   private

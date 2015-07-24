@@ -11,10 +11,10 @@ class OrderItem < ActiveRecord::Base
   validates :product_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validate :order_item_is_unique?
+  validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
+    message: "%{value} is not a valid status" } # TODO: add tests
+  validate :order_item_is_unique?, on: [:create]
 
-
-  # mutative methods
 
   def more!
     if product_has_stock? && product.stock > quantity_ordered
@@ -43,8 +43,15 @@ class OrderItem < ActiveRecord::Base
     product.remove_stock!(quantity_ordered)
   end
 
+  def mark_shipped # TODO: add tests
+    self.update(status: "shipped")
+  end
 
-  # non-mutative
+  def mark_canceled # TODO: add tests
+    self.update(status: "canceled")
+
+    product.add_stock!(quantity_ordered)
+  end
 
   def total_item_price
     quantity_ordered * product.price
@@ -61,7 +68,7 @@ class OrderItem < ActiveRecord::Base
   private
 
     # validation helper method
-    def order_item_is_unique? # TODO: anw, fix failing spec after merge. Also, write specs for this!
+    def order_item_is_unique? # TODO: write specs for this!
       if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
         errors.add(:product_not_unique, "That product is already in your cart.")
       end

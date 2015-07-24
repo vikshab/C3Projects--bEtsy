@@ -2,32 +2,30 @@ require 'rails_helper'
 
 RSpec.describe OrderItem, type: :model do
   before :each do
-    @seller = Seller.new(username: "a", email: "bob@bob.bob")
-    @seller.password = @seller.password_confirmation = "password"
-    @seller.save
+    @seller = Seller.create(username: "a", email: "bob@bob.bob", password: "password", password_confirmation: "password")
     @product = Product.create(name: "a", price: 1, seller_id: 1, stock: 5)
     @order = Order.create
-    @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+    @order_item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
   end
 
   describe "database relationships" do
     it "belongs to an order" do
-      expect(@item.order).to eq(@order)
+      expect(@order_item.order).to eq(@order)
     end
 
     it "belongs to a product" do
-      expect(@item.product).to eq(@product)
+      expect(@order_item.product).to eq(@product)
     end
 
     it "has a seller through its product" do
-      expect(@item.seller.id).to eq(@seller.id)
+      expect(@order_item.seller.id).to eq(@seller.id)
     end
   end
 
   describe "model validations" do
     context "product_id" do
       it "requires a product_id" do
-        valid_item = OrderItem.create(product_id: @product.id)
+        valid_item = @order_item
         expect(valid_item.errors.keys).to_not include(:product_id)
 
         invalid_item = OrderItem.create
@@ -36,7 +34,7 @@ RSpec.describe OrderItem, type: :model do
       end
 
       it "must have a numeric value" do
-        valid_item = OrderItem.create(product_id: 1)
+        valid_item = @order_item
         expect(valid_item.errors.keys).to_not include(:product_id)
 
         invalid_item = OrderItem.create(product_id: "four thousand")
@@ -45,7 +43,7 @@ RSpec.describe OrderItem, type: :model do
       end
 
       it "must be an integer value" do
-        valid_item = OrderItem.create(product_id: @product.id)
+        valid_item = @order_item
         expect(valid_item.errors.keys).to_not include(:product_id)
 
         invalid_item = OrderItem.create(product_id: 4.1)
@@ -54,7 +52,7 @@ RSpec.describe OrderItem, type: :model do
       end
 
       it "must be greater than zero" do
-        valid_item = OrderItem.create(product_id: 1)
+        valid_item = @order_item
         expect(valid_item.errors.keys).to_not include(:product_id)
 
         invalid_item = OrderItem.create(product_id: -4)

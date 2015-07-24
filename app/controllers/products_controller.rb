@@ -1,10 +1,10 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update]
+  before_action :set_product, only: [:show, :edit, :update, :retire]
   before_action :set_seller, only: [:new, :create, :seller]
-  before_action :require_seller_login, only: [:new, :update, :edit, :create, :add_categories]
+  before_action :require_seller_login, only: [:new, :update, :edit, :create, :add_categories, :retire]
 
   def index
-    @products = Product.all
+    @products = Product.has_stock
   end
 
   def show
@@ -16,6 +16,10 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
   end
+
+  def edit; end
+
+  def seller; end
 
   def create
     @product = Product.new(create_params)
@@ -41,7 +45,10 @@ class ProductsController < ApplicationController
     end
   end
 
-  def seller; end
+  def retire
+    @product.retire!
+    redirect_to product_path(@product)
+  end
 
   def add_categories
     @product = Product.find(params[:product_id])

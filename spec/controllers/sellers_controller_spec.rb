@@ -11,15 +11,25 @@ RSpec.describe SellersController, type: :controller do
   end
 
   describe "GET #new" do
-    it "responds successfully with an HTTP 200 status code" do
-      get :new
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
+    context "guest user" do
+      it "responds successfully with an HTTP 200 status code" do
+        get :new
+        expect(response).to be_success
+        expect(response).to have_http_status(200)
+      end
+
+      it "renders the new view" do
+        get :new
+        expect(response).to render_template("new")
+      end
     end
 
-    it "renders the new view" do
-      get :new
-      expect(response).to render_template("new")
+    context "logged in seller" do
+      it "redirects the seller away from the signup page" do
+        session[:seller_id] = 1
+        get :new
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 
