@@ -36,7 +36,7 @@ RSpec.describe ProductsController, type: :controller do
   # NEW ACTION__________________________________________________________________
 
   describe "GET #new" do
-    context "when loged in" do
+    context "when logged in" do
       before :each do
         @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
         session[:user_id] = @user.id
@@ -49,7 +49,7 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
 
-    context "when loged out" do
+    context "when logged out" do
       before :each do
         @user = User.create(name: "", email: "", password_digest: "VerySmartPassword")
         session[:user_id] = @user.id
