@@ -99,6 +99,13 @@ RSpec.describe CategoriesController, type: :controller do
         get :new, seller_id: seller
         expect(response).to render_template("new")
       end
+
+      it "only lets a logged in seller create a category" do
+        seller
+
+        get :new
+        expect(response).to redirect_to(login_path)
+      end
     end
 
     describe "POST #create" do

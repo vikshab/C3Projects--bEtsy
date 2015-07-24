@@ -1,6 +1,6 @@
 <h1>Products</h1>
 <h2><%= @seller.username %></h2>
-<%= link_to "Add New Category", new_seller_category_path %>
+<%= link_to "Add New Category", new_category_path %>
 <div class="row">
 <% @seller.products.each do |product| %>
   <div class="col-md-4">

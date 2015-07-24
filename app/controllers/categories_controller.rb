@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show]
-  before_action :set_seller, only: [:new, :create]
   before_action :require_seller_login, only: [:new, :create]
 
   def index
@@ -18,8 +17,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(create_params)
     if @category.save
-      session[:seller_id] = @seller.id
-      redirect_to seller_products_path(@seller)
+      redirect_to seller_products_path(session[:seller_id])
     else
       flash.now[:errors] = @category.errors
       render :new
