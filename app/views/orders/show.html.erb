@@ -1,4 +1,6 @@
-
+<div class="page-header">
+  <h1>Order #<%= @order.id %></h1>
+</div>
 <h2>Customer Info</h2>
 <p>Name: <%= @order.buyer_name %></p>
 <p>Address: <%= @order.buyer_address %></p>
@@ -24,10 +26,10 @@
       <td><%= order_item.status.titlecase %></td>
       <td>
       <% if order_item.status == "paid" %>
-        <%= button_to "Ship", order_item_path(order_item), method: :patch, params: { ship: true }, class: "btn btn-default" %>
+        <%= link_to "Ship", order_item_path(order_item, ship: true), method: :patch, class: "btn btn-default" %>
       <% end %>
       <% unless order_item.status == "canceled" %>
-        <%= button_to "Cancel", order_item_path(order_item), method: :patch, params: { cancel: true }, class: "btn btn-warning" %>
+        <%= link_to "Cancel", order_item_path(order_item, cancel: true), method: :patch, class: "btn btn-warning" %>
       <% end %>
       </td>
     </tr>

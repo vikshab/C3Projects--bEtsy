@@ -192,12 +192,12 @@ RSpec.describe OrderItem, type: :model do
         expect(no_defined_status_item.errors.keys).to_not include(:status)
       end
 
-      it "only lets status be one of: pending, paid, complete, or canceled" do
+      it "only lets status be one of: pending, paid, shipped, or canceled" do
         invalid_status_item = OrderItem.create(status: "hippo")
         expect(invalid_status_item.errors.keys).to include(:status)
         expect(invalid_status_item).to_not be_valid
 
-        %w(pending paid complete canceled).each do |status|
+        %w(pending paid shipped canceled).each do |status|
           valid_status_item = OrderItem.create(status: status)
           expect(valid_status_item.errors.keys).to_not include(:status)
         end
