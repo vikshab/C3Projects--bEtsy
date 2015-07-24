@@ -8,11 +8,12 @@
       <% end %>
     </small>
   </h1>
-  <h2 class="product-info">
-    <small class="spacing">Price: <%= display_dollars(@product.price) %></small>
-    <small>Sold by: <%= @product.seller.username %></small>
-  </h2>
 </div>
+
+<h2 class="product-info">
+  <small class="spacing">Price: <%= display_dollars(@product.price) %></small>
+  <small>Sold by: <%= @product.seller.username %></small>
+</h2>
 
 <!-- Image and Description information -->
 <div class="row">

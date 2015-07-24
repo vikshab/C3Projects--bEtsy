@@ -1,14 +1,18 @@
+<div class="page-header">
+  <h2>Edit Product</h2>
+</div>
+
 <div class="row">
   <div class="col-md-12">
-    <h2>Edit Product</h2>
     <%= render "form" %>
-
     <h3>Assign Categories</h3>
     <%= form_for @product, url: product_add_categories_path(@product.id), html: { class: "form" } do |f| %>
       <% @categories.each do |category| %>
-        <label><input type="checkbox" name="category_id[]" value=<%= category.id %> ><%= category.name %></label>
+      <div class="checkboxes">
+        <label><input type="checkbox" name="category_id[]" value=<%= category.id %> > <%= category.name %></label>
+      </div>
       <% end %>
-      <%= f.submit "Assign Categories", class: "btn btn-default"%>
+      <%= f.submit "Assign Categories", class: "btn btn-warning btn-block no-border-buttons"%>
     <% end %>
   </div>
 </div>

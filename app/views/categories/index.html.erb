@@ -1,5 +1,9 @@
-<h1>Search by Category</h1>
+<div class="page-header">
+  <h1>Search by Category</h1>
+</div>
 
-<% @categories.each do |category| %>
-  <%= link_to category.name, category_path(category), class: "btn btn-default col-md-4 no-border-buttons" %>
-<% end %>
+<div class="row">
+  <% @categories.each do |category| %>
+    <%= link_to category.name, category_path(category), class: "btn btn-default col-md-4 no-border-buttons" %>
+  <% end %>
+</div>
