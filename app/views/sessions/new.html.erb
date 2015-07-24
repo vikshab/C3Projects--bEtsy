@@ -13,12 +13,12 @@
     <!-- in form_for :session, telling us below are in the params[:session] hash -->
     <!-- url for the POST url after they click submit -->
       <div class="form-group">
-        <%= f.label :email %>
+        <%= f.label :email, class:"required" %>
         <%= f.text_field :email, class: "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password %>
+        <%= f.label :password, class:"required" %>
         <%= f.password_field :password, class: "form-control" %>
         <!-- f.password_field will only display dots -->
       </div>

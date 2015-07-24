@@ -46,7 +46,7 @@ module ApplicationHelper
     end
 
     @order.update(status: "paid")
-    session[:order_item] = nil
+    session[:order_id] = nil
   end
 
 end
