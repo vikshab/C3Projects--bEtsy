@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :retire]
   before_action :set_seller, only: [:new, :create, :seller]
-  before_action :require_seller_login, only: [:new, :update, :edit, :create]
+  before_action :require_seller_login, only: [:new, :update, :edit, :create, :retire]
 
   def index
     @products = Product.has_stock # FIXME: add spec to test has_stock here

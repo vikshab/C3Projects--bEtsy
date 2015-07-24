@@ -248,4 +248,59 @@ RSpec.describe ProductsController, type: :controller do
       expect(@product.retired).to eq(false)
     end
   end
+
+  describe "authentication" do
+    context "restricts access to some seller-only pages" do
+      before :each do
+        @seller = Seller.create(email: "insanity8@squiddy-lovecraft.org",
+          username: "cthulhu", password_digest: "ph'nglui-mglw'nafh")
+        @product = Product.create(name: "tentacle socks", seller_id: @seller.id,
+          stock: 1, price: 1)
+      end
+
+      context "#edit" do
+        it "does not render the edit view" do
+          get :edit, seller_id: @seller, id: @product
+          expect(response).not_to render_template("edit")
+        end
+
+        it "redirects to the login page" do
+          get :edit, seller_id: @seller, id: @product
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(login_path)
+        end
+
+        it "assigns flash[:errors]" do
+          get :edit, seller_id: @seller, id: @product
+          expect(flash[:errors].keys).to include(:not_logged_in)
+        end
+      end
+
+      context "#update" do
+        it "redirects to the login page" do
+          patch :update, seller_id: @seller, id: @product
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(login_path)
+        end
+
+        it "assigns flash[:errors]" do
+          patch :update, seller_id: @seller, id: @product
+          expect(flash[:errors].keys).to include(:not_logged_in)
+        end
+      end
+
+      context "#retire" do
+        it "redirects to the login page" do
+          patch :retire, seller_id: @seller, id: @product
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(login_path)
+        end
+
+        it "assigns flash[:errors]" do
+          patch :retire, seller_id: @seller, id: @product
+          expect(flash[:errors].keys).to include(:not_logged_in)
+        end
+      end
+    end
+  end
 end
