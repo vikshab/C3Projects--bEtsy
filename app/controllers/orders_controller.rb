@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = @seller.orders
+    @orders = @seller.fetch_orders(params[:status])
     flash.now[:errors] = ERRORS[:no_orders] if @orders.length == 0
   end
 
