@@ -4,7 +4,7 @@ class OrderItemsController < ApplicationController
   def more # increases the item quantity in the cart by 1
     @order_item.more!
 
-    flash[:errors] = @order_item.errors if @order_item.errors
+    flash[:errors] = @order_item.errors unless @order_item.errors.empty?
 
     redirect_to cart_path
   end
@@ -12,7 +12,7 @@ class OrderItemsController < ApplicationController
   def less # decreases the item quantity in the cart by 1
     @order_item.less!
 
-    flash[:errors] = @order_item.errors if @order_item.errors
+    flash[:errors] = @order_item.errors unless @order_item.errors.empty?
 
     redirect_to cart_path
   end

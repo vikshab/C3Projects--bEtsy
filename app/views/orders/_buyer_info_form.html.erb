@@ -3,19 +3,23 @@
 <%= form_for @order, url: checkout_path, html: { role: "form", method: :patch } do |f| %>
   <div class="form-group">
     <%= f.label :buyer_name, "Name" %>
-    <%= f.text_field :buyer_name, { class: "form-control", required: true } %>
+    <%= f.text_field :buyer_name, { class: "form-control", required: true, placeholder: "Your Name" } %>
   </div>
   <div class="form-group">
     <%= f.label :buyer_email, "Email Address" %>
-    <%= f.email_field :buyer_email, { class: "form-control", required: true } %>
+    <%= f.email_field :buyer_email, { class: "form-control", required: true, placeholder: "your_email@example.com" } %>
   </div>
   <div class="form-group">
-    <%= f.label :buyer_address, "Billing and Mailing Address" %>
-    <%= f.text_field :buyer_address, { class: "form-control", required: true } %>
+    <%= f.label :buyer_address, "Billing Address" %>
+    <%= f.text_field :buyer_address, { class: "form-control", required: true, placeholder: "Street Address, City, State Zipcode" } %>
   </div>
   <div class="form-group">
     <%= f.label :buyer_card_short, "Credit Card Number" %>
-    <%= f.text_field :buyer_card_short, { class: "form-control", required: true } %>
+    <%= f.text_field :buyer_card_short, { class: "form-control", required: true, placeholder: "1111222233334444" } %>
+  </div>
+  <div class="form-group">
+    <label id="cvv">Credit Card CVV (3-digit security code)</label>
+    <input type="number" name="buyer_card_cvv" placeholder="XXX" class="form-control">
   </div>
   <div class="form-group">
     <%= f.label :buyer_card_expiration, "Credit Card Expiration Date" %>
