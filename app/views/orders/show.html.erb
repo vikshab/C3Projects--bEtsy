@@ -18,11 +18,14 @@
       <td><%= order_item.quantity_ordered %></td>
       <td><%= order_item.product.name %></td>
       <td><%= display_dollars(order_item.total_item_price) %></td>
-      <td><%= @order.status %></td>
+      <td><%= order_item.status %></td>
       <td>
-        <!-- # FIXME: these buttons don't do anything see bug https://trello.com/c/iPWevY4r -->
-        <%= link_to "Ship", root_path, method: :get, class: "btn btn-default" %>
-        <%= link_to "Cancel", root_path, method: :get, class: "btn btn-warning" %>
+      <% if order_item.status == "paid" %>
+        <%= button_to "Ship", order_item_path(order_item), method: :patch, params: { ship: true }, class: "btn btn-default" %>
+      <% end %>
+      <% unless order_item.status == "canceled" %>
+        <%= button_to "Cancel", order_item_path(order_item), method: :patch, params: { cancel: true }, class: "btn btn-warning" %>
+      <% end %>
       </td>
     </tr>
   <% end %>
