@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :find_order, only: [:update, :destroy]
   before_action :empty_cart?, only: [:show]
 
+
   def new
     @order = Order.new
   end
@@ -63,5 +64,6 @@ class OrdersController < ApplicationController
           render :empty
         end
       end
+
     end
 end

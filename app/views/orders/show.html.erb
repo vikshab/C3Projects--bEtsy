@@ -20,12 +20,18 @@
 
   <div class="shopping-cart col-md-10 col-md-offset-1">
     <%= render "shopping_cart" %>
-  </div>
+    </div>
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-md-offset-7">
+
+         <% if  @order_items.any? { |order_item| order_item.quantity > order_item.product.stock } %>
+          <%= link_to "Checkout", checkout_path, class: "btn btn-success disabled" %>
+        <% else %>
+          <%= link_to "Checkout", checkout_path, class: "btn btn-success" %>
+         <% end %>
+
         <%= link_to "Continue Shopping", products_path, class: "btn btn-default" %>
-        <%= link_to "Checkout", checkout_path, class: "btn btn-success" %>
-    </div>
+      </div>
   </div>
 </div>
