@@ -118,6 +118,11 @@ body {
   font-family: 'Cherry Swash', cursive;
 }
 
+label.required:after {
+    content: " *";
+    color: $error;
+  }
+
 /* Images ------------------------------------------------------------------- */
 
 .product-thumb {
