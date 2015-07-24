@@ -45,6 +45,7 @@ class OrdersController < ApplicationController
 
   def buyer
     @buyer =  Buyer.find(params[:id])
+    @merchant = User.find(params[:user_id])
   end
 
   # check to see if the correct user is logged in
