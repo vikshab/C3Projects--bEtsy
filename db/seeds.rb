@@ -292,7 +292,7 @@ products = [
 ]
 
 def rando_rating
-  return ((rand * (1..5).to_a.sample).to_i)
+  return rand(1..5)
 end
 
 def review_text(rating, product)
@@ -313,8 +313,9 @@ end
 products.each do |product|
   product = Product.create(product)
 
-  3.times do
-    Review.create({ rating: rando_rating, description: review_text(rando_rating, product), product_id: product.id })
+  rando_rating.times do
+    current_rating = rando_rating
+    Review.create({ rating: current_rating, description: review_text(current_rating, product), product_id: product.id })
   end
 end
 
