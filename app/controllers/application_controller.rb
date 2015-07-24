@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   ERRORS = {
     not_logged_in: { not_logged_in: "Please log in to see this page." }, # used in ApplicationController's require_seller_login
-    login_error: { login_error: "Try Again!" }, # OPTIMZE this error message? used in SessionsController's create
+    login_error: { login_error: "Invalid log in. Please try again!" }, # used in SessionsController's create
     no_orders: { no_orders: "You don't have any orders." } # used in OrdersController's index (/sellers/1/orders)
   }
 
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     redirect_to login_path, flash: { errors: ERRORS[:not_logged_in] } unless session[:seller_id]
   end
 
-  def set_seller # OPTIMIZE: should this be combined with require_seller_login?
+  def set_seller
     @seller = Seller.find(session[:seller_id])
 
     # send seller to its own dashboard if it tries to access another seller's stuff
