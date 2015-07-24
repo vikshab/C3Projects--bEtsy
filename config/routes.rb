@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :sellers, only: [:index, :show, :new, :create] do
     get "products", to: "products#seller", as: "products"
-    get "inventory", to: "products#inventory", as: "inventory"
+    get "inventory", to: "products#inventory", as: "inventory" # OPTIMIZE: consider adding this content to the dashboard or seller products page?
     resources :products, only: [:new, :create]
     resources :orders, only: [:index, :show]
   end

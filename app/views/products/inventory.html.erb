@@ -14,9 +14,13 @@
   </tr>
   <% @products.each do |product| %>
     <tr>
-      <td><%= product.name %> <small><%= product.retired ? "RETIRED" : "" %></small></td>
+      <td><%= link_to product.name, product_path(product) %> <small><%= product.retired ? "RETIRED" : "" %></small></td>
       <td><%= product.average_rating %></td>
-      <td><%= display_categories(product) %></td>
+      <td>-
+        <% product.categories.each do |category| %>
+          <%= link_to category.name, category_path(category) %> -
+        <% end %>
+      </td>
       <td><%= display_dollars(product.price) %></td>
       <td><%= quantity_sold(product) %></td>
       <td><%= product.stock %></td>

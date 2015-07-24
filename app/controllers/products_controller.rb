@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
 
   def seller; end
 
-  def inventory
+  def inventory # TODO: spec
     @products = @seller.products
   end
 
