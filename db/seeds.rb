@@ -12,14 +12,11 @@ sellers = [
 ]
 
 sellers.each do |username, email, password|
-  seller = Seller.new(username: username, email: email)
-  seller.password = password
-  seller.password_confirmation = password
-  seller.save
+  seller = Seller.create(username: username, email: email, password: password, password_confirmation: password)
 end
 
 def rando_seller_id
-  return (1..10).to_a.sample
+  rand(1..Seller.count)
 end
 
 def rando_price
@@ -309,7 +306,6 @@ def review_text(rating, product)
   return fives.sample if rating == 5
 end
 
-
 products.each do |product|
   product = Product.create(product)
 
@@ -342,7 +338,7 @@ buyer_names = [
   "Ada Lovelace", "Betty McAwesomePants", "Tallis GenericLastName", "Tux"
 ]
 
-product_limit = Product.all.count
+product_limit = Product.count
 
 20.times do
   current_name = buyer_names.sample
@@ -352,16 +348,13 @@ product_limit = Product.all.count
     buyer_card_expiration: Date.parse("June 5 2086"))
 
   10.times do
-    OrderItem.create(product_id: (1..product_limit).to_a.sample,
-      order_id: order.id, quantity_ordered: 2)
+    OrderItem.create(product_id: rand(1..product_limit),
+      order_id: order.id, quantity_ordered: 2, status: "paid")
   end
 end
 
-all_categories = Category.all
-all_products = Product.all
-
-all_products.each do |product|
-  product.categories << all_categories.sample(rand(0..4))
+Product.all.each do |product|
+  product.categories << Category.all.sample(rand(0..4))
 end
 
 reviews = [

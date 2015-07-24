@@ -13,15 +13,11 @@ class Product < ActiveRecord::Base
   # Scopes ---------------------------------------------------------------------
   scope :has_stock, -> { where(retired: false).where("stock > 0") }
 
-  # non-mutative class method
-
   def self.top_products
     sorted_products = self.has_stock.sort_by { |product| product.average_rating }.reverse!
     top_products = sorted_products.first(12)
   end
 
-
-  # mutative methods
 
   def retire!
     update(retired: retired ? false : true)
@@ -47,9 +43,6 @@ class Product < ActiveRecord::Base
       errors[:remove_stock] << "You can't remove more stock than is present."
     end
   end
-
-
-  # non-mutative methods
 
   def average_rating
     total_num_reviews = self.reviews.count
