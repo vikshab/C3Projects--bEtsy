@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
-  let(:seller) { Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1") }
+  let(:seller) { Seller.create(username: "user1", email: "email1@email.com", password: "password1",
+    password_confirmation: "password1") }
   let(:valid_params) { { :category => { name: 'a' }, seller_id: 1 } }
   let(:invalid_params) { { :category => { name: '' }, seller_id: 1} }
   let(:category) { Category.create( { name: "I am a category" } ) }
