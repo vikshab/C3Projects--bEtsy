@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+    before_action :require_login, only: [:new, :create]
+
   def show
     @category = Category.find_by(name: params[:category_name])
     @products = @category.products.active_product
