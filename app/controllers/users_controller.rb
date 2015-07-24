@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :require_login, except: [:new, :create]
   before_action :correct_user, except: [:new, :create]
   # need this so it can see the helper methods
   include ApplicationHelper

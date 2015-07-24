@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
   before_action :find_order, only: [:update, :destroy]
   before_action :empty_cart?, only: [:show]
+  before_action :correct_order, only: [:index, :buyer]
+  include ApplicationHelper
 
   def new
     @order = Order.new
@@ -42,6 +44,13 @@ class OrdersController < ApplicationController
 
   def buyer
     @buyer =  Buyer.find(params[:id])
+  end
+
+  # check to see if the correct user is logged in
+  # renamed the method since I needed the user_id, not the id
+  def correct_order
+    @user = User.find(params[:user_id])
+    redirect_to(root_url) unless current_user?(@user)
   end
 
   private
