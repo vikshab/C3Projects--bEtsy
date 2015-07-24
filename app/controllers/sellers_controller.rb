@@ -10,7 +10,11 @@ class SellersController < ApplicationController
   end
 
   def new
-    @seller = Seller.new
+    if session[:seller_id] != nil
+      redirect_to root_path 
+    else
+      @seller = Seller.new
+    end
   end
 
   def create
