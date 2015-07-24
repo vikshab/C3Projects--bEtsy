@@ -8,6 +8,27 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
+
+    it "renders the index view" do
+      get :index
+
+      expect(response).to render_template("index")
+    end
+
+    it "assigns @products" do
+      counter1 = "a"
+      product = Product.create(name: "blaglagolag", price: 1, seller_id: 1, stock: 1)
+
+      15.times do
+        Product.create(name: counter1, price: 1, seller_id: 1, stock: 1)
+        counter1 = counter1.next
+      end
+
+      get :index
+
+      expect(assigns(:products)).to include(product)
+      expect(assigns(:products).count).to eq(16)
+    end
   end
 
   describe "GET #show" do
@@ -19,12 +40,19 @@ RSpec.describe ProductsController, type: :controller do
       get :show, id: @product
 
       expect(response).to be_success
+      expect(response).to have_http_status(200)
     end
 
     it "renders the show view" do
       get :show, id: @product
 
       expect(response).to render_template("show")
+    end
+
+    it "assigns @product" do
+      get :show, id: @product
+
+      expect(assigns(:product)).to eq(@product)
     end
   end
 
@@ -35,9 +63,22 @@ RSpec.describe ProductsController, type: :controller do
       session[:seller_id] = @seller.id
     end
 
+    it "returns successfully with an HTTP 200 status code" do
+      get :edit, id: @product
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
     it "renders the edit view" do
       get :edit, id: @product
       expect(response).to render_template("edit", session[:seller_id])
+    end
+
+    it "assigns @product" do
+      get :edit, id: @product
+
+      expect(assigns(:product)).to eq(@product)
     end
   end
 
@@ -50,6 +91,12 @@ RSpec.describe ProductsController, type: :controller do
         session[:seller_id] = @seller.id
       end
 
+      it "assigns @product" do
+        get :update, @new_params
+
+        expect(assigns(:product).id).to eq(@product.id)
+      end
+
       it "updates a product" do
         put :update, @new_params
         expect(Product.find(1).name).to eq 'b'
@@ -58,6 +105,7 @@ RSpec.describe ProductsController, type: :controller do
       it "redirects to sellers products view" do
         put :update, @new_params
         @product.reload
+        expect(response).to have_http_status(302)
         expect(response).to redirect_to(seller_products_path(@product.seller_id))
       end
     end
@@ -122,6 +170,7 @@ RSpec.describe ProductsController, type: :controller do
 
       it "redirects to the product show page" do
         post :create, @new_params
+        expect(response).to have_http_status(302)
         expect(subject).to redirect_to(product_path(Product.last))
       end
     end
@@ -156,9 +205,47 @@ RSpec.describe ProductsController, type: :controller do
       session[:seller_id] = @seller.id
     end
 
+    it "responds successfully with an HTTP 200 status code" do
+      get :seller, seller_id: @seller
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
     it "renders the sellers products view" do
       get :seller, seller_id: @seller
       expect(response).to render_template("seller", session[:seller_id])
+    end
+  end
+
+  describe "PATCH #retire" do
+    before :each do
+      @seller = Seller.create(username: "cthulhu", email: "insanity@squiddy-lovecraft.org", password_digest: "ph'nglui-mglw'nafh")
+      @product = Product.create(name: "tenacle beard-glove", stock: 8, seller_id: 1, price: 100)
+      session[:seller_id] = @seller.id
+    end
+
+    it "assigns @product" do
+      patch :retire, seller_id: @seller.id, id: @product.id
+
+      expect(assigns(:product).id).to eq(@product.id)
+    end
+
+    it "redirects back to product's show page" do
+      patch :retire, seller_id: @seller.id, id: @product.id
+
+      expect(response).to have_http_status(302)
+      expect(response).to redirect_to(product_path(@product))
+    end
+
+    it "alters the product's retired status" do
+      patch :retire, seller_id: @seller.id, id: @product.id
+      @product.reload
+      expect(@product.retired).to eq(true)
+
+      patch :retire, seller_id: @seller.id, id: @product.id
+      @product.reload
+      expect(@product.retired).to eq(false)
     end
   end
 end

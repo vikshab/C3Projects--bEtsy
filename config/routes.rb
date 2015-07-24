@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :categories, except: :destroy
   resources :products, except: [:new, :create, :destroy]
 
-  get "/products/:id/retire", to: "products#retire", as: "retire_product"
+  patch "/products/:id/retire", to: "products#retire", as: "retire_product"
 
   resources :sellers, only: [:index, :show, :new, :create] do
     get "products", to: "products#seller", as: "products"
