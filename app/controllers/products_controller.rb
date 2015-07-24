@@ -45,13 +45,9 @@ class ProductsController < ApplicationController
 
   def add_categories
     @product = Product.find(params[:product_id])
-    if params[:category_id].class == String
-      @product.categories << Category.find(params[:category_id])
-    else
-      params[:category_id].each do |category_id|
-        category = Category.find(category_id)
-        @product.categories << category
-      end
+    params[:category_id].each do |category_id|
+      category = Category.find(category_id)
+      @product.categories << category
     end
     redirect_to seller_products_path(@product.seller_id)
   end

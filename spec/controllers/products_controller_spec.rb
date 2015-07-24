@@ -172,7 +172,7 @@ RSpec.describe ProductsController, type: :controller do
     end
 
     it "adds a category to a product" do
-      post :add_categories, product_id: @product, category_id: @category1
+      post :add_categories, product_id: @product, category_id: [@category1]
       expect(@product.categories.count).to eq 1
     end
 
