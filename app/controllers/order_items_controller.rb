@@ -5,7 +5,12 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.create(order_item_params)
     session[:order_id] = @order.id
 
-    redirect_to cart_path
+    if order_item_params[:quantity].to_i > @order_item.product.stock.to_i
+      flash[:error] = "Unfortunately we don't have #{order_item_params[:quantity].to_i} #{@order_item.product.name}, only #{@order_item.product.stock.to_i} available"
+      redirect_to :back
+    else
+      redirect_to cart_path
+    end
   end
 
   def update
