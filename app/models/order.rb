@@ -6,7 +6,6 @@ class Order < ActiveRecord::Base
   end
 
   has_many :order_items, dependent: :destroy # should destroy all of the associated OrderItems if an Order is destroyed.
-    # TODO: but do we want to destroy Orders?
   has_many :products, through: :order_items
 
   # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
@@ -40,8 +39,8 @@ class Order < ActiveRecord::Base
       quantity_ordered_adjusted = true unless order_item.errors.empty?
     end
 
-    if quantity_ordered_adjusted # OPTIMIZE: this error message in prepare_checkout!
-      errors[:product_stock] = "Quantity ordered was adjusted because not enough of this product was stuck."
+    if quantity_ordered_adjusted
+      errors[:product_stock] = "Quantity ordered was adjusted because not enough of this product is in stock."
     end
   end
 
@@ -50,7 +49,7 @@ class Order < ActiveRecord::Base
     if update(checkout_params)
       order_items.each do |order_item|
         order_item.remove_product_stock!
-        order_item.update(status: "paid") # TODO: add testing for this
+        order_item.update(status: "paid")
       end
       return true
     else

@@ -178,6 +178,43 @@ RSpec.describe OrderItem, type: :model do
         expect(also_invalid_item).to_not be_valid
       end
     end
+
+    context "status" do
+      it "requires a status" do
+        valid_status_item = OrderItem.create(status: "paid")
+
+        expect(valid_status_item.errors.keys).to_not include(:status)
+      end
+
+      it "automatically sets status to pending" do
+        no_defined_status_item = OrderItem.create
+
+        expect(no_defined_status_item.errors.keys).to_not include(:status)
+      end
+
+      it "only lets status be one of: pending, paid, complete, or canceled" do
+        invalid_status_item = OrderItem.create(status: "hippo")
+        expect(invalid_status_item.errors.keys).to include(:status)
+        expect(invalid_status_item).to_not be_valid
+
+        %w(pending paid complete canceled).each do |status|
+          valid_status_item = OrderItem.create(status: status)
+          expect(valid_status_item.errors.keys).to_not include(:status)
+        end
+      end
+    end
+
+    context "#order_item_is_unique? (calls private method from validation)" do
+      it "adds errors to OrderItem if it's already in the Order" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 100)
+        order = Order.create
+        OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 1)
+        order_item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 2)
+
+        expect(order_item.errors).to include { :product_not_unique }
+        expect(order_item.errors[:product_not_unique]).to eq ["That product is already in your cart."]
+      end
+    end
   end
 
   describe "methods" do
@@ -200,6 +237,7 @@ RSpec.describe OrderItem, type: :model do
         expect(item.errors.keys).to include(:product_stock)
       end
     end
+
 
     context "#less!" do
       it "decrements the quantity_ordered" do
@@ -263,8 +301,26 @@ RSpec.describe OrderItem, type: :model do
       end
     end
 
-    context "#order_item_is_unique?" do
-      pending "order_item_is_unique? needs specs"
+    context "#marked_shipped" do
+      it "updates an order item's status to 'shipped'" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 100)
+        order = Order.create
+        order_item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 1)
+        order_item.mark_shipped
+
+        expect(order_item.status).to eq "shipped"
+      end
+    end
+
+    context "#marked_canceled" do
+      it "updates an order item's status to 'canceled'" do
+        product = Product.create(name: 'a34m89yv39ampy', price: 1, seller_id: 1, stock: 100)
+        order = Order.create
+        order_item = OrderItem.create(product_id: product.id, order_id: order.id, quantity_ordered: 1)
+        order_item.mark_canceled
+
+        expect(order_item.status).to eq "canceled"
+      end
     end
 
     context "#product_has_stock?" do
