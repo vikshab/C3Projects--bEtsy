@@ -11,6 +11,8 @@ class OrderItem < ActiveRecord::Base
   validates :product_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
+    message: "%{value} is not a valid status" } # TODO: add tests
   validate :order_item_is_unique?, on: [:create]
 
 
