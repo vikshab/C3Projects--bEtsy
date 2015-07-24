@@ -235,7 +235,7 @@ RSpec.describe ProductsController, type: :controller do
 
   # MERCHANT_PRODUCTS ACTION__________________________________________________________________
 
-  describe "GER#merchant_products" do
+  describe "GET#merchant_products" do
 
     before :each do
       @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
