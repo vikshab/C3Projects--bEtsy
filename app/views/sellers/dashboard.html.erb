@@ -3,6 +3,7 @@
 </div>
 
 <div class="row">
-  <%= link_to "View Products", seller_products_path(@seller), class: "btn btn-default col-md-4 col-md-offset-2 no-border-buttons" %>
+  <%= link_to "View Products", seller_products_path(@seller), class: "btn btn-default col-md-4 no-border-buttons" %>
   <%= link_to "View Orders", seller_orders_path(@seller), class: "btn btn-default col-md-4 no-border-buttons" %>
+  <%= link_to "Add New Category", new_category_path, class: "btn btn-default col-md-4 no-border-buttons" %>
 </div>
