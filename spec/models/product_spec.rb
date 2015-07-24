@@ -254,12 +254,10 @@ RSpec.describe Product, type: :model do
       expect(Product.top_products).not_to include(@product1)
     end
 
-    it "does not return products that have no stock" do
+    it "includes products that have no stock" do
       @product1.update(stock: 0)
 
-      expect(Product.top_products).to include(@product2)
-      expect(Product.top_products).to include(@worst_rated)
-      expect(Product.top_products).not_to include(@product1)
+      expect(Product.top_products).to include(@product1)
     end
   end
 end

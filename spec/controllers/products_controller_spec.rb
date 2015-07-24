@@ -337,6 +337,19 @@ RSpec.describe ProductsController, type: :controller do
           expect(flash[:errors].keys).to include(:not_logged_in)
         end
       end
+
+      context "#show" do
+        before :each do
+          @product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1, retired: true)
+        end
+
+        it "restricts access to #show for retired products" do
+          get :show, id: @product
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(login_path)
+          expect(flash[:errors].keys).to include(:not_logged_in)
+        end
+      end
     end
   end
 end
