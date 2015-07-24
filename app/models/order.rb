@@ -49,7 +49,7 @@ class Order < ActiveRecord::Base
     if update(checkout_params)
       order_items.each do |order_item|
         order_item.remove_product_stock!
-        order_item.update(status: "paid") # TODO: add testing for this
+        order_item.update(status: "paid")
       end
       return true
     else
