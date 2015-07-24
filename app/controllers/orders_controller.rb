@@ -20,10 +20,6 @@ class OrdersController < ApplicationController
     render :show
   end
 
-  def destroy
-    @order.destroy
-  end
-
   def index
     @merchant = User.find(params[:user_id])
 

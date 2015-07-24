@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   ## do we need all the reviews routes?
 
   resources :products, except: [:new, :destroy] do
-    resources :reviews
+    resources :reviews, only: [:new, :create]
   end
 
   # add a category
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get '/merchants/:user_id/orders/:id' => 'orders#buyer', as: 'user_order'
 
   ## check to see if using all after more of the orders things are fleshed out
-  resources :orders
+  resources :orders, except: [:index, :edit, :destroy]
 
   get "/cart" => "orders#show", as: "cart"
 
