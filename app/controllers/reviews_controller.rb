@@ -1,4 +1,4 @@
-class ReviewsController < ApplicationController  
+class ReviewsController < ApplicationController
   # Add a review
   def new
     @review = Review.new
@@ -9,16 +9,16 @@ class ReviewsController < ApplicationController
     @review = @product.reviews.create(review_params)
 
     redirect_to product_path(params[:product_id])
-   end
+  end
 
   def avg_rating(product_id)
     ratings = Review.where(product_id: product_id).pluck(:rating)
     avg_rating = ratings.sum / ratings.size
   end
 
-   private
+  private
 
-   def review_params
-    params.require(:review).permit(:body, :rating)
-   end
+    def review_params
+      params.require(:review).permit(:body, :rating)
+    end
 end
