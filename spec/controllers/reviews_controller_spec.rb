@@ -1,14 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe ReviewsController, type: :controller do
+  let(:review_params) do { review: { rating: 4 } } end
+  let(:invalid_params) do { review: { body: "text" } } end
+
+  before :each do
+    @product = Product.create(name: "name", price: 10.99, user_id: 2, stock: 1) 
+  end 
 
   describe "POST #create" do
-    let(:review_params) do { review: { rating: 4 } } end
-    let(:invalid_params) do { review: { body: "text" } } end
-    before :each do
-      @product = Product.create(name: "name", price: 10.99, user_id: 2, stock: 1) 
-    end 
-    
+
     context "valid params" do 
       it "creates a Media record" do
         post :create, { product_id: @product.id }.merge(review_params)
@@ -28,4 +29,5 @@ RSpec.describe ReviewsController, type: :controller do
       end
     end
   end
+
 end

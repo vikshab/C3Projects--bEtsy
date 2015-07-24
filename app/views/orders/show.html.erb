@@ -2,7 +2,7 @@
 <div class="col-md-8 col-md-offset-2">
 
   <h2><center>Shopping Cart</center></h2>
-  <!-- To much logic to the view page need to be somewhere else -->
+  <!-- Too much logic to the view page need to be somewhere else -->
   <% if session[:order_id].nil? == false %>
     <% items = @order.order_items %>
     <% array = [] %>
@@ -14,7 +14,7 @@
     <% quantity = 0 %>
     <% sum = 0 %>
     <h3><center>Your have <%= array.inject{ |quantity,element| quantity + element} %> items in your cart</h3>
-    <h3><center>Subtotal $<%= @total %></h3>
+    <h3><center>Subtotal <%= number_to_currency(@total) %></h3>
  <% end %>
 </div>
 
@@ -26,6 +26,6 @@
       <div class="col-md-4 col-md-offset-7">
         <%= link_to "Continue Shopping", products_path, class: "btn btn-default" %>
         <%= link_to "Checkout", checkout_path, class: "btn btn-success" %>
+      </div>
     </div>
   </div>
-</div>
