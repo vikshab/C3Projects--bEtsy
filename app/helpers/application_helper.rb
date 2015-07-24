@@ -15,6 +15,10 @@ module ApplicationHelper
   end
 
   def product_short_description(product)
-    product.description[0..150] + '...' if product.description
+    if product.description && product.description.length > 151
+      return product.description[0..150] + '...'
+    elsif product.description
+      return product.description
+    end
   end
 end
