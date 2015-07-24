@@ -10,6 +10,44 @@ RSpec.describe SellersController, type: :controller do
     end
   end
 
+  describe "GET #show" do
+    before :each do
+      @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
+    end
+
+    it "responds successfully with an HTTP 200 status code" do
+      get :show, id: @seller
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
+    it "renders the new view" do
+      get :show, id: @seller
+      expect(response).to render_template("show")
+    end
+
+    context "guest user" do
+      it "doesn't include retired products in @products" do
+        counter1 = "a"
+        product = Product.create(name: "blaglagolag", price: 1, seller_id: @seller.id,
+          stock: 1, retired: true)
+
+        15.times do
+          Product.create(name: counter1, price: 1, seller_id: @seller.id, stock: 1)
+          counter1 = counter1.next
+        end
+
+        get :show, id: @seller
+
+        expect(assigns(:products)).not_to include(product)
+        expect(assigns(:products).count).to eq(15)
+        expect(assigns(:seller).products).to include(product)
+        expect(assigns(:seller).products.count).to eq(16)
+      end
+    end
+  end
+
   describe "GET #new" do
     context "guest user" do
       it "responds successfully with an HTTP 200 status code" do
