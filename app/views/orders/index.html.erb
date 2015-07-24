@@ -1,7 +1,7 @@
 <div class="row form-header">
   <div class="col-md-8 col-md-offset-2">
     <h1> Order Fulfillment </h1>
-    <h3>Total Revenue: <%= number_to_currency(@pend_total.sum + @ship_total.sum + @paid_total.sum) %></h3><br>
+    <h3>Total Revenue: <%= number_to_currency(@ship_total.sum + @paid_total.sum) %></h3><br>
     </div>
   </div>
 
