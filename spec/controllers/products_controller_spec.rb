@@ -29,6 +29,22 @@ RSpec.describe ProductsController, type: :controller do
       expect(assigns(:products)).to include(product)
       expect(assigns(:products).count).to eq(16)
     end
+
+    it "doesn't include retired products in @products" do
+      counter1 = "a"
+      product = Product.create(name: "blaglagolag", price: 1, seller_id: 1,
+        stock: 1, retired: true)
+
+      15.times do
+        Product.create(name: counter1, price: 1, seller_id: 1, stock: 1)
+        counter1 = counter1.next
+      end
+
+      get :index
+
+      expect(assigns(:products)).not_to include(product)
+      expect(assigns(:products).count).to eq(15)
+    end
   end
 
   describe "GET #show" do

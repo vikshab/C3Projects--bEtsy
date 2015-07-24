@@ -8,7 +8,7 @@ class Product < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true, numericality: { greater_than: 0 }
   validates :seller_id, presence: true, numericality: { only_integer: true }
-  validates :stock, presence: true, numericality: { only_integer: true } #FIXME: validation specs for retired default value?
+  validates :stock, presence: true, numericality: { only_integer: true }
 
   # Scopes ---------------------------------------------------------------------
   scope :has_stock, -> { where(retired: false).where("stock > 0") }

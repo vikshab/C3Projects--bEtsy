@@ -2,6 +2,18 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   describe "model validations" do
+    describe "retired" do
+      it "isn't required to be valid" do
+        product = Product.new
+        expect(product.errors.keys).not_to include(:retired)
+      end
+
+      it "has a default value" do
+        product = Product.new
+        expect(product.retired).to eq(false)
+      end
+    end
+
     describe "name validations" do
       it "requires a name" do
         product = Product.new
