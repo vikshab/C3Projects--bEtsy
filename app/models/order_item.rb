@@ -9,7 +9,7 @@ class OrderItem < ActiveRecord::Base
   validates :order_id, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :status, presence: true, inclusion: { in: %w(pending paid complete canceled),
-    message: "%{value} is not a valid status" } # TODO: add tests
+    message: "%{value} is not a valid status" }
   validate :order_item_is_unique?, on: [:create]
 
   def more!
@@ -39,11 +39,11 @@ class OrderItem < ActiveRecord::Base
     product.remove_stock!(quantity_ordered)
   end
 
-  def mark_shipped # TODO: add tests
+  def mark_shipped
     self.update(status: "shipped")
   end
 
-  def mark_canceled # TODO: add tests
+  def mark_canceled
     self.update(status: "canceled")
 
     product.add_stock!(quantity_ordered)
@@ -62,7 +62,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   private
-    def order_item_is_unique? # TODO: write specs for this!
+    def order_item_is_unique?
       if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
         errors.add(:product_not_unique, "That product is already in your cart.")
       end
