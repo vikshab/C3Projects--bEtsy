@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   before_action :correct_order, only: [:index, :buyer]
   include ApplicationHelper
 
-
   def new
     @order = Order.new
   end
