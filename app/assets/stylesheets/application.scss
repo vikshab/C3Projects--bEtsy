@@ -24,6 +24,12 @@ $error: #F72B1D; /* red for warining */
 $border-top: #E7E7E7;
 $background: #F8F8F8;
 
+/* ------- */
+a:hover {
+  color: $jumbo_shadow;
+}
+
+
 /* Navbar ------------------------------------------------------------------ */
 
  .navbar-brand {
