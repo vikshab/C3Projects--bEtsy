@@ -234,6 +234,26 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
+  describe "POST #add_categories" do
+    before :each do
+      @product = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
+      @category1 = Category.create(name: "Grocery")
+      @category2 = Category.create(name: "Animals")
+      @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
+      session[:seller_id] = @seller.id
+    end
+
+    it "adds a category to a product" do
+      post :add_categories, product_id: @product, category_id: [@category1]
+      expect(@product.categories.count).to eq 1
+    end
+
+    it "adds multiple categories to a product" do
+      post :add_categories, product_id: @product, category_id: [@category1, @category2]
+      expect(@product.categories.count).to eq 2
+    end
+  end
+
   describe "PATCH #retire" do
     before :each do
       @seller = Seller.create(username: "cthulhu", email: "insanity@squiddy-lovecraft.org", password_digest: "ph'nglui-mglw'nafh")
