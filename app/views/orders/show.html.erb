@@ -26,10 +26,10 @@
       <td><%= order_item.status.titlecase %></td>
       <td>
       <% if order_item.status == "paid" %>
-        <%= button_to "Ship", order_item_path(order_item), method: :patch, params: { ship: true }, class: "btn btn-default" %>
+        <%= link_to "Ship", order_item_path(order_item, ship: true), method: :patch, class: "btn btn-default" %>
       <% end %>
       <% unless order_item.status == "canceled" %>
-        <%= button_to "Cancel", order_item_path(order_item), method: :patch, params: { cancel: true }, class: "btn btn-warning" %>
+        <%= link_to "Cancel", order_item_path(order_item, cancel: true), method: :patch, class: "btn btn-warning" %>
       <% end %>
       </td>
     </tr>
