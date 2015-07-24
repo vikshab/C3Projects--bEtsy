@@ -7,7 +7,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @products = @category.products.has_stock
+    @products = @category.products.active
   end
 
   def new

@@ -5,11 +5,10 @@ class ProductsController < ApplicationController
   before_action :require_seller_login_if_retired, only: [:show]
 
   def index
-    @products = Product.has_stock
+    @products = Product.active
   end
 
   def show
-    # skip_before_action :require_seller_login if @product.retired == false
     @reviews = @product.reviews
     @average_rating = @product.average_rating
     @product_categories = @product.categories
