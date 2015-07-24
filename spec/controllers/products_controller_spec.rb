@@ -36,7 +36,7 @@ RSpec.describe ProductsController, type: :controller do
   # NEW ACTION__________________________________________________________________
 
   describe "GET #new" do
-    context "when loged in"
+    context "when loged in" do
       before :each do
         @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
         session[:user_id] = @user.id
@@ -49,13 +49,13 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
 
-    context "when loged out"
+    context "when loged out" do
       before :each do
-        @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
+        @user = User.create(name: "", email: "", password_digest: "VerySmartPassword")
         session[:user_id] = @user.id
       end
 
-      it "renders the new view" do
+      it "flash the error" do
         get :new, user_id: @user
 
         expect(response).to render_template("new")
