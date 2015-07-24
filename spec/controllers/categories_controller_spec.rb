@@ -78,6 +78,15 @@ RSpec.describe CategoriesController, type: :controller do
         expect(assigns(:products).count).to eq(4)
       end
 
+      it "only includes active / not retired products" do
+        product = Product.create(name: "blaglagolag", price: 1, seller_id: 1,
+          stock: 1, retired: true)
+        category.products << product
+
+        get :show, { id: category.id }
+        expect(assigns(:products)).not_to include(product)
+      end
+
       context "when a cateogry has no products" do
         # TODO: what do we want to have happen when there are no products?
       end
