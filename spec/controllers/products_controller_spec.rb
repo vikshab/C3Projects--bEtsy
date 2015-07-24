@@ -36,7 +36,7 @@ RSpec.describe ProductsController, type: :controller do
   # NEW ACTION__________________________________________________________________
 
   describe "GET #new" do
-    context "when loged in"
+    context "when loged in" do
       before :each do
         @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
         session[:user_id] = @user.id
@@ -49,7 +49,7 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
 
-    context "when loged out"
+    context "when loged out" do
       before :each do
         @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")
         session[:user_id] = @user.id
@@ -61,13 +61,7 @@ RSpec.describe ProductsController, type: :controller do
         expect(response).to render_template("new")
       end
     end
-
-
-
-
-
   end
-
 
   # CREATE ACTION__________________________________________________________________
 
@@ -241,7 +235,7 @@ RSpec.describe ProductsController, type: :controller do
 
   # MERCHANT_PRODUCTS ACTION__________________________________________________________________
 
-  describe "GER#merchant_products" do
+  describe "GET#merchant_products" do
 
     before :each do
       @user = User.create(name: "vikushonok", email: "vika@email.com", password_digest: "VerySmartPassword")

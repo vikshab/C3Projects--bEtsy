@@ -7,7 +7,7 @@
     <h2><%= @product.name %></h2>
     <h3>Description
     <p><small><%= @product.desc %></small></p></h3>
-    <p class="text-muted">Categories:  
+    <p class="text-muted">Categories:
     <%= @product.categories.map {|category| category.name}.join(", ")%></p>
 
     <h4 class="price">$<%= @product.price %></h4>
@@ -17,7 +17,7 @@
        <% if @product.stock != 0 %>
           <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
        <% else %>
-          <%= f.number_field :quantity, placeholder: "Sorry, you cannot add this product, it is out of stock", class: "form-control" %>
+          <%= f.number_field :quantity, placeholder: "Item out of stock", class: "form-control" %>
        <% end %>
 
          <div class="input-group-btn">
