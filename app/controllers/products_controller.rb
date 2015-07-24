@@ -2,12 +2,14 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :retire]
   before_action :set_seller, only: [:new, :create, :seller]
   before_action :require_seller_login, only: [:new, :update, :edit, :create, :add_categories, :retire]
+  before_action :require_seller_login_if_retired, only: [:show]
 
   def index
     @products = Product.has_stock
   end
 
   def show
+    # skip_before_action :require_seller_login if @product.retired == false
     @reviews = @product.reviews
     @average_rating = @product.average_rating
     @product_categories = @product.categories
@@ -17,7 +19,9 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
-  def edit; end
+  def edit
+    @categories = Category.all
+  end
 
   def seller; end
 
@@ -30,10 +34,6 @@ class ProductsController < ApplicationController
       flash.now[:errors] = @product.errors
       render :new
     end
-  end
-
-  def edit
-    @categories = Category.all
   end
 
   def update
@@ -67,5 +67,11 @@ class ProductsController < ApplicationController
 
     def create_params
       params.require(:product).permit(:name, :price, :stock, :description, :photo_url)
+    end
+
+    def require_seller_login_if_retired
+      if @product.retired
+        require_seller_login
+      end
     end
 end
