@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @items = @order.order_items.select { |item| item.seller.id == @seller.id }
+    @order_items = @order.order_items.select { |item| item.seller.id == @seller.id }
   end
 
   private
