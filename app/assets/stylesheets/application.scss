@@ -14,7 +14,7 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
- @import url(http://fonts.googleapis.com/css?family=Cherry+Swash:400,700);
+ @import url(//fonts.googleapis.com/css?family=Cherry+Swash:400,700);
 
 $jumbo_color: #FF5454; /* red orange */
 $jumbo_shadow: #858585; /* darker grey */
@@ -101,7 +101,7 @@ body {
 .jumbotron {
   width: 100%;
   margin-top: -15px;
-  background: url(symphony.png) repeat;
+  background: image-url("symphony.png") repeat;
   border-bottom: 3px solid $border;
 }
 
