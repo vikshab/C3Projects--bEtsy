@@ -14,7 +14,7 @@ RSpec.describe Buyer, type: :model do
       end
     end
 
-    ["some word", 1234].each do |invalid_zip|
+    ["some word", 123].each do |invalid_zip|
       it "doesn't validate #{invalid_zip} for zip" do
         buyer = Buyer.new(name: "new buyer", email: "buyer@email.com", address: "address", zip: "#{invalid_zip}", state: "WA", city: "Seattle", exp: "exp", credit_card: 1234)
 
