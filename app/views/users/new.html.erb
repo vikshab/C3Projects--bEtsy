@@ -8,22 +8,22 @@
     <%= form_for @user do |f| %>
       <%= render partial: "shared/error_messages", locals: { data_type: @user } %>
       <div class="form-group">
-        <%= f.label :name, "Store Name" %>
+        <%= f.label :name, "Store Name", class: "required" %>
         <%= f.text_field :name, class: "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :email  %>
+        <%= f.label :email, class: "required" %>
         <%= f.email_field :email, class: "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password %>
+        <%= f.label :password, class: "required" %>
         <%= f.password_field :password, class: "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password_confirmation, "Confirm Password" %>
+        <%= f.label :password_confirmation, "Confirm Password", class: "required" %>
         <%= f.password_field :password_confirmation, class: "form-control" %>
       </div>
 
