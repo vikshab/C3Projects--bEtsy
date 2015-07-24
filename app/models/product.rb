@@ -11,19 +11,21 @@ class Product < ActiveRecord::Base
   validates :stock, presence: true, numericality: { only_integer: true }
 
   # Scopes ---------------------------------------------------------------------
-  # scope :active, -> { where("retired: false") }
-  scope :has_stock, -> { where("stock > 0") }
-
+  scope :has_stock, -> { where(retired: false).where("stock > 0") }
 
   # non-mutative class method
 
   def self.top_products
-    sorted_products = self.all.sort_by { |product| product.average_rating }.reverse!
+    sorted_products = self.has_stock.sort_by { |product| product.average_rating }.reverse!
     top_products = sorted_products.first(12)
   end
 
 
   # mutative methods
+
+  def retire!
+    update(retired: retired ? false : true)
+  end
 
   def add_stock!(how_much)
     if how_much > 0
