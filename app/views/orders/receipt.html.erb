@@ -1,5 +1,6 @@
 <h1>RECEIPT</h1>
 
 <%= render "display_nonpending_order_items" %>
-
+<h5>Purchase Time: <%= @order.created_at.strftime ("%c") %></h5>
+<h5>Order Status: <%= @order.status %></h5>
 <%= render "display_buyer_info" %>

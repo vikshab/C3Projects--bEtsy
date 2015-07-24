@@ -284,33 +284,45 @@ RSpec.describe Order, type: :model do
     end
 
     context "#checkout!(checkout_params)" do
-      it "reduces product stock upon successful update" do
-        order = Order.create
-        product = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
-        OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 5)
 
-        checkout_params = { buyer_name: "cthulhu", buyer_email: "cthulhu@rlyeh.net",
-          buyer_address: "1234 fake st", buyer_card_short: "4567",
-          buyer_card_expiration: Date.parse("June 5 2086") }
+      context "successful update" do
+        before :each do
+          order = Order.create
+          @product = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
+          @order_item = OrderItem.create(order_id: order.id, product_id: @product.id, quantity_ordered: 5)
 
-        order.checkout!(checkout_params)
-        product.reload
-        
-        expect(product.stock).to eq(5)
+          checkout_params = { buyer_name: "cthulhu", buyer_email: "cthulhu@rlyeh.net",
+            buyer_address: "1234 fake st", buyer_card_short: "4567",
+            buyer_card_expiration: Date.parse("June 5 2086") }
+
+          order.checkout!(checkout_params)
+          @product.reload
+          @order_item.reload
+        end
+
+        it "reduces product stock" do
+          expect(@product.stock).to eq(5)
+        end
+
+        it "changes status of individual order_items  to 'paid'" do
+          expect(@order_item.status).to eq "paid"
+        end
       end
 
-      it "and doesn't upon unsuccessful update" do
-        order = Order.create
-        product = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
-        OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 5)
+      context "unsuccessful update" do
+        it "doesn't reduce product stock" do
+          order = Order.create
+          product = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
+          OrderItem.create(order_id: order.id, product_id: product.id, quantity_ordered: 5)
 
-        checkout_params = { buyer_name: "cthulhu", buyer_email: "cthulhu@rlyeh.net",
-          buyer_address: "1234 fake st", buyer_card_short: "CTHULHU WAS HERE",
-          buyer_card_expiration: Date.parse("June 5 2086") }
+          checkout_params = { buyer_name: "cthulhu", buyer_email: "cthulhu@rlyeh.net",
+            buyer_address: "1234 fake st", buyer_card_short: "CTHULHU WAS HERE",
+            buyer_card_expiration: Date.parse("June 5 2086") }
 
-        order.checkout!(checkout_params)
+          order.checkout!(checkout_params)
 
-        expect(product.stock).to eq(10)
+          expect(product.stock).to eq(10)
+        end
       end
     end
   end
