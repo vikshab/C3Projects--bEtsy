@@ -7,8 +7,7 @@ Rails.application.routes.draw do
 
   get '/sellers/:id/dashboard', to: 'sellers#dashboard', as: "dashboard"
 
-  resources :categories, except: :destroy
-  resources :products, except: [:new, :create, :destroy]
+  resources :categories, only: [:index, :show, :new, :create]
 
   patch "/products/:id/retire", to: "products#retire", as: "retire_product"
 
@@ -17,6 +16,10 @@ Rails.application.routes.draw do
     get "inventory", to: "products#inventory", as: "inventory" # OPTIMIZE: consider adding this content to the dashboard or seller products page?
     resources :products, only: [:new, :create]
     resources :orders, only: [:index, :show]
+
+  end
+  resources :products, except: [:new, :create, :destroy] do
+    patch '/add_categories', to: 'products#add_categories', as: "add_categories"
   end
 
   get '/products/:id/reviews/new', to: 'reviews#new', as: "new_review"
@@ -38,4 +41,6 @@ Rails.application.routes.draw do
 
   # removing an item from the cart
   delete "/cart/item/:id", to: "order_items#destroy", as: "kill_item"
+
+  resources :order_items, only: [:update]
 end

@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
+  let(:seller) { Seller.create(username: "user1", email: "email1@email.com", password: "password1",
+    password_confirmation: "password1") }
+  let(:valid_params) { { :category => { name: 'a' }, seller_id: 1 } }
+  let(:invalid_params) { { :category => { name: '' }, seller_id: 1} }
   let(:category) { Category.create( { name: "I am a category" } ) }
   let(:create_11_categories) {
     Category.create( { name: "Grocery" } )
@@ -76,6 +80,78 @@ RSpec.describe CategoriesController, type: :controller do
 
       context "when a cateogry has no products" do
         # TODO: what do we want to have happen when there are no products?
+      end
+    end
+
+    describe "GET #new" do
+      it "responds successfully with an HTTP 200 status code" do
+        seller
+        session[:seller_id] = seller.id
+
+        get :new, seller_id: seller
+        expect(response).to be_success
+        expect(response).to have_http_status(200)
+      end
+
+      it "renders the new view" do
+        seller
+        session[:seller_id] = seller.id
+
+        get :new, seller_id: seller
+        expect(response).to render_template("new")
+      end
+
+      it "only lets a logged in seller create a category" do
+        seller
+
+        get :new
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    describe "POST #create" do
+      context "valid category params" do
+        it "creates a category" do
+          seller
+          session[:seller_id] = seller.id
+
+          post :create, valid_params
+          expect(Category.count).to eq 1
+        end
+
+        it "redirects to the product show page" do
+          seller
+          session[:seller_id] = seller.id
+
+          post :create, valid_params
+          expect(subject).to redirect_to(seller_products_path(seller))
+        end
+      end
+
+      context "invalid category params" do
+        it "does not persist invalid records" do
+          seller
+          session[:seller_id] = seller.id
+
+          post :create, invalid_params
+          expect(Product.count).to eq 0
+        end
+
+        it "renders the new page so the record can be fixed" do
+          seller
+          session[:seller_id] = seller.id
+
+          post :create, invalid_params
+          expect(response).to render_template("new", session[:seller_id])
+        end
+
+        it "assigns flash[:errors]" do
+          seller
+          session[:seller_id] = seller.id
+
+          post :create, invalid_params
+          expect(flash[:errors]).to include(:name)
+        end
       end
     end
   end

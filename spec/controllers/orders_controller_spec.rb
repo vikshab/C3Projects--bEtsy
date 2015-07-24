@@ -410,11 +410,11 @@ RSpec.describe OrdersController, type: :controller do
       expect(assigns(:order)).to eq(@order)
     end
 
-    it "assigns @items" do
+    it "assigns @order_items" do
       get :show, seller_id: @seller.id, id: @order.id
 
-      expect(assigns(:items)).to include(@item1)
-      expect(assigns(:items)).to include(@item2)
+      expect(assigns(:order_items)).to include(@item1)
+      expect(assigns(:order_items)).to include(@item2)
     end
   end
 end

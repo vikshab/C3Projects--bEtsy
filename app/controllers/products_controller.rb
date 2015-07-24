@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :retire]
   before_action :set_seller, only: [:new, :create, :seller, :inventory]
-  before_action :require_seller_login, only: [:new, :update, :edit, :create, :retire, :inventory]
+  before_action :require_seller_login, only: [:new, :update, :edit, :create, :add_categories, :retire, :inventory]
 
   def index
     @products = Product.has_stock
@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
   def show
     @reviews = @product.reviews
     @average_rating = @product.average_rating
+    @product_categories = @product.categories
   end
 
   def new
@@ -35,6 +36,10 @@ class ProductsController < ApplicationController
     end
   end
 
+  def edit
+    @categories = Category.all
+  end
+
   def update
     if @product.update(create_params)
       redirect_to seller_products_path(@product.seller_id)
@@ -49,6 +54,14 @@ class ProductsController < ApplicationController
     redirect_to product_path(@product)
   end
 
+  def add_categories
+    @product = Product.find(params[:product_id])
+    params[:category_id].each do |category_id|
+      category = Category.find(category_id)
+      @product.categories << category
+    end
+    redirect_to seller_products_path(@product.seller_id)
+  end
 
 
   private
