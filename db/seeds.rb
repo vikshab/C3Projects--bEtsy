@@ -291,9 +291,31 @@ products = [
   }
 ]
 
+def rando_rating
+  return ((rand * (1..5).to_a.sample).to_i)
+end
+
+def review_text(rating, product)
+  ones = ["Poor quality.", "Not as many bees as I expected.", "Broke when I tried to feed it to my kid.", "Hated it."]
+  twos = ["Meh.", "Didn't taste like described.", "Not sharp enough.", "#{ product.name } was slightly damaged."]
+  threes = ["Pretty okay!", "#{ product.name } could have been worse.", "Good for the price but not great."]
+  fours = ["The best thing since sliced bread!", "Slight defect in the packaging but otherwise amazing.", "Loved it."]
+  fives = ["EXCELLENT!", "Would buy #{ product.name } again!", "My #{ product.name } came with a free quarter inside!"]
+
+  return ones.sample if rating == 1
+  return twos.sample if rating == 2
+  return threes.sample if rating == 3
+  return fours.sample if rating == 4
+  return fives.sample if rating == 5
+end
+
+
 products.each do |product|
   product = Product.create(product)
-  puts product.errors.keys
+
+  3.times do
+    Review.create({ rating: rando_rating, description: review_text(rando_rating, product), product_id: product.id })
+  end
 end
 
 categories = [
