@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h1> Purchaser Information </h1>
+    <h2> Purchaser Information </h2>
     </div>
   </div>
 
@@ -24,5 +24,6 @@
       <td><%= "Last 4 digits: #{@buyer.credit_card} Expiration: #{@buyer.exp}" %></td>
     </tr>
   </table>
+    <%= link_to "Back to Orders", user_orders_path(@merchant), class: "btn btn-default" %>
   </div>
 </div>
