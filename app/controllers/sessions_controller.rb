@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       flash[:messages] = MESSAGES[:successful_login]
       redirect_to dashboard_path(@seller)
     else
-      flash.now[:errors] = ERRORS[login_error] # NOTE: in specs, can test this with: `@sellers.errors.messages`
+      flash.now[:errors] = ERRORS[:login_error] # NOTE: in specs, can test this with: `@sellers.errors.messages`
       render :new
     end
   end
