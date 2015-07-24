@@ -1,13 +1,12 @@
 class Order < ActiveRecord::Base
+  has_many :order_items, dependent: :destroy # should destroy all of the associated OrderItems if an Order is destroyed.
+  has_many :products, through: :order_items
+
   attr_accessor :confirmed_payment
 
   after_initialize do |order|
     order.confirmed_payment = false
   end
-
-  has_many :order_items, dependent: :destroy # should destroy all of the associated OrderItems if an Order is destroyed.
-    # TODO: but do we want to destroy Orders?
-  has_many :products, through: :order_items
 
   # email regex from: http://rails-3-2.railstutorial.org/book/modeling_users#code-validates_format_of_email
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -31,7 +30,6 @@ class Order < ActiveRecord::Base
     validates_presence_of :buyer_card_expiration
     validate :buyer_card_unexpired
   end
-
 
   def prepare_checkout!
     quantity_ordered_adjusted = false
