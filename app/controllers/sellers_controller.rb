@@ -10,11 +10,8 @@ class SellersController < ApplicationController
   end
 
   def new
-    if session[:seller_id] != nil
-      redirect_to root_path 
-    else
-      @seller = Seller.new
-    end
+    redirect_to root_path unless session[:seller_id] == nil
+    @seller = Seller.new
   end
 
   def create
