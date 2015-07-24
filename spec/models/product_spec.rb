@@ -87,6 +87,14 @@ RSpec.describe Product, type: :model do
         expect(Product.has_stock).to include(product1)
         expect(Product.has_stock).not_to include(product2)
       end
+
+      it "returns only unretired products" do
+        product1 = Product.create(name: 'afsbfdsf', price: 1, seller_id: 1, stock: 10)
+        product2 = Product.create(name: 'asdfbsdfba', price: 1, seller_id: 1, stock: 10, retired: true)
+
+        expect(Product.has_stock).to include(product1)
+        expect(Product.has_stock).not_to include(product2)
+      end
     end
   end
 
@@ -115,6 +123,30 @@ RSpec.describe Product, type: :model do
     it "returns false if no stock is present" do
       product = Product.create(stock: 0, price: 1, seller_id: 1, name: "z4$asdf")
       expect(product.stock?).to eq(false)
+    end
+  end
+
+  describe "#retire!" do
+    it "changes value of retired from true to false" do
+      product = Product.create(stock: 1, price: 1, seller_id: 1, name: "z4ssdfg$%fds", retired: true)
+      product.retire!
+      expect(product.retired).to eq(false)
+    end
+
+    it "also changes value of retired from false to true" do
+      product = Product.create(stock: 1, price: 1, seller_id: 1, name: "z4$%fdsasdf", retired: false)
+      product.retire!
+      expect(product.retired).to eq(true)
+    end
+
+    it "basically swaps between true and false, ok?" do
+      product = Product.create(stock: 1, price: 1, seller_id: 1, name: "z4$%fasdfasdfds", retired: false)
+      10.times do |count|
+        product.retire!
+        result = count.even? ? true : false
+
+        expect(product.retired).to eq(result)
+      end
     end
   end
 
@@ -165,10 +197,10 @@ RSpec.describe Product, type: :model do
   end
 
   describe "#top_products" do
-    it "returns the top_products" do
-      product1 = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
-      product2 = Product.create(name: 'b', price: 1, seller_id: 1, stock: 1)
-      product3 = Product.create(name: 'c', price: 1, seller_id: 1, stock: 1)
+    before :each do
+      @product1 = Product.create(name: 'a', price: 1, seller_id: 1, stock: 1)
+      @product2 = Product.create(name: 'b', price: 1, seller_id: 1, stock: 1)
+      @product3 = Product.create(name: 'c', price: 1, seller_id: 1, stock: 1)
       product4 = Product.create(name: 'd', price: 1, seller_id: 1, stock: 1)
       product5 = Product.create(name: 'e', price: 1, seller_id: 1, stock: 1)
       product6 = Product.create(name: 'f', price: 1, seller_id: 1, stock: 1)
@@ -178,7 +210,7 @@ RSpec.describe Product, type: :model do
       product10 = Product.create(name: 'j', price: 1, seller_id: 1, stock: 1)
       product11 = Product.create(name: 'k', price: 1, seller_id: 1, stock: 1)
       product12 = Product.create(name: 'l', price: 1, seller_id: 1, stock: 1)
-      product13 = Product.create(name: 'm', price: 1, seller_id: 1, stock: 1)
+      @worst_rated = Product.create(name: 'm', price: 1, seller_id: 1, stock: 1)
 
       review = Review.create(rating: 5, product_id: 1)
       review = Review.create(rating: 5, product_id: 2)
@@ -191,13 +223,31 @@ RSpec.describe Product, type: :model do
       review = Review.create(rating: 3, product_id: 9)
       review = Review.create(rating: 2, product_id: 10)
       review = Review.create(rating: 2, product_id: 11)
-      review = Review.create(rating: 1, product_id: 12)
+      review = Review.create(rating: 2, product_id: 12)
       review = Review.create(rating: 1, product_id: 13)
 
+      @expected_array = [@product1, @product2, @product3, product4, product5,
+        product6, product7, product8, product9, product10, product11, product12]
+    end
 
-      expected_array = [product1, product2, product3, product4, product5, product6,
-                        product7, product8, product9, product10, product11, product12]
-      expect(Product.top_products).to eq expected_array
+    it "returns the top_products" do
+      expect(Product.top_products).to eq(@expected_array)
+    end
+
+    it "does not return products that are retired" do
+      @product1.update(retired: true)
+
+      expect(Product.top_products).to include(@product2)
+      expect(Product.top_products).to include(@worst_rated)
+      expect(Product.top_products).not_to include(@product1)
+    end
+
+    it "does not return products that have no stock" do
+      @product1.update(stock: 0)
+
+      expect(Product.top_products).to include(@product2)
+      expect(Product.top_products).to include(@worst_rated)
+      expect(Product.top_products).not_to include(@product1)
     end
   end
 end
