@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
   def checkout
     @order.prepare_checkout!
-    flash[:errors] = @order.errors if @order.errors
+    flash[:errors] = @order.errors unless @order.errors.empty?
   end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController.
