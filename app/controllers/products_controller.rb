@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
 
   def seller; end
 
-  def inventory # TODO: spec
+  def inventory # OPTIMIZE: consider adding this content to the dashboard or seller products page?
     @products = @seller.products
   end
 

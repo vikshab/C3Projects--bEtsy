@@ -265,6 +265,35 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
+  describe "GET #inventory" do
+    before :each do
+      @seller = Seller.create(username: "user1", email: "email1@email.com", password_digest: "password1")
+      session[:seller_id] = @seller.id
+    end
+
+    it "responds successfully with an HTTP 200 status code" do
+      get :inventory, seller_id: @seller
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
+    it "renders the inventory products view" do
+      get :inventory, seller_id: @seller
+      expect(response).to render_template("inventory")#, session[:seller_id]
+    end
+
+    it "assigns @seller" do
+      get :inventory, seller_id: @seller
+      expect(assigns(:seller)).to eq(@seller)
+    end
+
+    it "assigns @products" do
+      product = Product.create(name: "asdfasdf", stock: 1, price: 1, seller_id: @seller.id)
+      get :inventory, seller_id: @seller
+      expect(assigns(:products)).to include(product)
+    end
+  end
+
   describe "authentication" do
     context "restricts access to some seller-only pages" do
       before :each do
