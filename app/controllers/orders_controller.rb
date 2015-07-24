@@ -56,7 +56,7 @@ class OrdersController < ApplicationController
 
     def empty_cart?
       if session[:order_id].nil?
-          render :empty
+        render :empty
       elsif session[:order_id].nil? == false
         @order = Order.find(session[:order_id])
         if @order.order_items.count == 0

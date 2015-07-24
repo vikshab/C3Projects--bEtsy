@@ -25,8 +25,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @product.update(product_params)
@@ -50,11 +49,11 @@ class ProductsController < ApplicationController
 
   private
 
-  def find_product
-    @product = Product.find(params[:id])
-  end
+    def find_product
+      @product = Product.find(params[:id])
+    end
 
-  def product_params
-    params.require(:product).permit(:name, :price, :desc, :stock, :photo_url, :user_id, :retired, :category_ids => [], :categories_attributes => [:id, :name])
-  end
+    def product_params
+      params.require(:product).permit(:name, :price, :desc, :stock, :photo_url, :user_id, :retired, :category_ids => [], :categories_attributes => [:id, :name])
+    end
 end
