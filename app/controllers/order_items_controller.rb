@@ -35,6 +35,6 @@ class OrderItemsController < ApplicationController
 
   private
     def set_order_item
-      @order_item = OrderItem.find_by(id: params[:id])
+      @order_item = OrderItem.find(params[:id])
     end
 end
