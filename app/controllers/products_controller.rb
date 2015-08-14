@@ -56,7 +56,10 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:name, :price, :desc, :stock, :photo_url, :user_id, :retired, :category_ids => [], :categories_attributes => [:id, :name])
+      params.require(:product).permit(
+        :name, :price, :desc, :stock, :photo_url,
+        :user_id, :retired, :category_ids => [],
+        :categories_attributes => [:id, :name])
     end
 
     def merchant_exist?
