@@ -7,7 +7,7 @@ module ApplicationHelper
     display_text = "Cart"
 
     if session[:order_id] && Order.find_by(id: session[:order_id])
-      no_items = Order.find(session[:order_id]).order_items.count
+      no_items = OrderItems.where(order_id: session[:order_id]).count
       display_text += " (#{ no_items })" if no_items > 0
     end
 
