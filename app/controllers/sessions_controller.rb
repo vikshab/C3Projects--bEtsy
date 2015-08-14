@@ -1,8 +1,7 @@
 class SessionsController < ApplicationController
   before_action :set_seller, only: [:create]
 
-  def new
-  end
+  def new; end
 
   def create
     if @seller && @seller.authenticate(params[:session][:password])
