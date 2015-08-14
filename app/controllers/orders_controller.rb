@@ -73,6 +73,5 @@ class OrdersController < ApplicationController
           render :empty
         end
       end
-
     end
 end
