@@ -120,45 +120,35 @@ RSpec.describe CategoriesController, type: :controller do
 
     describe "POST #create" do
       context "valid category params" do
-        it "creates a category" do
-          seller
+        before :each do
           session[:seller_id] = seller.id
-
           post :create, valid_params
+        end
+        
+        it "creates a category" do
           expect(Category.count).to eq 1
         end
 
         it "redirects to the product show page" do
-          seller
-          session[:seller_id] = seller.id
-
-          post :create, valid_params
           expect(subject).to redirect_to(seller_products_path(seller))
         end
       end
 
       context "invalid category params" do
-        it "does not persist invalid records" do
-          seller
+        before :each do
           session[:seller_id] = seller.id
-
           post :create, invalid_params
+        end
+        
+        it "does not persist invalid records" do
           expect(Product.count).to eq 0
         end
 
         it "renders the new page so the record can be fixed" do
-          seller
-          session[:seller_id] = seller.id
-
-          post :create, invalid_params
           expect(response).to render_template("new", session[:seller_id])
         end
 
         it "assigns flash[:errors]" do
-          seller
-          session[:seller_id] = seller.id
-
-          post :create, invalid_params
           expect(flash[:errors]).to include(:name)
         end
       end
