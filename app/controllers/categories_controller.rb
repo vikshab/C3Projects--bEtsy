@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :category_exist?, only: [:show]
+  before_action :require_login, only: [:new, :create]
 
   def show
     @category = Category.find_by(name: params[:category_name])
