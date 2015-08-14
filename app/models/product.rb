@@ -10,7 +10,7 @@ class Product < ActiveRecord::Base
   validates :stock, presence: true, numericality: { only_integer: true }
 
   scope :active, -> { where(retired: false) }
-  scope :has_stock, -> { where(retired: false).where("stock > 0") }
+  scope :has_stock, -> { active.where("stock > 0") }
 
   def self.top_products
     sorted_products = self.active.sort_by { |product| product.average_rating }.reverse!
