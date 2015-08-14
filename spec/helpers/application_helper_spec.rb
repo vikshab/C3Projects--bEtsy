@@ -72,5 +72,14 @@ LONG
 
       expect(product_short_description(product)).to eq(nil)
     end
+
+    it "returns a product's description unchanged if it is short" do
+      short_version = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+
+      product = Product.create(name: "The Adventures of Run-on Sentence Man",
+        price: 1, seller_id: 1, stock: 1, description: short_version)
+
+      expect(product_short_description(product)).to eq(short_version)
+    end
   end
 end

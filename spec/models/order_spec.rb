@@ -325,5 +325,22 @@ RSpec.describe Order, type: :model do
         end
       end
     end
+
+
+    context "#already_has_product?" do
+      before :each do
+        @order = Order.create
+        @product = Product.create(name: "sheer inanity", stock: 10, price: 1, seller_id: 1)
+      end
+
+      it "returns true if a product is in an order" do
+        item = OrderItem.create(order_id: @order.id, product_id: @product.id, quantity_ordered: 5)
+        expect(@order.already_has_product? @product).to be true
+      end
+
+      it "returns false if a product is not in an order" do
+        expect(@order.already_has_product? @product).to be false
+      end
+    end
   end
 end
