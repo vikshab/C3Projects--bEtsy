@@ -2,6 +2,8 @@ class OrdersController < ApplicationController
   before_action :find_order, only: [:update, :destroy]
   before_action :empty_cart?, only: [:show]
   before_action :correct_order, only: [:index, :buyer]
+  before_action :find_merchant, only: [:index, :buyer]
+
   include ApplicationHelper
 
   def new
@@ -23,8 +25,6 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @merchant = User.find(params[:user_id])
-
     @all_items = @merchant.order_items
 
     @pend = @all_items.where(status: "pending")
@@ -44,7 +44,6 @@ class OrdersController < ApplicationController
 
   def buyer
     @buyer =  Buyer.find(params[:id])
-    @merchant = User.find(params[:user_id])
   end
 
   # check to see if the correct user is logged in
@@ -73,5 +72,9 @@ class OrdersController < ApplicationController
           render :empty
         end
       end
+    end
+
+    def find_merchant
+      @merchant = User.find(params[:user_id])
     end
 end
