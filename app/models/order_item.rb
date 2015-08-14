@@ -10,7 +10,7 @@ class OrderItem < ActiveRecord::Base
   validates :quantity_ordered, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :status, presence: true, inclusion: { in: %w(pending paid shipped canceled),
     message: "%{value} is not a valid status" }
-  validate :order_item_is_unique?, on: [:create]
+  validate :order_item_is_unique, on: [:create]
 
   def more!
     if product_has_stock? && product.stock > quantity_ordered
@@ -62,7 +62,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   private
-    def order_item_is_unique?
+    def order_item_is_unique
       if OrderItem.where(product_id: product_id, order_id: order_id).count > 0
         errors.add(:product_not_unique, "That product is already in your cart.")
       end
