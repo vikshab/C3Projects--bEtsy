@@ -8,9 +8,9 @@
     <h3>Assign Categories</h3>
     <%= form_for @product, url: product_add_categories_path(@product.id), html: { class: "form" } do |f| %>
       <% @categories.each do |category| %>
-      <div class="checkboxes">
-        <label><input type="checkbox" name="category_id[]" value=<%= category.id %> > <%= category.name %></label>
-      </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="category_id[]" value=<%= category.id %> > <%= category.name %></label>
+        </div>
       <% end %>
       <%= f.submit "Assign Categories", class: "btn btn-warning btn-block no-border-buttons"%>
     <% end %>
