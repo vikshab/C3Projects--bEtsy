@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  before_action :category_exist?, only: [:show]
+
   def show
     @category = Category.find_by(name: params[:category_name])
     @products = @category.products.active_product
@@ -21,5 +23,14 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def category_exist?
+    if Category.where(name: params["category_name"]).any?
+      show
+    else
+      flash[:error] = "This category does not exist"
+      redirect_to root_path
+    end
   end
 end
