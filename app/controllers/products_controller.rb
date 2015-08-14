@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   before_action :require_login, only: [:new, :create, :edit, :update, :destroy, :retire]
   before_action :find_product,  only: [:show, :edit, :update, :destroy, :retire]
+  before_action :merchant_exist?, only: [:merchant_products]
+
 
   def index
     @products = Product.active_product
@@ -55,5 +57,14 @@ class ProductsController < ApplicationController
 
     def product_params
       params.require(:product).permit(:name, :price, :desc, :stock, :photo_url, :user_id, :retired, :category_ids => [], :categories_attributes => [:id, :name])
+    end
+
+    def merchant_exist?
+      if User.where(id: params["id"]).any?
+        show
+      else
+        flash[:error] = "This merchant does not exist"
+        redirect_to root_path
+      end
     end
 end
