@@ -99,5 +99,23 @@ RSpec.describe OrderItemsController, type: :controller do
         expect(response).to have_http_status(302)
       end
     end
+
+    context "#update: changes the status of an item" do
+      before :each do
+        request.env["HTTP_REFERER"] = root_path
+      end
+
+      it "can change the status to shipped" do
+        patch :update, id: test_order_item.id, ship: "true"
+
+        expect(OrderItem.find(1).status).to eq("shipped")
+      end
+
+      it "can change the status to canceled" do
+        patch :update, id: test_order_item.id, cancel: "true"
+
+        expect(OrderItem.find(1).status).to eq("canceled")
+      end
+    end
   end
 end

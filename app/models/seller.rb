@@ -15,7 +15,7 @@ class Seller < ActiveRecord::Base
     self.order_items.where(status: status).map(&:total_item_price).sum
   end
 
-  def count_orders(status)
+  def count_orders(status) # this is actually counting order items
     self.order_items.where(status: status).count
   end
 
