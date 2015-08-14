@@ -3,7 +3,7 @@
 </div>
 <div class="row">
   <div class="col-lg-4 col-lg-offset-4">
-    <%= form_for @review, url: "/products/#{@product.id}/reviews/new" do |f| %>
+    <%= form_for @review, new_review_path(@product) do |f| %>
     <fieldset>
       <div class="input-group col-lg-12">
         <%= f.label :rating %>
