@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :correct_user, except: [:new, :create]
   before_action :find_user, only: [:show, :correct_user]
+  before_action :correct_user, except: [:new, :create]
   # need this so it can see the helper methods
   include ApplicationHelper
 
