@@ -3,7 +3,6 @@ class ProductsController < ApplicationController
   before_action :find_product,  only: [:show, :edit, :update, :destroy, :retire]
   before_action :merchant_exist?, only: [:merchant_products]
 
-
   def index
     @products = Product.active_product
   end
