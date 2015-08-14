@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
-    before_action :require_login, only: [:new, :create]
+  before_action :category_exist?, only: [:show]
+  before_action :require_login, only: [:new, :create]
 
   def show
     @category = Category.find_by(name: params[:category_name])
@@ -23,5 +24,14 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def category_exist?
+    if Category.where(name: params["category_name"]).any?
+      show
+    else
+      flash[:error] = "This category does not exist"
+      redirect_to root_path
+    end
   end
 end
