@@ -1,4 +1,5 @@
 class OrderItemsController < ApplicationController
+  before_action :find_order, only: [:update, :destroy]
 
   def create
     @order = current_order
@@ -14,8 +15,6 @@ class OrderItemsController < ApplicationController
   end
 
   def update
-    @order = current_order
-    @order_item = @order.order_items.find(params[:id])
     if order_item_params[:quantity].to_i <= @order_item.product.stock.to_i
       @order_item.update(order_item_params)
       @order_items = @order.order_items
@@ -27,8 +26,6 @@ class OrderItemsController < ApplicationController
   end
 
   def destroy
-    @order = current_order
-    @order_item = @order.order_items.find(params[:id])
     @order_item.destroy
     @order_items = @order.order_items
     redirect_to cart_path
@@ -45,5 +42,10 @@ private
 
     def order_item_params
       params.require(:order_item).permit(:quantity, :product_id, :order_id)
+    end
+
+    def find_order
+      @order = current_order
+      @order_item = @order.order_items.find(params[:id])
     end
 end
