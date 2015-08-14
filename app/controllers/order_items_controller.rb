@@ -7,10 +7,8 @@ class OrderItemsController < ApplicationController
 
     if order_item_params[:quantity].to_i > @order_item.product.stock.to_i
       flash[:error] = "Unfortunately we don't have #{order_item_params[:quantity].to_i} #{@order_item.product.name}, only #{@order_item.product.stock.to_i} available"
-      redirect_to cart_path
-    else
-      redirect_to cart_path
     end
+    redirect_to cart_path
   end
 
   def update
