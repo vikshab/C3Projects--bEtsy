@@ -1,8 +1,7 @@
 # C3Projects--bEtsy
-# Corinne, Jeri, Lindsey, Ashley
-# App Name: Tux
-# Team Name: Tux
-# Heroku Link: https://desolate-coast-1026.herokuapp.com/
+## Shipping API - Loraine and Elia
+## Original Team: Corinne, Jeri, Lindsey, Ashley
+## Original Heroku Link: https://desolate-coast-1026.herokuapp.com/
 
 [b]Etsy will be an online store where a wide variety of products can be listed and sold by any user. In this project we will focus on reinforcing the major components of Rails, Model Validation, as well as introducing some more complex logic such as user authentication.
 
