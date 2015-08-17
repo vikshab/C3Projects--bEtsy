@@ -1,14 +1,10 @@
 class UsersController < ApplicationController
-  before_action :require_login, except: [:new, :create]
+  before_action :find_user, only: [:show, :correct_user]
   before_action :correct_user, except: [:new, :create]
   # need this so it can see the helper methods
   include ApplicationHelper
-  # def index
-  #   @users = User.all
-  # end
 
   def show
-    @user = User.find(params[:id])
     @products = @user.products
   end
 
@@ -19,21 +15,24 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash.now[:success] = "Welcome to Bitsy, #{@user.name}!"
+      log_in(@user)
       redirect_to user_path(@user)
     else
       render 'new'
     end
   end
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
+  def correct_user
+    redirect_to(root_url) unless current_user?(@user)
+  end
 
   private
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    def find_user
+      @user = User.find(params[:id])
     end
 end

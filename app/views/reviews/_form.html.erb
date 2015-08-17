@@ -1,5 +1,4 @@
-<div class="row">
-  <div class = "col-xs-5" >
+  <div class = "col-md-9" >
     <%= form_for [@product, @product.reviews.build], class: "form-group" do |f| %>
       <h3>Rating:</h3>
       <% (1..5).each do |num| %>
@@ -7,10 +6,9 @@
         <%= f.radio_button :rating, num %>
       <% end %>
       <br><br>
-      <%= f.label :body, "Review:" %>
+      <h5><%= f.label :body, "Write Your Own Review:" %></h5>
       <%= f.text_area :body, class: "form-control", rows: "5" %><br>
 
       <%= f.submit "Submit", class: "btn btn-default" %>
     <% end %>
   </div>
-</div>

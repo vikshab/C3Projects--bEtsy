@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150720232631) do
+ActiveRecord::Schema.define(version: 20150723204312) do
 
   create_table "buyers", force: :cascade do |t|
     t.string   "name"
@@ -20,11 +20,12 @@ ActiveRecord::Schema.define(version: 20150720232631) do
     t.string   "city"
     t.string   "state"
     t.integer  "zip"
-    t.integer  "last4cc"
-    t.string   "expcc"
+    t.integer  "credit_card", limit: 8
+    t.integer  "cvv"
+    t.string   "exp"
     t.integer  "order_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   add_index "buyers", ["order_id"], name: "index_buyers_on_order_id"
@@ -47,10 +48,11 @@ ActiveRecord::Schema.define(version: 20150720232631) do
     t.integer  "quantity"
     t.integer  "order_id"
     t.integer  "product_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.decimal  "unit_price",  precision: 12, scale: 2
-    t.decimal  "total_price", precision: 12, scale: 2
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.float    "unit_price"
+    t.float    "total_price"
+    t.string   "status"
   end
 
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id"
@@ -58,22 +60,21 @@ ActiveRecord::Schema.define(version: 20150720232631) do
 
   create_table "orders", force: :cascade do |t|
     t.string   "status"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.decimal  "subtotal",   precision: 12, scale: 2
-    t.integer  "buyer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "subtotal"
   end
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "price",      precision: 12, scale: 2
+    t.float    "price"
     t.text     "desc"
     t.integer  "stock"
     t.string   "photo_url"
     t.integer  "user_id"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.boolean  "retired",                             default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "retired",    default: false
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"

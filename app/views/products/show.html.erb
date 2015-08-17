@@ -1,23 +1,36 @@
 <div class="row">
   <div class="col-md-4 col-md-offset-2">
-    <%= image_tag("#{@product.photo_url}") %>
-  </div>
+      <%= image_tag(@product.photo_url, class:"img-responsive img-rounded") %>
+   </div>
 
-  <div class="col-md-3 col-md-offset-1">
+  <div class="col-md-3">
     <h2><%= @product.name %></h2>
-    <h3>Description</h3>
-    <h2><small><%= @product.desc %></small></h2>
-    <h4><small>$<%= @product.price %><small></h4>
-      <%= form_for @order_item do |f| %>
-       <div class="input-group">
-         <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
-           <div class="input-group-btn">
-             <%= f.hidden_field :product_id, value: @product.id %>
-             <%= f.hidden_field :order_id %>
-             <%= f.submit "Add to Cart", class: "btn btn-primary" %>
-           </div>
-          </div>
-        <% end %>
+    <h3>Description
+    <p><small><%= @product.desc %></small></p></h3>
+    <p class="text-muted">Categories:
+    <%= @product.categories.map {|category| category.name}.join(", ")%></p>
+
+    <h4 class="price"><%= number_to_currency(@product.price) %></h4>
+
+    <%= form_for @order_item do |f| %>
+     <div class="input-group">
+       <% if @product.stock != 0 %>
+          <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
+       <% else %>
+          <%= f.number_field :quantity, placeholder: "Item out of stock", class: "form-control" %>
+       <% end %>
+
+         <div class="input-group-btn">
+           <%= f.hidden_field :product_id, value: @product.id %>
+           <%= f.hidden_field :order_id %>
+           <% if @product.stock != 0  %>
+              <%= f.submit "Add to Cart", class: "btn btn-primary" %>
+            <% else %>
+              <%= f.submit "Add to Cart", class: "btn btn-primary disabled" %>
+           <% end %>
+         </div>
+        </div>
+      <% end %>
     <h4><%= @product.stock %> in Stock </h4>
   </div>
 </div>

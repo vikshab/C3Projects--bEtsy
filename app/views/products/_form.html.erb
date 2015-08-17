@@ -1,0 +1,49 @@
+<div class="form-group">
+    <%= form_for @product, html: {class: "form"} do |f| %>
+  <div class="col-md-4 col-md-offset-2">
+    <%= render partial: "shared/error_messages", locals: { data_type: @product } %>
+      <h3>Describe your product</h3>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+
+      <%= f.label :description %>
+      <%= f.text_area :desc, class: "form-control" %>
+
+      <%= f.label :categories %><br>
+      <%= collection_check_boxes(:product, :category_ids, Category.all, :id, :name) do |b| %>
+        <%= b.label class: "checkbox-inline" do %>
+          <%= b.check_box + b.text.capitalize %>
+        <% end %>
+      <% end %>
+    </div>
+
+
+  <div class="col-md-4">
+    <h3>Add product details</h3>
+
+    <%= f.label :stock %>
+    <%= f.number_field :stock, class: "form-control" %>
+
+    <div class="form-group">
+      <%= f.label :price %>
+      <%= f.number_field :price, class: "form-control", step: 0.01 %>
+    </div>
+
+    <% if form_type %>
+      <div class="form-group">
+        <%= f.label :retired %>
+        <%= f.check_box :retired %>
+      </div>
+    <% end %>
+
+    <%= f.label :photo_url %><br>
+    <%= f.collection_select :photo_url, Product.all, :photo_url, :photo_url, include_blank: "--Select a Photo--" %>
+
+    <%= f.hidden_field :user_id, value: @product.user_id %>
+    <br><br>
+    <%= f.submit class: "btn btn-default" %>
+  <% end %>
+  </div>
+ </div>
+</div>

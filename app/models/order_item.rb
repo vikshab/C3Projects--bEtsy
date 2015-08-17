@@ -4,6 +4,7 @@ class OrderItem < ActiveRecord::Base
   validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :order_id, presence: true
   validates :product_id, presence: true
+  before_create :set_status
   before_save :finalize
 
   def unit_price
@@ -19,7 +20,15 @@ class OrderItem < ActiveRecord::Base
     unit_price * quantity
   end
 
+  def complete_ship
+  self.status = "complete"
+  end
+
   private
+
+  def set_status
+    self.status = "pending"
+  end
 
   def finalize
     self[:unit_price] = unit_price

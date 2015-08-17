@@ -2,8 +2,8 @@ module ApplicationHelper
 
   def render_stars(rating)
     output = ''
-    if (1..5).include?(rating.to_i)
-      rating.to_i.times { output += image_tag('star.png') }
+    if (1..5).include?(rating)
+      rating.times { output += image_tag('star.png') }
     end
     output.html_safe
   end
@@ -23,13 +23,30 @@ module ApplicationHelper
     user == current_user
   end
 
-  # trying to see if I can use this to log-in a newly created user
+  # log-in a newly created user
   def log_in(user)
     session[:user_id] = user.id
   end
 
   def logged_in?
    current_user != nil
+  end
+
+  def transaction
+    order = Order.find(session[:order_id])
+    @order_items = OrderItem.where("order_id = ?", params[:order_id])
+    total = order.subtotal
+    @order_items.each do |item|
+      bought = item.quantity #how many were bought
+      product = item.product
+      inventory = item.product.stock #inventory
+      inventory = inventory - bought
+      product.update(stock: inventory)
+      item.update(status: 'paid')
+    end
+
+    order.update(status: "paid")
+    session[:order_id] = nil
   end
 
 end

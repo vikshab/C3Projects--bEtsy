@@ -14,11 +14,21 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
- @import url(http://fonts.googleapis.com/css?family=Cherry+Swash:400,700);
+ @import url(//fonts.googleapis.com/css?family=Cherry+Swash:400,700);
 
 $jumbo_color: #FF5454; /* red orange */
 $jumbo_shadow: #858585; /* darker grey */
 $border: #B4B4B4; /* dark grey */
+$money: #4F9728; /* color of money: green */
+$error: #F72B1D; /* red for warining */
+$border-top: #E7E7E7;
+$background: #F8F8F8;
+
+/* ------- */
+a:hover {
+  color: $jumbo_shadow;
+}
+
 
 /* Navbar ------------------------------------------------------------------ */
 
@@ -32,7 +42,16 @@ $border: #B4B4B4; /* dark grey */
  }
 
  .cart {
-  font-size: 1.4em;
+  font-size: 1.5em;
+ }
+
+ .navbar-link .cart {
+  padding: 15px 0px 0px 0px;
+ }
+
+ .cart-number {
+   margin-right: 5px;
+   margin-left: 10px;
  }
 
 /* Sticky footer ----------------------------------------------------------- */
@@ -43,7 +62,7 @@ html {
 }
 body {
   /* Margin top by nav height */
-  margin-top: 60px;
+  margin-top: 63px;
 
   /* Margin bottom by footer height */
   margin-bottom: 70px;
@@ -54,8 +73,8 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 50px;
-  border-top: 1px solid #E7E7E7;
-  background-color: #F8F8F8;
+  border-top: 1px solid $border-top;
+  background-color: $background;
 }
 
 .container .text-muted {
@@ -63,15 +82,18 @@ body {
   margin: 16px 0;
   text-align: center;
 }
-
-/* Review ------------------------------------------------------------------- */
-
-.review_rating {
-  font-weight: bold;
+/* ---------------------------------------------------------------------------*/
+.error {
+  color: $error;
 }
+/* Review ------------------------------------------------------------------- */
 
 .review_time {
   font-style: italic;
+}
+
+.review_body {
+  font-size: 1.1em;
 }
 
 /* Jumbotron ---------------------------------------------------------------- */
@@ -79,7 +101,7 @@ body {
 .jumbotron {
   width: 100%;
   margin-top: -15px;
-  background: url(symphony.png) repeat;
+  background: image-url("symphony.png") repeat;
   border-bottom: 3px solid $border;
 }
 
@@ -96,9 +118,48 @@ body {
   font-family: 'Cherry Swash', cursive;
 }
 
+label.required:after {
+    content: " *";
+    color: $error;
+  }
+
 /* Images ------------------------------------------------------------------- */
 
 .product-thumb {
   max-width: 320px;
   max-height: 215px;
+}
+
+.dash-photo {
+  max-width: 65px;
+  border: 1px solid $border;
+}
+
+.cart-image {
+  max-width: 230px;
+}
+
+.img-rounded {
+  border: 1px solid $border;
+}
+
+/* Product Page -------------------------------------------------------------- */
+
+.price {
+  color: $money;
+  margin-top: 30px;
+}
+
+/* Order Fulfillment --------------------------------------------------------- */
+
+.paid {
+  color: $money;
+}
+
+.pending {
+  color: #F0CC00;
+}
+
+.cancelled {
+  color: #F00;
 }

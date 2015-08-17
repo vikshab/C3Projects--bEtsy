@@ -9,8 +9,14 @@
 </head>
 
 <body>
+  <div class="container">
+
   <%= render "shared/nav" %>
+  <% if flash[:error] %>
+  <h4><span class="label label-danger"><%= flash[:error] %></span></h4>
+  <% end %>
   <%= yield %>
   <%= render "shared/footer" %>
+  </div>
 </body>
 </html>

@@ -1,15 +1,75 @@
-<div class="row no-jumbo form-header">
-  <div class = "col-md-6">
+<div class="row form-header">
+  <div class="col-md-8 col-md-offset-2">
     <h1> Order Fulfillment </h1>
+    <h3>Total Revenue: <%= number_to_currency(@ship_total.sum + @paid_total.sum) %></h3><br>
     </div>
   </div>
 
 <div class="row">
-  <div class="col-md-6">
-  <%= @all_items.each do |item| %>
-    <%= item.order_id %>
-    <%= item.product_id %>
-    <%= item.total_price %>
-  <% end %>
+  <div class="col-md-8 col-md-offset-2">
+  <table class="table table-hover table-bordered">
+    <tr class="active">
+      <th>Purchased By</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Item Total</th>
+      <th>Purchase Date</th>
+      <th>Shipped?</th>
+      <th>Item Order Status</th>
+    </tr>
+
+    <% @all_items.each do |item| %>
+      <tr>
+        <td>
+          <% if item.order.buyer %>
+            <%= link_to item.order.buyer.name, user_order_path(@merchant, item.order.buyer.id) %>
+          <% else %>
+            In cart
+          <% end %>
+        </td>
+        <td><%= link_to item.product.name, product_path(item.product.id) %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.total_price) %></td>
+        <td><%= item.updated_at.strftime("%m/%d/%Y") %></td>
+        <% if item.status == 'paid' %>
+          <td><%= link_to "Ship Item", shipped_path(item), method: "patch" %></td>
+          <td class="paid"><%= item.status.capitalize %></td>
+        <% elsif item.status == 'pending' %>
+          <td>Order Pending</td>
+          <td class="pending"><%= item.status.capitalize %></td>
+        <% else%>
+          <td>Shipped</td>
+          <td class=""><%= item.status.capitalize %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+  <table class="table table-hover table-bordered">
+    <tr class="active">
+      <th>Order Status</th>
+      <th>Total Revenue</th>
+      <th>Number of Orders</th>
+    </tr>
+    <tr>
+      <td class="paid">Paid</td>
+      <td><%= number_to_currency(@paid_total.sum) %></td>
+      <td><%= @paid.count %></td>
+    </tr>
+    <tr>
+      <td class="pending">Pending</td>
+      <td><%= number_to_currency(@pend_total.sum) %></td>
+      <td><%= @pend.count %></td>
+    </tr>
+    <tr>
+      <td>Complete</td>
+      <td><%= number_to_currency(@ship_total.sum) %></td>
+      <td><%= @ship.count %></td>
+    </tr>
+  </table>
   </div>
 </div>
