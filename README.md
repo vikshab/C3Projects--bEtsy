@@ -1,14 +1,21 @@
-### Team Malenkiy https://shopbitsy.herokuapp.com/
-- Team members are:
-  - Brittany W
-  - Elia G
-  - Victoria S
-  - Anita W
-- "Malenkiy" means "tiny" in Russian
+# Shipping project -- We're expanding on top of the following bEtsy project
+## Team members:
+- Katie Atrops
+- Ashley Watkins
 
-### Bitsy
-- Our store is called Bitsy, which sells all the itsy bitsy, teeny weeny, itty bitty, small, tiny things that one might need in their life.
-  - Each team member seeded the database with at least 5 products, so we were able to have a lot of products to work with in our store display.
+-------------------
+
+-### Team Malenkiy https://shopbitsy.herokuapp.com/
+-- Team members are:
+-  - Brittany W
+-  - Elia G
+-  - Victoria S
+-  - Anita W
+-- "Malenkiy" means "tiny" in Russian
+-
+-### Bitsy
+-- Our store is called Bitsy, which sells all the itsy bitsy, teeny weeny, itty bitty, small, tiny things that one might need in their life.
+-  - Each team member seeded the database with at least 5 products, so we were able to have a lot of products to work with in our store display.
 
 # C3Projects--bEtsy
 [b]Etsy will be an online store where a wide variety of products can be listed and sold by any user. In this project we will focus on reinforcing the major components of Rails, Model Validation, as well as introducing some more complex logic such as user authentication.
