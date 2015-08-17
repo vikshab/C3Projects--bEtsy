@@ -40,7 +40,6 @@ class ProductsController < ApplicationController
 
   def retire
     @product.retire_toggle!
-    @product.save
     redirect_to user_path(@product.user_id)
   end
 

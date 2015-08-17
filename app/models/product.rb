@@ -20,5 +20,6 @@ class Product < ActiveRecord::Base
 
   def retire_toggle!
     self.retired ? self.retired = false : self.retired = true
+    self.save
   end
 end
