@@ -1,9 +1,11 @@
-<ul>
-  <% @shipping.each do |option| %>
-    <li>
-      <%= option[0] %> |
-      <%= option[1] %> |
-      <%= option[2] %>
-    </li>
+<% @response.each do |option| %>
+  <%= form_for @order, url: update_shipping_path, html: { role: "form", method: :patch } do |f| %>
+    <%= "#{option[0]} | #{option[1]} | #{option[2]}" %>
+    <%= f.hidden_field :shipping_type, value: option[0] %>
+    <%= f.hidden_field :shipping_price, value: option[1] %>
+    <%= f.hidden_field :shipping_estimate, value: option[2] %>
+  <%= submit_tag("Select", class: "btn btn-default") %>
   <% end %>
-</ul>
+<% end %>
+
+<%= link_to "<< Ship to a different location", checkout_path %>

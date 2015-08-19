@@ -1,20 +1,18 @@
-<h1>SHIPPING ESTIMATE</h1>
-
 <%= form_tag checkout_path, { role: "form", method: :get } do |f| %>
   <div class="form-group">
-    <%= label_tag :city, "City" %>
+    <%= label_tag :city, "Shipping City" %>
     <%= text_field_tag :city, nil, { class: "form-control", required: true, placeholder: "Your City" } %>
   </div>
   <div class="form-group">
-    <%= label_tag :state, "State" %>
+    <%= label_tag :state, "Shipping State" %>
     <%= text_field_tag :state, nil, { class: "form-control", required: true, placeholder: "Your State" } %>
   </div>
   <div class="form-group">
-    <%= label_tag :zip, "Zipcode" %>
+    <%= label_tag :zip, "Shipping Zipcode" %>
     <%= text_field_tag :zip, nil, { class: "form-control", required: true, placeholder: "Your Zipcode" } %>
   </div>
   <div class="form-group">
-    <%= label_tag :country, "Country" %>
+    <%= label_tag :country, "Shipping Country" %>
     <%= text_field_tag :country, nil, { class: "form-control", required: true, placeholder: "Your Country" } %>
   </div>
 

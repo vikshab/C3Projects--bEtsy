@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:cart, :checkout, :add_to_cart, :update, :receipt]
+  before_action :set_order, only: [:cart, :update_shipping, :remove_shipping, :checkout, :add_to_cart, :update, :receipt]
   before_action :set_seller_order, only: [:show]
   before_action :set_product, only: [:add_to_cart]
   before_action :set_seller, only: [:index, :show]
@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
 
     # HTTParty
     if params[:city]
-      @shipping = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
+      @response = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
     end
 
     flash[:errors] = @order.errors unless @order.errors.empty?
@@ -27,6 +27,20 @@ class OrdersController < ApplicationController
     end
 
     redirect_to product_path(@product)
+  end
+
+  def update_shipping
+    @order.update(shipping_params)
+    redirect_to action: :checkout
+  end
+
+  def remove_shipping
+    @order.update(
+      shipping_type: nil,
+      shipping_price: 0,
+      shipping_estimate: nil
+    )
+    redirect_to action: :checkout
   end
 
   def update
@@ -60,6 +74,10 @@ class OrdersController < ApplicationController
   private
     def checkout_params
       params.require(:order).permit(:buyer_name, :buyer_email, :buyer_address, :buyer_card_short, :buyer_card_expiration)
+    end
+
+    def shipping_params
+      params.require(:order).permit(:shipping_type, :shipping_price, :shipping_estimate)
     end
 
     def set_order

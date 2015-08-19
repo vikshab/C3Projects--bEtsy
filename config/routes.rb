@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   scope :cart do
     get "/", to: "orders#cart", as: "cart"
     get "/checkout", to: "orders#checkout", as: "checkout"
+    patch "/checkout/shipping", to: "orders#update_shipping", as: "update_shipping"
+    patch "/checkout/remove_shipping", to: "orders#remove_shipping", as: "remove_shipping"
     patch "/checkout", to: "orders#update"
     get "/receipt", to: "orders#receipt", as: "receipt"
   end
