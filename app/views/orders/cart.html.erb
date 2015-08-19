@@ -5,7 +5,6 @@
 <% if @order.order_items && @order.order_items.count > 0 %>
   <%= render "display_pending_order_items" %>
   <%= link_to "Checkout!", checkout_path, class: "btn btn-primary" %>
-  <%= render "display_shipping_estimate_form" %>
 <% else %>
   <h4 class="alert alert-info">You don't have any items in your cart.</h4>
 <% end %>

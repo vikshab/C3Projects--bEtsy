@@ -6,4 +6,7 @@
 
 <%= link_to "<< Back to cart", cart_path %>
 
+<%= render "display_shipping_estimate" if @shipping %>
+<%= render "shipping_estimate_form" unless @shipping %>
+
 <%= render "buyer_info_form" %>

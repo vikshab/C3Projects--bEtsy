@@ -1,7 +1,6 @@
-<h4>Shipping Estimate</h4>
-<%= render "display_shipping_estimate" if @shipping %>
+<h1>SHIPPING ESTIMATE</h1>
 
-<%= form_tag shipping_estimate_path, { role: "form", method: :post } do |f| %>
+<%= form_tag checkout_path, { role: "form", method: :get } do |f| %>
   <div class="form-group">
     <%= label_tag :city, "City" %>
     <%= text_field_tag :city, nil, { class: "form-control", required: true, placeholder: "Your City" } %>

@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:cart, :shipping_estimate, :checkout, :add_to_cart, :update, :receipt]
+  before_action :set_order, only: [:cart, :checkout, :add_to_cart, :update, :receipt]
   before_action :set_seller_order, only: [:show]
   before_action :set_product, only: [:add_to_cart]
   before_action :set_seller, only: [:index, :show]
@@ -9,13 +9,13 @@ class OrdersController < ApplicationController
 
   def checkout
     @order.prepare_checkout!
-    flash[:errors] = @order.errors unless @order.errors.empty?
-  end
 
-  def shipping_estimate # NOTE: WRITE TEST
     # HTTParty
-    @shipping = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
-    render :cart
+    if params[:city]
+      @shipping = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
+    end
+
+    flash[:errors] = @order.errors unless @order.errors.empty?
   end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController. !!!
