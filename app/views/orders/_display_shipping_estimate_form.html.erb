@@ -1,0 +1,22 @@
+<h4>Shipping Estimate</h4>
+
+<%= form_tag shipping_estimate_path, { role: "form", method: :post } do |f| %>
+  <div class="form-group">
+    <%= label_tag :city, "City" %>
+    <%= text_field_tag :city, nil, { class: "form-control", required: true, placeholder: "Your City" } %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :state, "State" %>
+    <%= text_field_tag :state, nil, { class: "form-control", required: true, placeholder: "Your State" } %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :zip, "Zipcode" %>
+    <%= text_field_tag :zip, nil, { class: "form-control", required: true, placeholder: "Your Zipcode" } %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :country, "Country" %>
+    <%= text_field_tag :country, nil, { class: "form-control", required: true, placeholder: "Your Country" } %>
+  </div>
+
+  <%= submit_tag("Shipping Estimate", class: "btn btn-default") %>
+<% end %>

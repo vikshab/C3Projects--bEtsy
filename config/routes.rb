@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get "/checkout", to: "orders#checkout", as: "checkout"
     patch "/checkout", to: "orders#update"
     get "/receipt", to: "orders#receipt", as: "receipt"
+    post "/", to: "orders#shipping_estimate", as: "shipping_estimate"
   end
 
   # adding an item to the cart
