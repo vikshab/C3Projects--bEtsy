@@ -16,6 +16,10 @@
     </tr>
   <% end %>
   <tr>
+    <th colspan="3">Shipping:</th>
+    <th colspan="2"><%= display_dollars(@order.shipping_price) %></th>
+  </tr>
+  <tr>
     <!-- !L this should use Lindsey's display_dollars helper once it exists! -->
     <th colspan="3">Total:</th>
     <th colspan="2"><%= display_dollars(@order.total_order_price) %></th>

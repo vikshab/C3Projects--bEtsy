@@ -1,4 +1,4 @@
-<div class="page-header">  
+<div class="page-header">
   <h1>RECEIPT</h1>
 </div>
 
@@ -6,3 +6,4 @@
 <h5>Purchase Time: <%= @order.created_at.strftime ("%c") %></h5>
 <h5>Order Status: <%= @order.status %></h5>
 <%= render "display_buyer_info" %>
+<%= render "display_shipping_info" %>
