@@ -45,7 +45,9 @@ ActiveRecord::Schema.define(version: 20150819193643) do
     t.datetime "buyer_card_expiration"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.integer  "shipping_price"
+    t.string   "shipping_type"
+    t.integer  "shipping_price",        default: 0
+    t.datetime "shipping_estimate"
   end
 
   create_table "products", force: :cascade do |t|
