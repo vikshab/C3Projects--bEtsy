@@ -4,7 +4,6 @@
 
 <% if @order.order_items && @order.order_items.count > 0 %>
   <%= render "display_pending_order_items" %>
-  <%= render "display_shipping_estimate" if @shipping %>
   <%= link_to "Checkout!", checkout_path, class: "btn btn-primary" %>
   <%= render "display_shipping_estimate_form" %>
 <% else %>

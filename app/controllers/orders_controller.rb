@@ -5,9 +5,7 @@ class OrdersController < ApplicationController
   before_action :set_seller, only: [:index, :show]
   before_action :require_seller_login, only: [:index, :show]
 
-  def cart
-    @shipping = params[:ship] # NOTE: WRITE TEST
-  end
+  def cart; end
 
   def checkout
     @order.prepare_checkout!
@@ -16,16 +14,8 @@ class OrdersController < ApplicationController
 
   def shipping_estimate # NOTE: WRITE TEST
     # HTTParty
-    response = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
-    hash = {}
-    response.each do |option|
-      hash[option[0]] = [option[1], option[2]]
-    end
-
-    # params does not like an array inside an array
-    # :shipping below kept returning nil if it was formatted like
-    # [["UPS", 100], ["USPS", 200]]
-    redirect_to :controller => 'orders', :action => 'cart', :shipping => hash
+    @shipping = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
+    render :cart
   end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController. !!!
