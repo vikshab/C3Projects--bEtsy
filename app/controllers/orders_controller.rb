@@ -12,16 +12,15 @@ class OrdersController < ApplicationController
   def checkout
     @order.prepare_checkout!
     if all_shipping_params?
-      # NOTE: Possibly put this in it's own method?
-      begin
-        @response = ShippingAPI.call_shipping_api(
-          params[:city],
-          params[:state],
-          params[:zip],
-          params[:country]
-        )
-      rescue
-        flash[:errors] = ERRORS[:invalid_shipping_address]
+      @response = ShippingAPI.call_shipping_api(
+        params[:city],
+        params[:state],
+        params[:zip],
+        params[:country]
+      )
+      unless @response.is_a?(Array)
+        flash[:errors] = { @response => "Make sure all fields are valid. State and country must be abbreviated." }
+        @response = nil
       end
     end
     flash[:errors] = @order.errors unless @order.errors.empty?

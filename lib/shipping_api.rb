@@ -8,8 +8,12 @@ class ShippingAPI
     query = "?origin_address1=1215%205th%20Ave&origin_zip=98121&origin_country=US&origin_state=WA&destination_city=#{city}&destination_state=#{state}&destination_zip=#{zip}&destination_country=#{country}"
 
     ups_response = HTTParty.get(SHIPPING_URL + "ups" + query)
-    usps_response = HTTParty.get(SHIPPING_URL + "usps" + query)
-    return (ups_response.parsed_response["data"] + usps_response.parsed_response["data"])
+    if ups_response["status"] == "error"
+      return ups_response["message"]
+    else
+      usps_response = HTTParty.get(SHIPPING_URL + "usps" + query)
+      return (ups_response.parsed_response["data"] + usps_response.parsed_response["data"])
+    end
   end
 
   def self.return_info_to_shipping_api(order)
