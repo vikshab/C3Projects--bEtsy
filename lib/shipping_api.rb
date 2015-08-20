@@ -1,6 +1,6 @@
 class ShippingAPI
-  SHIPPING_URL = Rails.env.production? ? "https://bwvs.herokuapp.com/shipping/" : "http://localhost:3000/shipping/"
-  LOGGING_URL  = Rails.env.production? ? "https://bwvs.herokuapp.com/log/" : "http://localhost:3000/log/"
+  SHIPPING_URL = Rails.env.production? ? "https://safe-beach-7475.herokuapp.com/shipping/" : "http://localhost:3000/shipping/"
+  LOGGING_URL  = Rails.env.production? ? "https://safe-beach-7475.herokuapp.com/log/" : "http://localhost:3000/log/"
 
   def self.call_shipping_api(city, state, zip, country)
     query = "?origin_address1=1215%205th%20Ave&origin_zip=98121&origin_country=US&origin_state=WA&destination_city=#{city}&destination_state=#{state}&destination_zip=#{zip}&destination_country=#{country}"
