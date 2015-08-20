@@ -109,12 +109,16 @@ class OrdersController < ApplicationController
     end
 
     def call_shipping_api
-      url = "http://localhost:3000/shipping/"
+      url = Rails.env.production? ? "PLACEHOLDER" : "http://localhost:3000/shipping/"
       query = "?origin_address1=1215%205th%20Ave&origin_zip=98121&origin_country=US&origin_state=WA&destination_city=#{params[:city]}&destination_zip=#{params[:zip]}&destination_country=#{params[:country]}&destination_state=#{params[:state]}"
 
       ups_response = HTTParty.get(url + "ups" + query)
       usps_response = HTTParty.get(url + "usps" + query)
 
       return (ups_response.parsed_response["data"] + usps_response.parsed_response["data"])
+    end
+
+    def send_shipping_api
+
     end
 end
