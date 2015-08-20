@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
         params[:zip],
         params[:country]
       )
-      unless @response.is_a?(Array)
+      if @response.is_a?(String)
         flash[:errors] = { @response => "Make sure all fields are valid. State and country must be abbreviated." }
         @response = nil
       end
