@@ -1,4 +1,4 @@
-require 'HTTParty'
+require "#{ Rails.root }/lib/shipping_api"
 
 class OrdersController < ApplicationController
   before_action :set_order, only: [:cart, :update_shipping, :remove_shipping, :checkout, :add_to_cart, :update, :receipt]
@@ -7,16 +7,18 @@ class OrdersController < ApplicationController
   before_action :set_seller, only: [:index, :show]
   before_action :require_seller_login, only: [:index, :show]
 
-  SHIPPING_URL = Rails.env.production? ? "PLACEHOLDER" : "http://localhost:3000/shipping/"
-  LOGGING_URL  = Rails.env.production? ? "PLACEHOLDER" : "http://localhost:3000/log/"
-
   def cart; end
 
   def checkout
     @order.prepare_checkout!
     if all_shipping_params?
       begin
-        @response = call_shipping_api
+        @response = ShippingAPI.call_shipping_api(
+          params[:city],
+          params[:state],
+          params[:zip],
+          params[:country]
+        )
       rescue
         flash[:errors] = ERRORS[:invalid_shipping_address]
       end
@@ -51,7 +53,7 @@ class OrdersController < ApplicationController
 
   def update
     if @order.checkout!(checkout_params)
-      return_info_to_shipping_api
+      ShippingAPI.return_info_to_shipping_api(@order)
       redirect_to receipt_path
     else
       flash.now[:errors] = @order.errors
@@ -110,19 +112,5 @@ class OrdersController < ApplicationController
       else
         false
       end
-    end
-
-    def call_shipping_api
-      query = "?origin_address1=1215%205th%20Ave&origin_zip=98121&origin_country=US&origin_state=WA&destination_city=#{params[:city]}&destination_zip=#{params[:zip]}&destination_country=#{params[:country]}&destination_state=#{params[:state]}"
-
-      ups_response = HTTParty.get(SHIPPING_URL + "ups" + query)
-      usps_response = HTTParty.get(SHIPPING_URL + "usps" + query)
-      return (ups_response.parsed_response["data"] + usps_response.parsed_response["data"])
-    end
-
-    def return_info_to_shipping_api
-      query = "tux?order=#{@order.id}&provider=#{@order.shipping_type}&cost=#{@order.shipping_price}&estimate=#{@order.shipping_estimate}&purchase_time=#{@order.updated_at}"
-
-      HTTParty.post(LOGGING_URL + query)
     end
 end
