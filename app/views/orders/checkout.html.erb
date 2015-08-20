@@ -6,10 +6,9 @@
 
 <%= link_to "<< Back to cart", cart_path %>
 
-<h2>SHIPPING INFO</h2>
 <% if @order.shipping_type %>
-  <%= "#{@order.shipping_type} | #{@order.shipping_price} | #{@order.shipping_estimate}" %>
-  <br><%= link_to "<< Ship to a different location", remove_shipping_path, method: :patch %>
+  <%= render "display_shipping_info" %>
+  <%= link_to "<< Ship to a different location", remove_shipping_path, method: :patch %>
   <%= render "buyer_info_form" %>
 <% elsif @response %>
   <%= render "display_shipping_estimate" %>

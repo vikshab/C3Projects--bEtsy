@@ -1,3 +1,5 @@
+require "#{ Rails.root }/lib/shipping_api"
+
 class OrdersController < ApplicationController
   before_action :set_order, only: [:cart, :update_shipping, :remove_shipping, :checkout, :add_to_cart, :update, :receipt]
   before_action :set_seller_order, only: [:show]
@@ -9,12 +11,18 @@ class OrdersController < ApplicationController
 
   def checkout
     @order.prepare_checkout!
-
-    # HTTParty
-    if params[:city]
-      @response = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
+    if all_shipping_params?
+      @response = ShippingAPI.call_shipping_api(
+        params[:city],
+        params[:state],
+        params[:zip],
+        params[:country]
+      )
+      unless @response.is_a?(Array)
+        flash[:errors] = { @response => "Make sure all fields are valid. State and country must be abbreviated." }
+        @response = nil
+      end
     end
-
     flash[:errors] = @order.errors unless @order.errors.empty?
   end
 
@@ -45,6 +53,7 @@ class OrdersController < ApplicationController
 
   def update
     if @order.checkout!(checkout_params)
+      ShippingAPI.return_info_to_shipping_api(@order)
       redirect_to receipt_path
     else
       flash.now[:errors] = @order.errors
@@ -95,5 +104,13 @@ class OrdersController < ApplicationController
 
     def set_product
       @product = Product.find(params[:id])
+    end
+
+    def all_shipping_params?
+      if params[:city] && params[:state] && params[:country] && params[:zip]
+        true
+      else
+        false
+      end
     end
 end

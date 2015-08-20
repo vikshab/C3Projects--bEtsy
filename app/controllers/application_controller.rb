@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   ERRORS = {
     not_logged_in: { not_logged_in: "Please log in to see this page." }, # used in ApplicationController's require_seller_login
     login_error: { login_error: "Invalid log in. Please try again!" }, # used in SessionsController's create
-    no_orders: { no_orders: "You don't have any orders." } # used in OrdersController's index (/sellers/1/orders)
+    no_orders: { no_orders: "You don't have any orders." }, # used in OrdersController's index (/sellers/1/orders)
   }
 
   def require_seller_login
