@@ -13,7 +13,7 @@ class ShippingAPI
   end
 
   def self.return_info_to_shipping_api(order)
-    query = "tux?order=#{order.id}&provider=#{order.shipping_type}&cost=#{order.shipping_price}&estimate=#{order.shipping_estimate}&purchase_time=#{order.updated_at}"
+    query = "tux?order_number=#{order.id}&provider=#{order.shipping_type}&cost=#{order.shipping_price}&estimate=#{order.shipping_estimate}&purchase_time=#{order.updated_at}"
 
     HTTParty.post(LOGGING_URL + query)
   end
