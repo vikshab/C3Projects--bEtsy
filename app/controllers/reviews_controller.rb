@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
-before_action :set_product, only: [:create, :new]
+  before_action :set_product, only: [:create, :new]
+
   def new
     @review = Review.new
   end
@@ -15,7 +16,7 @@ before_action :set_product, only: [:create, :new]
   end
 
   private
-  
+
     def set_product
       @product = Product.find(params[:id])
     end
