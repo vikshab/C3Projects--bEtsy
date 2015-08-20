@@ -1,3 +1,5 @@
+require 'HTTParty'
+
 class OrdersController < ApplicationController
   before_action :set_order, only: [:cart, :update_shipping, :remove_shipping, :checkout, :add_to_cart, :update, :receipt]
   before_action :set_seller_order, only: [:show]
@@ -9,12 +11,13 @@ class OrdersController < ApplicationController
 
   def checkout
     @order.prepare_checkout!
-
-    # HTTParty
-    if params[:city]
-      @response = [["UPS Test", 2034, Time.now],["UPSP Test", 4636, Time.now],["UPSS Test", 4777, Time.now]]
+    if all_shipping_params?
+      begin
+        @response = call_shipping_api
+      rescue
+        flash[:errors] = ERRORS[:invalid_shipping_address]
+      end
     end
-
     flash[:errors] = @order.errors unless @order.errors.empty?
   end
 
@@ -95,5 +98,23 @@ class OrdersController < ApplicationController
 
     def set_product
       @product = Product.find(params[:id])
+    end
+
+    def all_shipping_params?
+      if params[:city] && params[:state] && params[:country] && params[:zip]
+        true
+      else
+        false
+      end
+    end
+
+    def call_shipping_api
+      url = "http://localhost:3000/shipping/"
+      query = "?origin_address1=1215%205th%20Ave&origin_zip=98121&origin_country=US&origin_state=WA&destination_city=#{params[:city]}&destination_zip=#{params[:zip]}&destination_country=#{params[:country]}&destination_state=#{params[:state]}"
+
+      ups_response = HTTParty.get(url + "ups" + query)
+      usps_response = HTTParty.get(url + "usps" + query)
+
+      return (ups_response.parsed_response["data"] + usps_response.parsed_response["data"])
     end
 end
