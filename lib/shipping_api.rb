@@ -1,5 +1,3 @@
-require "HTTParty"
-
 class ShippingAPI
   SHIPPING_URL = Rails.env.production? ? "https://bwvs.herokuapp.com/shipping/" : "http://localhost:3000/shipping/"
   LOGGING_URL  = Rails.env.production? ? "https://bwvs.herokuapp.com/log/" : "http://localhost:3000/log/"
