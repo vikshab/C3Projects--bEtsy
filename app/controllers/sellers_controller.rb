@@ -29,7 +29,6 @@ class SellersController < ApplicationController
 
   def dashboard
     @seller = Seller.find(params[:id])
-    render :dashboard
   end
 
   private
