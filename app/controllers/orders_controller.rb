@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
   def checkout
     @order.prepare_checkout!
     if all_shipping_params?
+      # NOTE: Possibly put this in it's own method?
       begin
         @response = ShippingAPI.call_shipping_api(
           params[:city],
