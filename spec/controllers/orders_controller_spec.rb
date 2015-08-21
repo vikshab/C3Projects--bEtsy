@@ -87,7 +87,7 @@ RSpec.describe OrdersController, type: :controller do
         session[:order_id] = @order.id
       end
 
-      context "recieving shipping estimates" do
+      context "receiving shipping estimates" do
         let(:params) {
           {
             city: "Seattle",
@@ -128,7 +128,33 @@ RSpec.describe OrdersController, type: :controller do
         end
       end
 
-      context "recieving shipping estimates with invalid address" do
+      # # UNSURE HOW TO TEST A TIMEOUT
+      # # HERE: lib/shipping_api.rb --> #call_api_for
+      # context "timeout when receiving shipping estimates" do
+      #   let(:params) {
+      #     {
+      #       city: "Seattle",
+      #       state: "WA",
+      #       country: "US",
+      #       zip: "98101"
+      #     }
+      #   }
+      #   before :each do
+      #     VCR.use_cassette("getting shipping quotes timeout") do
+      #       get :checkout, params
+      #     end
+      #   end
+      #
+      #   it "assigns @response" do
+      #     expect(assigns(:response)).to be nil
+      #   end
+      #
+      #   it "raises a flash error" do
+      #     expect(flash[:errors]).to include(:timeout)
+      #   end
+      # end
+
+      context "receiving shipping estimates with invalid address" do
         let(:params) {
           {
             city: "Seattle",
@@ -233,6 +259,56 @@ RSpec.describe OrdersController, type: :controller do
 
         expect(flash[:errors]).to include(:product_not_unique)
       end
+    end
+  end
+
+  describe "PATCH #update_shipping" do
+    let(:shipping_params) {
+      {
+        order: {
+          shipping_type: "UPS Ground",
+          shipping_price: "1000",
+          shipping_estimate: ""
+        }
+      }
+    }
+
+    before :each do
+      session[:order_id] = test_order.id
+      patch :update_shipping, shipping_params
+    end
+
+    it "updates the order" do
+      expect(Order.find(session[:order_id]).shipping_type).to eq "UPS Ground"
+      expect(Order.find(session[:order_id]).shipping_price).to eq 1000
+      expect(Order.find(session[:order_id]).shipping_estimate).to eq nil
+    end
+
+    it "redirects to #checkout" do
+      expect(subject).to redirect_to checkout_path
+    end
+  end
+
+  describe "PATCH #remove_shipping" do
+    before :each do
+      session[:order_id] = test_order.id
+      Order.find(session[:order_id]).update(
+        shipping_type: "UPS Ground",
+        shipping_price: 1000,
+        shipping_estimate: nil
+      )
+      patch :remove_shipping
+    end
+
+    it "updates the order" do
+      the_order = Order.find(session[:order_id])
+      expect(the_order.shipping_type).to eq nil
+      expect(the_order.shipping_price).to eq 0
+      expect(the_order.shipping_estimate).to eq nil
+    end
+
+    it "redirects to #checkout" do
+      expect(subject).to redirect_to checkout_path
     end
   end
 
