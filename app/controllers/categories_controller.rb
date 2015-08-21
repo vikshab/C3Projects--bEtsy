@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(create_params)
+    @category = Category.new(category_params)
     if @category.save
       redirect_to seller_products_path(session[:seller_id])
     else
@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
       @category = Category.find(params[:id])
     end
 
-    def create_params
+    def category_params
       params.require(:category).permit(:name)
     end
 end
