@@ -1,27 +1,23 @@
 <h2>SHIPPING INFO</h2>
-<div class="shipping_estimate">
-    <!-- <ul class="sort-list dropdown-menu" style='display:inline;right:auto;'> -->
-      <table>
+  <table>
+    <tr>
+      <th>Provider</th>
+      <th>Cost</th>
+      <th>Delivery</th>
+      <th></th>
+    </tr>
+    <% @response.each do |option| %>
+      <%= form_for @order, url: update_shipping_path, html: { role: "form", method: :patch } do |f| %>
         <tr>
-          <th>Provider</th>
-          <th>Cost</th>
-          <th>Delivery</th>
-          <th></th>
+          <td><li class="sort-item"><%= option[0] %></li></td>
+          <td><li class="sort-item"><%= display_dollars(option[1]) %></li></td>
+          <td><li class="sort-item"><%= option[2] || "N/A" %></li></td>
+            <%= f.hidden_field :shipping_type, value: option[0] %>
+            <%= f.hidden_field :shipping_price, value: option[1] %>
+            <%= f.hidden_field :shipping_estimate, value: option[2] %>
+          <td><li class="sort-item"><%= submit_tag("√", class: "btn btn-default") %></li></td>
         </tr>
-        <% @response.each do |option| %>
-          <%= form_for @order, url: update_shipping_path, html: { role: "form", method: :patch } do |f| %>
-            <tr>
-              <td><li class="sort-item"><%= option[0] %></li></td>
-              <td><li class="sort-item"><%= display_dollars(option[1]) %></li></td>
-              <td><li class="sort-item"><%= option[2] || "N/A" %></li></td>
-                <%= f.hidden_field :shipping_type, value: option[0] %>
-                <%= f.hidden_field :shipping_price, value: option[1] %>
-                <%= f.hidden_field :shipping_estimate, value: option[2] %>
-              <td><li class="sort-item"><%= submit_tag("√", class: "btn btn-default") %></li></td>
-            </tr>
-          <% end %>
-        <% end %>
-      </table>
-    <!-- </ul> -->
+      <% end %>
+    <% end %>
+  </table>
   <%= link_to "<< Ship to a different location", checkout_path %>
-</div>
