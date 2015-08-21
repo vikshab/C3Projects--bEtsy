@@ -88,3 +88,19 @@
 body {
   padding-top: 70px;
 }
+
+.sort-list {
+  width: 650px;
+  height: 230px;
+  padding: 15px;
+  overflow-y: scroll;
+}
+.sort-item {
+  display: block;
+  padding: 3px;
+  margin: 3px;
+  text-align: center;
+  border-radius: 5px;
+  background: #F1F0F1;
+  color: black;
+}

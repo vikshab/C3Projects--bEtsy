@@ -1,7 +1,13 @@
 <h2>SHIPPING INFO</h2>
-
-<ul>
-  <li>Provider: <%= @order.shipping_type %></li>
-  <li>Price: <%= display_dollars(@order.shipping_price) %>
-  <li>Estimated Arrival: <%= @order.shipping_estimate || "N/A" %> </li>
-</ul>
+<table>
+  <tr>
+    <th>Provider</th>
+    <th>Cost</th>
+    <th>Delivery</th>
+  </tr>
+  <tr>
+    <td><li class="sort-item"><%= @order.shipping_type %></li></td>
+    <td><li class="sort-item"><%= display_dollars(@order.shipping_price) %></li></td>
+    <td><li class="sort-item"><%= @order.shipping_estimate || "N/A" %></li></td>
+  </tr>
+</table>
