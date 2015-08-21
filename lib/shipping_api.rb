@@ -16,7 +16,7 @@ class ShippingAPI
     return usps_response if timed_out?(usps_response)
     return { usps_response["message"] => INVALID_ADDRESS_MESSAGE } if error_occurred?(ups_response)
 
-    return (ups_response.parsed_response["data"] + usps_response.parsed_response["data"])
+    return order_by_price(ups_response, usps_response)
   end
 
   def self.return_info_to_shipping_api(order)
@@ -44,5 +44,11 @@ class ShippingAPI
 
   def self.error_occurred?(response)
     response["status"] == "error" ? true : false
+  end
+
+  def self.order_by_price(ups_response, usps_response)
+    response_combined = ups_response.parsed_response["data"] + usps_response.parsed_response["data"]
+    response = response_combined.sort { |x, y| x[1] <=> y[1] }
+    return response
   end
 end
