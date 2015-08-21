@@ -26,6 +26,12 @@ class OrdersController < ApplicationController
     flash[:errors] = @order.errors unless @order.errors.empty?
   end
 
+  def sort_by_price
+    raise
+    @response = response.sort { |x, y| x[1] <=> y[1] }
+    redirect_to checkout_path
+  end
+
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController. !!!
     order_item = OrderItem.new(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
     if order_item.save

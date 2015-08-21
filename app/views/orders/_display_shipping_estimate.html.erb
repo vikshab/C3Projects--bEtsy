@@ -2,7 +2,7 @@
   <table>
     <tr>
       <th>Provider</th>
-      <th>Cost</th>
+      <th><%= link_to "Cost", sort_by_price_path(response: @response) %></th>
       <th>Delivery</th>
       <th></th>
     </tr>
