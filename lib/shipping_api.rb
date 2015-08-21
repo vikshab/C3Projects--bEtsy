@@ -4,9 +4,10 @@ class ShippingAPI
   TUX_ADDRESS  = "origin_address1=1100%202nd%20Ave&origin_zip=98101&origin_country=US&origin_state=WA"
   TIMED_OUT_ERROR = { timeout: "Timeout occurred, try again later." }
   INVALID_ADDRESS_MESSAGE = "Make sure all fields are valid. State and country must be abbreviated."
+  DEFAULT_PACKAGE = "weight=100&height=60&width=24&length=14"
 
   def self.call_shipping_api(city, state, zip, country)
-    @query = "?#{TUX_ADDRESS}&destination_city=#{city}&destination_state=#{state}&destination_zip=#{zip}&destination_country=#{country}"
+    @query = "?#{TUX_ADDRESS}&destination_city=#{city}&destination_state=#{state}&destination_zip=#{zip}&destination_country=#{country}&#{DEFAULT_PACKAGE}"
 
     ups_response = call_api_for("ups")
     return ups_response if timed_out?(ups_response)
