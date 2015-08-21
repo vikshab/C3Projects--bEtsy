@@ -26,10 +26,17 @@ class OrdersController < ApplicationController
     flash[:errors] = @order.errors unless @order.errors.empty?
   end
 
-  def delivery_sort
-    @response
+  # def delivery_sort
+  #   @response
+  #   raise
+  #   redirect_to :back
+  # end
+
+  def sort_by_price
+    params[:response]
     raise
-    redirect_to :back
+    @response = response.sort { |x, y| x[1] <=> y[1] }
+    redirect_to checkout_path
   end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController. !!!
