@@ -79,23 +79,106 @@ RSpec.describe OrdersController, type: :controller do
       end
     end
 
-    # context "recieving shipping estimates" do
-    #   before :each do
-    #     @order = Order.create
-    #     @product = Product.create(name: "34234ujoiujhe", stock: 1, price: 1, seller_id: 1)
-    #     @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 5)
-    #     session[:order_id] = @order.id
-    #   end
-    #
-    #   it "assigns @response" do
-    #     params[:city] = "Seattle"
-    #     params[:state] = "WA"
-    #     params[:country] = "US"
-    #     params[:zip] = "98101"
-    #
-    #     expect(assigns(:response)).to eq("SOMETHING")
-    #   end
-    # end
+    context "shipping" do
+      before :each do
+        @order = Order.create
+        @product = Product.create(name: "oiajga", stock: 1, price: 1, seller_id: 1)
+        @item = OrderItem.create(product_id: @product.id, order_id: @order.id, quantity_ordered: 1)
+        session[:order_id] = @order.id
+      end
+
+      context "receiving shipping estimates" do
+        let(:params) {
+          {
+            city: "Seattle",
+            state: "WA",
+            country: "US",
+            zip: "98101"
+          }
+        }
+
+        before :each do
+          VCR.use_cassette("getting shipping quotes") do
+            get :checkout, params
+          end
+        end
+
+        it "assigns @response" do
+          expect(assigns(:response)).to_not be_empty
+          expect(assigns(:response).first.count).to be 3
+          expect(assigns(:response).count).to be > 0
+        end
+
+        it "assigns @response specific response" do
+          saved_vcr_response = [
+            ["USPS Library Mail Parcel", 259, nil],
+            ["USPS Media Mail Parcel", 272, nil],
+            ["USPS First-Class Mail Parcel", 274, nil],
+            ["USPS Priority Mail 1-Day", 575, nil],
+            ["UPS Ground", 1125, nil],
+            ["UPS Three-Day Select", 1493, "2015-08-26"],
+            ["USPS Priority Mail Express 1-Day Hold For Pickup", 1695, nil],
+            ["USPS Priority Mail Express 1-Day", 1695, nil],
+            ["UPS Second Day Air", 1980, "2015-08-25"],
+            ["UPS Next Day Air Saver", 3252, "2015-08-24"],
+            ["UPS Next Day Air", 3588, "2015-08-24"],
+            ["UPS Next Day Air Early A.M.", 6730, "2015-08-24"]
+          ]
+          expect(assigns(:response)).to eq(saved_vcr_response)
+        end
+      end
+
+      # # UNSURE HOW TO TEST A TIMEOUT
+      # # HERE: lib/shipping_api.rb --> #call_api_for
+      # context "timeout when receiving shipping estimates" do
+      #   let(:params) {
+      #     {
+      #       city: "Seattle",
+      #       state: "WA",
+      #       country: "US",
+      #       zip: "98101"
+      #     }
+      #   }
+      #   before :each do
+      #     VCR.use_cassette("getting shipping quotes timeout") do
+      #       get :checkout, params
+      #     end
+      #   end
+      #
+      #   it "assigns @response" do
+      #     expect(assigns(:response)).to be nil
+      #   end
+      #
+      #   it "raises a flash error" do
+      #     expect(flash[:errors]).to include(:timeout)
+      #   end
+      # end
+
+      context "receiving shipping estimates with invalid address" do
+        let(:params) {
+          {
+            city: "Seattle",
+            state: "WA",
+            country: "US",
+            zip: "55555"
+          }
+        }
+
+        before :each do
+          VCR.use_cassette("getting shipping quotes invalid") do
+            get :checkout, params
+          end
+        end
+
+        it "assigns @response" do
+          expect(assigns(:response)).to be nil
+        end
+
+        it "raises a flash error" do
+          expect(flash[:errors]).to include("Invalid address")
+        end
+      end
+    end
   end
 
   describe "POST #add_to_cart" do
@@ -176,6 +259,56 @@ RSpec.describe OrdersController, type: :controller do
 
         expect(flash[:errors]).to include(:product_not_unique)
       end
+    end
+  end
+
+  describe "PATCH #update_shipping" do
+    let(:shipping_params) {
+      {
+        order: {
+          shipping_type: "UPS Ground",
+          shipping_price: "1000",
+          shipping_estimate: ""
+        }
+      }
+    }
+
+    before :each do
+      session[:order_id] = test_order.id
+      patch :update_shipping, shipping_params
+    end
+
+    it "updates the order" do
+      expect(Order.find(session[:order_id]).shipping_type).to eq "UPS Ground"
+      expect(Order.find(session[:order_id]).shipping_price).to eq 1000
+      expect(Order.find(session[:order_id]).shipping_estimate).to eq nil
+    end
+
+    it "redirects to #checkout" do
+      expect(subject).to redirect_to checkout_path
+    end
+  end
+
+  describe "PATCH #remove_shipping" do
+    before :each do
+      session[:order_id] = test_order.id
+      Order.find(session[:order_id]).update(
+        shipping_type: "UPS Ground",
+        shipping_price: 1000,
+        shipping_estimate: nil
+      )
+      patch :remove_shipping
+    end
+
+    it "updates the order" do
+      the_order = Order.find(session[:order_id])
+      expect(the_order.shipping_type).to eq nil
+      expect(the_order.shipping_price).to eq 0
+      expect(the_order.shipping_estimate).to eq nil
+    end
+
+    it "redirects to #checkout" do
+      expect(subject).to redirect_to checkout_path
     end
   end
 
