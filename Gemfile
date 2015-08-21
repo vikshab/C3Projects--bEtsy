@@ -58,6 +58,9 @@ group :development, :test do
   gem 'awesome_print'
 
   gem 'rspec-rails', '~> 3.0'
+
+  gem "vcr"
+  gem "webmock"
 end
 
 group :production do
