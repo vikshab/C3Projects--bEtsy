@@ -194,74 +194,62 @@ RSpec.describe OrdersController, type: :controller do
       }
     } }
     let(:invalid_checkout_buyer_params) { { order: { buyer_card_short: "words" } } }
-
-    it "assigns @order" do
+    let(:action) {
       VCR.use_cassette("shipping API") do
         patch :update, checkout_buyer_params
       end
+    }
+
+    it "assigns @order" do
+      action
 
       expect(assigns(:order)).to eq(test_order)
     end
 
     context "when input is valid" do
       it "updates order.status to paid" do
-        VCR.use_cassette("shipping API") do
-          patch :update, checkout_buyer_params
-        end
-
+        action
         test_order.reload
         expect(test_order.status).to eq("paid")
       end
 
       it "updates the order.buyer_name" do
         old_name = test_order.buyer_name
-        VCR.use_cassette("shipping API") do
-          patch :update, checkout_buyer_params
-        end
+        action
         test_order.reload
         expect(test_order.buyer_name).not_to eq(old_name)
       end
 
       it "updates the order.buyer_email" do
         old_email = test_order.buyer_email
-        VCR.use_cassette("shipping API") do
-          patch :update, checkout_buyer_params
-        end
+        action
         test_order.reload
         expect(test_order.buyer_email).not_to eq(old_email)
       end
 
       it "updates the order.buyer_address" do
         old_address = test_order.buyer_address
-        VCR.use_cassette("shipping API") do
-          patch :update, checkout_buyer_params
-        end
+        action
         test_order.reload
         expect(test_order.buyer_address).not_to eq(old_address)
       end
 
       it "updates the order.buyer_card_short" do
         old_card_short = test_order.buyer_card_short
-        VCR.use_cassette("shipping API") do
-          patch :update, checkout_buyer_params
-        end
+        action
         test_order.reload
         expect(test_order.buyer_card_short).not_to eq(old_card_short)
       end
 
       it "updates the order.buyer_card_expiration" do
         old_card_expiration = test_order.buyer_card_expiration
-        VCR.use_cassette("shipping API") do
-          patch :update, checkout_buyer_params
-        end
+        action
         test_order.reload
         expect(test_order.buyer_card_expiration).not_to eq(old_card_expiration)
       end
 
       it "redirects to receipt_path" do
-        VCR.use_cassette("shipping API") do
-          patch :update, checkout_buyer_params
-        end
+        action
 
         expect(response).to redirect_to(receipt_path)
       end
