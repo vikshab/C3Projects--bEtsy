@@ -59,11 +59,14 @@ group :development, :test do
 
   gem 'rspec-rails', '~> 3.0'
 
-  gem "vcr"
-  gem "webmock"
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+end
+
+group :test do
+  gem "vcr"
+  gem "webmock"
 end
