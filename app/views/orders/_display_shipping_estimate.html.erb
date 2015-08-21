@@ -2,8 +2,8 @@
   <table>
     <tr>
       <th>Provider</th>
-      <th>Cost<%= link_to "⬇︎" %></th>
-      <th>Delivery <%= link_to "➠" %></th>
+      <th>Cost</th>
+      <th>Delivery <%= link_to "➠", order_by_delivery_path, method: "get" %></th>
       <th></th>
     </tr>
     <% @response.each do |option| %>

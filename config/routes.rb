@@ -45,4 +45,5 @@ Rails.application.routes.draw do
   delete "/cart/item/:id", to: "order_items#destroy", as: "kill_item"
 
   resources :order_items, only: [:update]
+  get "/checkout/shipping/sort", to: "orders#delivery_sort", as: "order_by_delivery"
 end

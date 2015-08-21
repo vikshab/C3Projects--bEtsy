@@ -1,7 +1,7 @@
 require "#{ Rails.root }/lib/shipping_api"
 
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:cart, :update_shipping, :remove_shipping, :checkout, :add_to_cart, :update, :receipt]
+  before_action :set_order, only: [:cart, :update_shipping, :remove_shipping, :checkout, :add_to_cart, :update, :receipt, :delivery_sort]
   before_action :set_seller_order, only: [:show]
   before_action :set_product, only: [:add_to_cart]
   before_action :set_seller, only: [:index, :show]
@@ -24,6 +24,12 @@ class OrdersController < ApplicationController
       end
     end
     flash[:errors] = @order.errors unless @order.errors.empty?
+  end
+
+  def delivery_sort
+    @response
+    raise
+    redirect_to :back
   end
 
   def add_to_cart # OPTIMIZE: consider moving this elsewhere, i.e. ProductsController or OrderItemsController. !!!
