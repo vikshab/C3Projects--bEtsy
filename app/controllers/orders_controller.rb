@@ -33,9 +33,8 @@ class OrdersController < ApplicationController
   # end
 
   def sort_by_price
-    params[:response]
+    @response.sort { |x, y| x[1] <=> y[1] }
     raise
-    @response = response.sort { |x, y| x[1] <=> y[1] }
     redirect_to checkout_path
   end
 
