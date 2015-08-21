@@ -18,8 +18,8 @@ class OrdersController < ApplicationController
         params[:zip],
         params[:country]
       )
-      if @response.is_a?(String)
-        flash[:errors] = { @response => "Make sure all fields are valid. State and country must be abbreviated." }
+      if @response.is_a?(Hash)
+        flash[:errors] = @response
         @response = nil
       end
     end
